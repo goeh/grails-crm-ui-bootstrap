@@ -114,7 +114,7 @@ class CrmBootstrapTagLib {
         }
         def favorite = attrs.remove('favorite')
         if (favorite) {
-            out << favoriteIcon(bean: favorite)
+            favorite = favoriteIcon(bean: favorite)
         } else {
             favorite = ''
         }
