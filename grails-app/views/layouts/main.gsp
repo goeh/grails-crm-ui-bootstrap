@@ -16,62 +16,61 @@
           href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
     <r:layoutResources/>
     <g:layoutHead/>
-
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
           <style type="text/css">
             button.btn-dummy {
               visibility: visible;
-              height:22px;
+              height: 22px;
               padding: 1px 3px 6px 3px;
               color: white;
-              background-color: #00a9dd;
+              background-color: transparent;
               border: none;
             }
-            </style>
+          </style>
     <![endif]-->
-
 </head>
 
 <body class="${controllerName ?: 'home'}-body">
 
-<div class="container-fluid">
+    <div id="head-wrapper" class="clearfix">
+        <div class="span5">
+            <div id="brand" class="visible-desktop"></div>
+        </div>
 
-<div class="row-fluid">
-    <div class="span4">
-        <div id="brand" class="visible-desktop"></div>
-    </div>
+        <div class="span7">
 
-    <div class="span8">
-        <div id="global-message" class="hide">
-            <g:if test="${flash.info || flash.message}">
-                <div class="alert-info">
-                    ${flash.info ?: flash.message}
-                </div>
-            </g:if>
-            <g:if test="${flash.success}">
-                <div class="alert-success">
-                    ${flash.success}
-                </div>
-            </g:if>
-            <g:if test="${flash.warning}">
-                <div class="alert-warning">
-                    ${flash.warning}
-                </div>
-            </g:if>
-            <g:if test="${flash.error}">
-                <div class="alert-error">
-                    ${flash.error}
-                </div>
-            </g:if>
+            <g:pageProperty name="page.top"/>
+
+            <div id="global-message" class="hide">
+                <g:if test="${flash.info || flash.message}">
+                    <div class="alert-info">
+                        ${flash.info ?: flash.message}
+                    </div>
+                </g:if>
+                <g:if test="${flash.success}">
+                    <div class="alert-success">
+                        ${flash.success}
+                    </div>
+                </g:if>
+                <g:if test="${flash.warning}">
+                    <div class="alert-warning">
+                        ${flash.warning}
+                    </div>
+                </g:if>
+                <g:if test="${flash.error}">
+                    <div class="alert-error">
+                        ${flash.error}
+                    </div>
+                </g:if>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="navbar">
-    <div class="navbar-inner">
-        <div class="row-fluid">
+<div class="navbar" id="navigation-wrapper">
+    <div class="navbar-inner" style="min-height:40px;">
+        <div class="container">
 
             <crm:user>
                 <g:link class="btn btn-navbar pull-right hidden-desktop" style="padding: 5px 12px 2px 12px;"
@@ -86,9 +85,7 @@
                 <span class="icon-bar"></span>
             </a>
 
-            <span class="hidden-desktop"><a class="brand" href="${createLink(uri: '/')}"><g:message code="app.name"
-                                                                                                    default="Grails CRM"/></a>
-            </span>
+            <span class="hidden-desktop"><g:message code="app.name" default="Grails CRM"/></span>
 
             <div class="nav-collapse">
 
@@ -211,14 +208,14 @@
                             </li>
                         </ul>
                     </nav:ifHasItems>
-
+<%--
                     <crm:hasPermission permission="search:global">
                         <g:form class="navbar-search pull-right">
                             <g:textField name="q" class="search-query span2" placeholder="Sök"/>
                             <button id="search-button" class="btn-dummy" type="submit">&raquo;</button>
                         </g:form>
                     </crm:hasPermission>
-
+--%>
                 </crm:user>
 
 
@@ -240,11 +237,17 @@
                     </nav:ifHasItems>
 
                     <g:form controller="auth" action="signIn" name="loginBar"
-                            class="navbar-search pull-right visible-desktop">
+                            class="form-inline navbar-search pull-right visible-desktop">
                         <input type="hidden" name="targetUri" value="${targetUri}"/>
+                        <!--[if lt IE 9]>
+                        <label class="inline"><g:message code="auth.login.username"/></label>
+                        <![endif]-->
                         <g:textField id="login-username" name="username" value="${username}"
                                      placeholder="${message(code:'auth.login.username', default:'Username...')}"
                                      class="search-query span2"/>
+                        <!--[if lt IE 9]>
+                        <label class="inline"><g:message code="auth.login.password"/></label>
+                        <![endif]-->
                         <g:passwordField id="login-password" name="password" value=""
                                          placeholder="${message(code:'auth.login.password', default:'Password...')}"
                                          class="search-query span2"/>
@@ -260,76 +263,20 @@
     </div>
 </div>
 
-<div class="row-fluid">
+<div class="container-fluid">
 
-    <div class="span9">
+    <g:pageProperty name="page.hero"/>
 
-        <div id="content" class="${controllerName ?: 'home'}-content" role="main">
-            <g:layoutBody/>
-        </div>
-
+    <div class="controller-${controllerName ?: 'home'} action-${actionName ?: 'index'}" id="content-wrapper"
+         role="main">
+        <g:layoutBody/>
     </div>
 
-    <div class="span3">
-
-        <nav:ifHasItems group="${controllerName ?: 'home'}">
-            <div class="well sidebar-nav">
-
-                <ul id="navigation_${controllerName}" class="nav nav-list">
-                    <li class="nav-header"><g:message code="sidebar.commands.label"/></li>
-
-                    <nav:eachItem group="${controllerName ?: 'home'}" var="item">
-                        <li class="${item.active ? 'active' : ''}">
-                            <g:set var="icon"
-                                   value="${message(code: (item.title ?: (item.controller ?: controllerName) + '.' + item.action) + '._icon', default: message(code: (item.title ?: item.action) + '._icon', default: ''))}"/>
-                            <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
-                                    id="${item.id}"
-                                    elementId="menu_${item.controller ?: controllerName}_${item.action}"
-                                    class="menu-${item.action}">
-                                <g:if test="${icon}"><i class="${icon}"></i></g:if>
-                                ${message(code: (item.title ?: (item.controller ?: controllerName) + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                            </g:link>
-                        </li>
-                    </nav:eachItem>
-
-                </ul>
-            </div>
-
-        </nav:ifHasItems>
-
-        <g:pageProperty name="page.sidebar"/>
-
+    <div id="footer-wrapper">
+        <footer>
+            <div id="copyright"><g:message code="app.copyright.message" default=""/> (${TenantUtils.tenant})</div>
+        </footer>
     </div>
-
-</div>
-
-<div class="row-fluid">
-    <footer>
-
-        <div class="pull-right">&nbsp;[${TenantUtils.tenant}]</div>
-
-        <div id="copyright" class="pull-right"><g:message code="app.copyright.message" default=""/></div>
-        <!--
-        <crm:user>
-            <nav:ifHasItems group="public">
-                <ul class="nav nav-pills" id="navigation_footer">
-                <nav:eachItem group="public" var="item">
-                    <li>
-                    <g:link controller="${item.controller ?: controllerName}"
-                            action="${item.action}"
-                            id="${item.id}"
-                            title="${message(code:item.controller + '.' + item.action + '.help')}">
-                        ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                    </g:link>
-                    </li>
-                </nav:eachItem>
-                </ul>
-            </nav:ifHasItems>
-        </crm:user>
-        -->
-    </footer>
-</div>
-
 </div>
 
 <r:layoutResources/>

@@ -23,8 +23,8 @@
     notificationStyles: {
       padding: "12px 18px",
       margin: "0 9px 6px 0",
-      backgroundColor: "#23b2dd",
-      opacity: 0.8,
+      backgroundColor: "#104b61",
+      opacity: 0.75,
       color: "#ffffff",//"#f89406",
       font: "normal 13px 'Droid Sans', sans-serif",
       borderRadius: "4px",

@@ -54,12 +54,14 @@ class CrmBootstrapTagLib {
             activePath = activePath.tokenize('/')
         }
 
-        out << """
-            <ul class="nav nav-list">
-                <li class="nav-header">${menuTitle}</li>
-"""
+        def empty = true
 
-        items.eachWithIndex { item, i ->
+        items?.eachWithIndex { item, i ->
+
+            if (!crmSecurityService.isPermitted((item.controller ?: controllerName) + ':' + item.action)) {
+                return
+            }
+
             // isVisible is closure or null/false
             def isVisible = item['isVisible']
 
@@ -80,17 +82,37 @@ class CrmBootstrapTagLib {
 
                 def active = pathIsActive(item.path, activePath)
                 def title = message(code: item.controller + '.' + item.action + '.help', default: '')
-                def icon = message(code: (item.title ?: (item.controller ?: controllerName) + '.' + item.action) + '_icon', default: message(code: ('default.' + item.action) + '_icon', default: 'icon-asterisk'))
+                def icon = item.icon ?: message(code: (item.title ?: (item.controller ?: controllerName) + '.' + item.action) + '_icon', default: message(code: ('default.' + item.action) + '_icon', default: 'icon-asterisk'))
                 def label = g.message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])
-                def link = g.link(controller: item.controller ?: controllerName, action: item.action, id: id, title: title, "<i class=\"${icon}\"></i>" + label)
+                def elementId = "menu_${item.controller ?: controllerName}_${item.action}"
+                def link = g.link(controller: item.controller ?: controllerName, action: item.action, id: id, elementId: elementId, title: title, "<i class=\"${icon}\"></i> " + label)
 
+                if (empty) {
+                    out << """<div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header">${menuTitle}</li>
+"""
+                    empty = false
+                }
                 out << """<li class="${active ? 'active' : ''}">$link</li>"""
             }
         }
 
-        out << body()
+        def bodyContent = body()?.toString()?.trim()
+        if (bodyContent) {
+            if (empty) {
+                out << """<div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header">${menuTitle}</li>
+"""
+            }
+            out << bodyContent
+            empty = false
+        }
 
-        out << "</ul>"
+        if (!empty) {
+            out << "</ul></div>"
+        }
     }
 
     protected pathIsActive(itemPath, currentPath) {
@@ -106,11 +128,12 @@ class CrmBootstrapTagLib {
 
     def header = {attrs, body ->
         def args = attrs.remove('args')
+        def tag = attrs.remove('tag') ?: 'h1'
         def h1 = attrs.remove('title')
         if (h1) {
             h1 = h1.toString()
         } else {
-            throwTagError("Tag [crudHead] is missing required attribute [title]")
+            throwTagError("Tag [header] is missing required attribute [title]")
         }
         def favorite = attrs.remove('favorite')
         if (favorite) {
@@ -126,7 +149,7 @@ class CrmBootstrapTagLib {
             small = ''
         }
         out << '<header class="page-header">\n'
-        out << "<h1${renderAttributes(attrs)}>" + g.message(code: h1, default: h1, args: args) + favorite + small + '</h1>\n'
+        out << "<${tag}${renderAttributes(attrs)}>" + g.message(code: h1, default: h1, args: args) + favorite + small + "</${tag}>\n"
 
         out << body()
 
@@ -139,7 +162,7 @@ class CrmBootstrapTagLib {
         }
         def username = crmSecurityService.currentUser?.username
         def tag = grailsApplication.config.crm.tag.favorite ?: 'favorite'
-        def icon = grailsApplication.config.crm.favorite.icon ?: 'icon-star'
+        def icon = grailsApplication.config.crm.favorite.icon ?: 'icon-bookmark'
         if (userTagService.isTagged(attrs.bean, tag, username, TenantUtils.tenant)) {
             out << '<i class="' + icon + '"></i>'
         }
@@ -159,7 +182,7 @@ class CrmBootstrapTagLib {
     private String renderAttributes(Map attrs) {
         def s = new StringBuilder()
         attrs.each {key, value ->
-            if(value != null) {
+            if (value != null) {
                 s << " ${key.encodeAsURL()}=\"${value.encodeAsURL()}\""
             }
         }
@@ -168,7 +191,7 @@ class CrmBootstrapTagLib {
 
     def button = {attrs, body ->
         def props = takeAttributes(attrs, ['type', 'action', 'visual', 'class', 'icon', 'label', 'args',
-                'confirm', 'style', 'controller', 'id', 'params', 'href', 'target','permission'])
+                'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission'])
         if (props.permission && !crmSecurityService.isPermitted(props.permission)) {
             return
         }
@@ -177,8 +200,8 @@ class CrmBootstrapTagLib {
         def visual = props.visual
         def css = "btn ${visual ? 'btn-' + visual : ''} ${props['class'] ?: ''}"
         def icon = props.icon
-        def label = props.label ? g.message(code: props.label, default: props.label, encodeAs: 'HTML', args:props.args) : body()
-        def confirm = props.confirm ? g.message(code: props.confirm, default: props.confirm, encodeAs: 'HTML', args:props.args) : null
+        def label = props.label ? g.message(code: props.label, default: props.label, encodeAs: 'HTML', args: props.args) : body()
+        def confirm = props.confirm ? g.message(code: props.confirm, default: props.confirm, encodeAs: 'HTML', args: props.args) : null
         switch (type) {
             case 'button':
                 out << '<button type="submit"'
