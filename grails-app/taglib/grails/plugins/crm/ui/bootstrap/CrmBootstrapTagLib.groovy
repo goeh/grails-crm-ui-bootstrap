@@ -190,7 +190,7 @@ class CrmBootstrapTagLib {
     }
 
     def button = {attrs, body ->
-        def props = takeAttributes(attrs, ['type', 'action', 'visual', 'class', 'icon', 'label', 'args',
+        def props = takeAttributes(attrs, ['type', 'action', 'visual', 'class', 'icon', 'label', 'title', 'args',
                 'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission'])
         if (props.permission && !crmSecurityService.isPermitted(props.permission)) {
             return
@@ -200,8 +200,9 @@ class CrmBootstrapTagLib {
         def visual = props.visual
         def css = "btn ${visual ? 'btn-' + visual : ''} ${props['class'] ?: ''}"
         def icon = props.icon
-        def label = props.label ? g.message(code: props.label, default: props.label, encodeAs: 'HTML', args: props.args) : body()
-        def confirm = props.confirm ? g.message(code: props.confirm, default: props.confirm, encodeAs: 'HTML', args: props.args) : null
+        def label = props.label ? g.message(code: props.label, default: props.label, args: props.args) : body()
+        def title = props.title ? g.message(code: props.title, default: props.title, args: props.args) : null
+        def confirm = props.confirm ? g.message(code: props.confirm, default: props.confirm, args: props.args) : null
         switch (type) {
             case 'button':
                 out << '<button type="submit"'
@@ -209,6 +210,9 @@ class CrmBootstrapTagLib {
                     out << " name=\"_action_${action.encodeAsHTML()}\""
                 }
                 out << " class=\"${css.encodeAsHTML()}\""
+                if(title) {
+                    out << " title=\"${title}\""
+                }
                 if (confirm) {
                     out << " onclick=\"return confirm('$confirm')\""
                 }
@@ -233,6 +237,9 @@ class CrmBootstrapTagLib {
                 if (props.params) {
                     linkAttrs.params = props.params
                 }
+                if (title) {
+                    linkAttrs.title = title
+                }
                 out << g.link(linkAttrs + attrs, label)
                 break;
             case 'url':
@@ -243,6 +250,9 @@ class CrmBootstrapTagLib {
                 }
                 if (props.style) {
                     out << " style=\"${props.style}\""
+                }
+                if(title) {
+                    out << " title=\"${title}\""
                 }
                 if (props.target) {
                     out << " target=\"${props.target}\""
