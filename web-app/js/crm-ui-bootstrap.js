@@ -63,11 +63,16 @@ if (jQuery)( function() {
          * The following will allow remote autocompletes *without* modifying any officially released core code.
          * If others find ways to improve this, please share.
          */
-        crmAutocomplete: function(url, callback) {
+        crmAutocomplete: function(url, params, callback) {
             $(this).typeahead().on('keyup', function(ev) {
 
                 ev.stopPropagation();
                 ev.preventDefault();
+
+                if(!callback) {
+                    callback = params;
+                    params = null;
+                }
 
                 //filter out up/down, tab, enter, and escape keys
                 if ($.inArray(ev.keyCode, [40,38,9,13,27]) === -1) {
@@ -76,23 +81,29 @@ if (jQuery)( function() {
 
                     //set typeahead source to empty
                     self.data('typeahead').source = [];
+                    self.data('typeahead').values = [];
 
                     //active used so we aren't triggering duplicate keyup events
                     if (!self.data('active') && self.val().length > 0) {
 
                         self.data('active', true);
 
+                        var getParams = params;
+                        if(! getParams) {
+                            getParams = {};
+                        }
+                        getParams.q = $(this).val();
+
                         //Do data request. Insert your own API logic here.
-                        $.getJSON(url, {
-                            q: $(this).val()
-                        }, function(data) {
+                        $.getJSON(url, getParams, function(data) {
                             //set this to true when your callback executes
                             self.data('active', true);
 
-                            var arr = callback(data);
+                            var result = callback(data);
 
                             //set your results into the typehead's source
-                            self.data('typeahead').source = arr;
+                            self.data('typeahead').source = result.labels;
+                            self.data('typeahead').values = result.values;
 
                             //trigger keyup on the typeahead to make it search
                             self.trigger('keyup');

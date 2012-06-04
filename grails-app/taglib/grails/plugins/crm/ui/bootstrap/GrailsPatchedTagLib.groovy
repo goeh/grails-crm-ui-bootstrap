@@ -18,15 +18,17 @@
 package grails.plugins.crm.ui.bootstrap
 
 import org.springframework.web.servlet.support.RequestContextUtils as RCU
+import org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib
 
 /**
  *
  */
-class GrailsPatchedTagLib {
+class GrailsPatchedTagLib extends ApplicationTagLib {
 
-    static namespace = "g"
+    //static namespace = "g"
 
     def grailsApplication
+    def selectionService
 
     /**
      * Creates next/previous links to support pagination for the current controller.<br/>
@@ -68,7 +70,6 @@ class GrailsPatchedTagLib {
 
         if (!offset) offset = (attrs.int('offset') ?: 0)
         if (!max) max = (attrs.int('max') ?: 10)
-
         if(total <= max) {
             return
         }
@@ -80,6 +81,11 @@ class GrailsPatchedTagLib {
         if (params[prefix + 'id']) linkParams[prefix + 'id'] = params[prefix + 'id']
         if (params[prefix + 'sort']) linkParams[prefix + 'sort'] = params[prefix + 'sort']
         if (params[prefix + 'order']) linkParams[prefix + 'order'] = params[prefix + 'order']
+
+        def uri = pageScope.selection
+        if(uri) {
+            linkParams.putAll(selectionService.createSelectionParameters(uri))
+        }
 
         def linkTagAttrs = [action: action]
         if (attrs.controller) {
@@ -178,7 +184,7 @@ class GrailsPatchedTagLib {
             }
             writer << '</li>'
         } else {
-            linkParams[prefix + 'offset'] = offset + max
+            //linkParams[prefix + 'offset'] = offset + max
             writer << '<li class="next disabled">'
             writer << '<span>'
             writer << (attrs.next ? attrs.next : messageSource.getMessage('paginate.next', null, messageSource.getMessage('default.paginate.next', null, 'Next', locale), locale))
@@ -268,6 +274,11 @@ class GrailsPatchedTagLib {
             linkParams[prefix + 'order'] = defaultOrder
         }
 
+        def uri = pageScope.selection
+        if(uri) {
+            linkParams.putAll(selectionService.createSelectionParameters(uri))
+        }
+
         // determine column title
         def title = attrs.remove("title")
         def titleKey = attrs.remove("titleKey")
@@ -349,7 +360,6 @@ class GrailsPatchedTagLib {
         if (!attrs.optionValue) {
             attrs.optionValue = 'name'
         }
-println "from=${attrs.from}"
         // use generic select
         out << select(attrs)
     }

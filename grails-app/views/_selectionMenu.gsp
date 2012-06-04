@@ -14,10 +14,10 @@
                     class="pull-right delete" style="display:none;"
                     onclick="return confirm('${message(code:'default.button.delete.confirm.message', default:'Are you sure?')}')">
                 <i class="icon-trash"></i></g:link>
-            <g:link controller="${location ?: controllerName}" action="${action ?: 'list'}"
-                    id="${select.encode(selection:sel.uri)}">
-                <i class="icon-search"></i> ${sel.name.encodeAsHTML()}
-            </g:link>
+            <select:link controller="${location ?: controllerName}" action="${action ?: 'list'}" selection="${sel.uri}">
+                <i class="icon-search"></i>
+                ${sel.name.encodeAsHTML()}
+            </select:link>
         </li>
     </select:listRepo>
 </crm:submenu>

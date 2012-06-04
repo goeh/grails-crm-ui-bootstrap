@@ -28,6 +28,8 @@ class CrmBootstrapTagLib {
     def crmSecurityService
     def navigationService
     def userTagService
+    def selectionService
+    def selectionRepositoryService
 
     def menu = {attrs, body ->
         out << '<ul class="navigation" id="navigation_main">'
@@ -41,7 +43,7 @@ class CrmBootstrapTagLib {
         def entityName = g.message(code: controllerName + '.label', default: GrailsNameUtils.getNaturalName(controllerName))
         def menuTitle = attrs.title ?: entityName
         def items = navigationService.byGroup[attrs.group ?: controllerName]
-        def delegate = new MenuVisibilityDelegate(grailsApplication, pageScope, [
+        def dlg = new MenuVisibilityDelegate(grailsApplication, pageScope, [
                 session: session,
                 request: request,
                 controllerName: controllerName,
@@ -67,7 +69,7 @@ class CrmBootstrapTagLib {
 
             if (isVisible instanceof Closure) {
                 isVisible = isVisible.clone()
-                isVisible.delegate = delegate
+                isVisible.delegate = dlg
                 isVisible.resolveStrategy = Closure.DELEGATE_FIRST
             }
 
@@ -75,7 +77,7 @@ class CrmBootstrapTagLib {
                 def id = item.id
                 if (id instanceof Closure) {
                     id = id.clone();
-                    id.delegate = delegate
+                    id.delegate = dlg
                     id.resolveStrategy = Closure.DELEGATE_FIRST
                     id = id.call()
                 }
@@ -125,6 +127,67 @@ class CrmBootstrapTagLib {
         }
     }
 
+    def selectionMenu = {attrs, body ->
+        def username = crmSecurityService.currentUser?.username
+        if (!username) {
+            return
+        }
+        def location = attrs.location ?: controllerName
+        def savedSelections = selectionRepositoryService.list(location, username, TenantUtils.tenant)
+        def selection = attrs.selection ?: pageScope.selection
+        def splitButton = (savedSelections || selection)
+        def bodyContent = body()?.trim()
+        if (!splitButton && !bodyContent) {
+            return
+        }
+
+        out << """<div class="btn-group">"""
+
+        if (bodyContent) {
+            out << bodyContent
+        }
+
+        if (splitButton) {
+            out << """<button class="btn ${attrs.visual ? 'btn-' + attrs.visual : ''} dropdown-toggle" data-toggle="dropdown">"""
+            if (!bodyContent) {
+                out << """<i class="icon-search ${attrs.visual ? 'icon-white' : ''}"></i> Sökningar """
+            }
+            out << """<span class="caret"></span></button>\n"""
+            out << """<ul class="dropdown-menu">\n"""
+            if (selection) {
+                out << """<li>${link(action: "index", "Ny sökning")}</li>"""
+                if(crmSecurityService.isPermitted("selectionRepository:create")) {
+                    out << """<li>${
+                        link(controller: 'selectionRepository', action: 'create',
+                                params: [location: location,
+                                        username: username,
+                                        tenant: TenantUtils.tenant,
+                                        uri: selectionService.encodeSelection(selection),
+                                        referer: attrs.referer ?: request.forwardURI],
+                                message(code: 'selectionRepository.save.label', default: 'Save')
+                        )}
+                    </li>"""
+                }
+            }
+            if (savedSelections) {
+                out << """<li><a href="#">Hantera sparade sökningar</a></li>"""
+                out << """<li class="divider"></li>"""
+                for (sel in savedSelections) {
+                    out << "<li>"
+                    out << select.link(controller: location, action: attrs.action ?: 'list', selection: sel.uri, sel.name)
+                    out << "</li>"
+                }
+            }
+            out << "</ul>"
+        }
+        out << "</div>"
+        /*
+            <g:link controller="selectionRepository" action="delete" id="${sel.id}"
+                    class="pull-right delete" style="display:none;"
+                    onclick="return confirm('${message(code:'default.button.delete.confirm.message', default:'Are you sure?')}')">
+                <i class="icon-trash"></i></g:link>
+          */
+    }
 
     def header = {attrs, body ->
         def args = attrs.remove('args')
@@ -191,7 +254,7 @@ class CrmBootstrapTagLib {
 
     def button = {attrs, body ->
         def props = takeAttributes(attrs, ['type', 'action', 'visual', 'class', 'icon', 'label', 'title', 'args',
-                'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission'])
+                'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission','group'])
         if (props.permission && !crmSecurityService.isPermitted(props.permission)) {
             return
         }
@@ -203,6 +266,9 @@ class CrmBootstrapTagLib {
         def label = props.label ? g.message(code: props.label, default: props.label, args: props.args) : body()
         def title = props.title ? g.message(code: props.title, default: props.title, args: props.args) : null
         def confirm = props.confirm ? g.message(code: props.confirm, default: props.confirm, args: props.args) : null
+        if(props.group) {
+            out << "<div class=\"btn-group\">\n"
+        }
         switch (type) {
             case 'button':
                 out << '<button type="submit"'
@@ -210,7 +276,7 @@ class CrmBootstrapTagLib {
                     out << " name=\"_action_${action.encodeAsHTML()}\""
                 }
                 out << " class=\"${css.encodeAsHTML()}\""
-                if(title) {
+                if (title) {
                     out << " title=\"${title}\""
                 }
                 if (confirm) {
@@ -251,7 +317,7 @@ class CrmBootstrapTagLib {
                 if (props.style) {
                     out << " style=\"${props.style}\""
                 }
-                if(title) {
+                if (title) {
                     out << " title=\"${title}\""
                 }
                 if (props.target) {
@@ -264,6 +330,9 @@ class CrmBootstrapTagLib {
                 out << label
                 out << "</a>\n"
                 break
+        }
+        if(props.group) {
+            out << "</div>\n"
         }
     }
 

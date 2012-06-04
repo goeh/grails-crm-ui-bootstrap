@@ -14,6 +14,13 @@
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="114x114"
           href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
+    <% if(flash.alert) { %>
+    <r:script>
+        $(document).ready(function() {
+            $('#alertModal').modal({show:true});
+        });
+    </r:script>
+    <% } %>
     <r:layoutResources/>
     <g:layoutHead/>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -106,44 +113,48 @@
                 </nav:ifHasItems>
 
                 <crm:user>
-                    <g:set var="fullname" value="${name}"/>
-                    <crm:tenant>
-                        <ul class="nav pull-right">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    ${fullname.encodeAsHTML()}<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                ${name.encodeAsHTML()}<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
 
-                                    <li><g:link controller="auth" action="logout"
-                                                title="${fullname.encodeAsHTML()}">
-                                        <g:message code="auth.logout.label"
-                                                   default="Logout"/>
-                                    </g:link>
-                                    </li>
-                                    <li><g:link controller="settings" action="index">
-                                        ${message(code: 'user.settings.label', default: 'Settings')}
-                                    </g:link>
-                                    </li>
+                                <li><g:link controller="auth" action="logout"
+                                            title="${name.encodeAsHTML()}">
+                                    <g:message code="auth.logout.label"
+                                               default="Logout"/>
+                                </g:link>
+                                </li>
+                                <li><g:link controller="settings" action="index">
+                                    ${message(code: 'user.settings.label', default: 'Settings')}
+                                </g:link>
+                                </li>
 
-                                    <li class="divider"></li>
+                                <li class="divider"></li>
 
-                                    <li><g:link controller="account" action="index"><g:message
-                                            code="account.index.label"
-                                            default="Accounts"/></g:link>
+                                <li><g:link controller="crmInvitation" action="index">
+                                    ${message(code: 'crmInvitation.index.label', default: 'Invitations')}
+                                </g:link>
+                                </li>
+
+                                <li class="divider"></li>
+
+                                <li><g:link controller="account" action="index"><g:message
+                                        code="account.index.label"
+                                        default="Accounts"/></g:link>
+                                </li>
+                                <crm:eachAccount var="a">
+                                    <li>
+                                        <g:link controller="account" action="activate"
+                                                id="${a.id}">${a.name.encodeAsHTML()}
+                                            <g:if test="${a.current}"><i class="icon-arrow-left"></i></g:if>
+                                        </g:link>
                                     </li>
-                                    <crm:eachAccount var="a">
-                                        <li>
-                                            <g:link controller="account" action="activate"
-                                                    id="${a.id}">${a.name.encodeAsHTML()}
-                                                <g:if test="${a.current}"><i class="icon-arrow-left"></i></g:if>
-                                            </g:link>
-                                        </li>
-                                    </crm:eachAccount>
-                                </ul>
-                            </li>
-                        </ul>
-                    </crm:tenant>
+                                </crm:eachAccount>
+                            </ul>
+                        </li>
+                    </ul>
 
                     <ul class="nav pull-right" id="navigation_favorites">
                         <li class="dropdown">
@@ -278,6 +289,27 @@
         </footer>
     </div>
 </div>
+
+<g:if test="${flash.alert}">
+<div class="modal hide fade" id="alertModal">
+
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+
+        <h3><g:message code="alert.title" default="Message"/></h3>
+    </div>
+
+    <div class="modal-body">
+        <p>${flash.alert.encodeAsHTML()}</p>
+    </div>
+
+    <div class="modal-footer">
+        <a href="#" class="btn btn-primary" data-dismiss="modal"><g:message
+                code="default.button.ok.label" default="Ok"/></a>
+    </div>
+
+</div>
+</g:if>
 
 <r:layoutResources/>
 

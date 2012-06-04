@@ -56,7 +56,7 @@
             </tbody>
             <tfoot class="paginateButtons">
             <tr>
-                <td colspan="5"><bootstrap:paginate total="${totalCount}"/></td>
+                <td colspan="5"><g:paginate total="${totalCount}"/></td>
             </tr>
             </tfoot>
         </table>

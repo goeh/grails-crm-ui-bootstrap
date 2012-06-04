@@ -17,16 +17,17 @@
 modules = {
     crmUiBootstrap {
         dependsOn 'jquery'
-        //dependsOn 'bootstrap'
 
         resource url: 'js/modernizr.js', disposition: 'head'
-        resource url: 'js/crm-ui-bootstrap.js', disposition: 'head'
-        resource url: 'js/bootstrap-datepicker.js', disposition: 'head'
-        resource url:'js/jquery.dropdownPlain.js', disposition: 'head'
-        resource url:'js/jquery.hoverIntent-min.js', disposition: 'head'
-        resource url:'js/jquery.notifier.js', disposition: 'head'
+        resource url: 'js/crm-ui-bootstrap.js'
+        resource url: 'js/bootstrap-datepicker.js'
+        resource url:'js/jquery.dropdownPlain.js'
+        resource url:'js/jquery.hoverIntent-min.js'
+        resource url:'js/jquery.notifier.js'
+    }
 
-        //resource url: 'js/growl.js', disposition: 'head'
-        //resource url: 'css/growl.css'
+    autocomplete {
+        dependsOn 'jquery'
+        resource url:'js/jquery.autocomplete.js'
     }
 }
