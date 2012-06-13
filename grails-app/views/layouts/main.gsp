@@ -1,4 +1,4 @@
-<%@ page import="grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils; org.codehaus.groovy.grails.web.servlet.GrailsApplicationAttributes" %>
+<%@ page import="grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,11 +112,13 @@
                     </ul>
                 </nav:ifHasItems>
 
+                <crm:tenant><g:set var="tenantName" value="${name}"/></crm:tenant>
+
                 <crm:user>
                     <ul class="nav pull-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                ${name.encodeAsHTML()}<b class="caret"></b>
+                                ${(tenantName ?: name).encodeAsHTML()}<b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
 
@@ -263,6 +265,7 @@
                                          placeholder="${message(code:'auth.login.password', default:'Password...')}"
                                          class="search-query span2"/>
                         <button id="login-button" class="btn-dummy" type="submit">&raquo;</button>
+
                     </g:form>
 
                 </crm:noUser>
