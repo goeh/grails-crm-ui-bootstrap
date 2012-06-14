@@ -19,6 +19,7 @@ package grails.plugins.crm.ui.bootstrap
 import grails.plugins.crm.core.DateUtils
 import grails.util.GrailsNameUtils
 import grails.plugins.crm.core.TenantUtils
+import org.springframework.web.servlet.support.RequestContextUtils as RCU
 
 class CrmBootstrapTagLib {
 
@@ -454,9 +455,9 @@ class CrmBootstrapTagLib {
             writer << '</li>'
         } else {
             writer << '<li class="prev disabled">'
-            writer << '<span>'
+            writer << '<a href="#">'
             writer << (attrs.prev ?: messageSource.getMessage('paginate.prev', null, messageSource.getMessage('default.paginate.prev', null, 'Previous', locale), locale))
-            writer << '</span>'
+            writer << '</a>'
             writer << '</li>'
         }
         // display steps when steps are enabled and laststep is not firststep
@@ -485,13 +486,13 @@ class CrmBootstrapTagLib {
                 writer << '<li>'
                 writer << g.link(linkTagAttrs.clone()) {firststep.toString()}
                 writer << '</li>'
-                writer << '<li class="disabled"><span>...</span></li>'
+                writer << '<li class="disabled"><a href=\"#\">...</a></li>'
             }
 
             // display paginate steps
             (beginstep..endstep).each { i ->
                 if (currentstep == i) {
-                    writer << "<li class=\"active\"><span>${i}</span></li>"
+                    writer << "<li class=\"active\"><a href=\"#\">${i}</a></li>"
                 }
                 else {
                     linkParams[prefix + 'offset'] = (i - 1) * max
@@ -503,7 +504,7 @@ class CrmBootstrapTagLib {
 
             // display laststep link when endstep is not laststep
             if (endstep < laststep) {
-                writer << '<li class="disabled"><span>...</span></li>'
+                writer << '<li class="disabled"><a href=\"#\">...</a></li>'
                 linkParams[prefix + 'offset'] = (laststep - 1) * max
                 writer << '<li>'
                 writer << g.link(linkTagAttrs.clone()) { laststep.toString() }
@@ -523,9 +524,9 @@ class CrmBootstrapTagLib {
         } else {
             //linkParams[prefix + 'offset'] = offset + max
             writer << '<li class="next disabled">'
-            writer << '<span>'
+            writer << '<a href="#">'
             writer << (attrs.next ? attrs.next : messageSource.getMessage('paginate.next', null, messageSource.getMessage('default.paginate.next', null, 'Next', locale), locale))
-            writer << '</span>'
+            writer << '</a>'
             writer << '</li>'
         }
 
