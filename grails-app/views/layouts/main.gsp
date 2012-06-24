@@ -252,13 +252,13 @@
                     <g:form controller="auth" action="signIn" name="loginBar"
                             class="form-inline navbar-search pull-right visible-desktop">
                         <input type="hidden" name="targetUri" value="${targetUri}"/>
-                        <!--[if lt IE 9]>
+                        <!--[if lt IE 10]>
                         <label class="inline"><g:message code="auth.login.username"/></label>
                         <![endif]-->
                         <g:textField id="login-username" name="username" value="${username}"
                                      placeholder="${message(code:'auth.login.username', default:'Username...')}"
                                      class="search-query span2"/>
-                        <!--[if lt IE 9]>
+                        <!--[if lt IE 10]>
                         <label class="inline"><g:message code="auth.login.password"/></label>
                         <![endif]-->
                         <g:passwordField id="login-password" name="password" value=""
