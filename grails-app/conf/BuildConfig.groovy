@@ -46,6 +46,7 @@ grails.project.dependency.resolution = {
         runtime ":navigation:1.3.2"
         runtime ":famfamfam:latest.integration"
         runtime ":content-buffer:latest.integration"
+        runtime ":user-tag:latest.integration"
         //runtime ":domain-tracker:latest.integration"
         //runtime ":cache-headers:latest.integration"
         //runtime ":springcache:latest.integration"

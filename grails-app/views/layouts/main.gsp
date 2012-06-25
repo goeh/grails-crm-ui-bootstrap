@@ -43,7 +43,9 @@
 
     <div id="head-wrapper" class="clearfix">
         <div class="span5">
-            <div id="brand" class="visible-desktop"></div>
+            <div id="brand" class="visible-desktop">
+                <crm:logo size="large" default="/images/grails_logo.png"/>
+            </div>
         </div>
 
         <div class="span7">
@@ -146,14 +148,14 @@
                                         code="account.index.label"
                                         default="Accounts"/></g:link>
                                 </li>
-                                <crm:eachAccount var="a">
+                                <crm:eachTenant var="a">
                                     <li>
                                         <g:link controller="account" action="activate"
                                                 id="${a.id}">${a.name.encodeAsHTML()}
                                             <g:if test="${a.current}"><i class="icon-arrow-left"></i></g:if>
                                         </g:link>
                                     </li>
-                                </crm:eachAccount>
+                                </crm:eachTenant>
                             </ul>
                         </li>
                     </ul>
