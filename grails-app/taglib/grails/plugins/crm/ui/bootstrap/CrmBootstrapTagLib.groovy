@@ -36,6 +36,9 @@ class CrmBootstrapTagLib {
         // TODO support different logo sizes
         def tenant = crmSecurityService.getCurrentTenant()
         def image = tenant?.options?.logo ?: attrs.default
+        if(!image) {
+            image = grailsApplication.config.crm.theme.logo.default ?: "/images/grails_logo.png"
+        }
         out << g.link(mapping:"home", g.img(uri: image))
     }
 

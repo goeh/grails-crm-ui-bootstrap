@@ -44,7 +44,7 @@
     <div id="head-wrapper" class="clearfix">
         <div class="span5">
             <div id="brand" class="visible-desktop">
-                <crm:logo size="large" default="/images/grails_logo.png"/>
+                <crm:logo size="large"/>
             </div>
         </div>
 
