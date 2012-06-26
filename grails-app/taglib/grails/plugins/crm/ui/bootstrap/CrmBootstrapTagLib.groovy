@@ -35,7 +35,7 @@ class CrmBootstrapTagLib {
     def logo = {attrs, body->
         // TODO support different logo sizes
         def tenant = crmSecurityService.getCurrentTenant()
-        def image = tenant.options?.logo ?: attrs.default
+        def image = tenant?.options?.logo ?: attrs.default
         out << g.link(mapping:"home", g.img(uri: image))
     }
 
