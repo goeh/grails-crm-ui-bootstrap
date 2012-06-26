@@ -30,8 +30,4 @@ modules = {
         dependsOn 'jquery'
         resource url:'js/jquery.autocomplete.js'
     }
-    application {
-
-    }
-    style {}
 }
