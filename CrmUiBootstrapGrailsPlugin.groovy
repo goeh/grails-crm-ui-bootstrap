@@ -18,7 +18,7 @@
 class CrmUiBootstrapGrailsPlugin {
     def groupId = "grails.crm"
     // the plugin version
-    def version = "0.9.4.3"
+    def version = "0.9.4.6"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.0 > *"
     // the other plugins this plugin depends on
@@ -34,7 +34,6 @@ class CrmUiBootstrapGrailsPlugin {
     def description = '''\
 This plugin provides Twitter Bootstrap layout for Grails CRM.
 '''
-
     def documentation = "https://github.com/goeh/grails-crm-ui-bootstrap"
     def license = "APACHE"
     def organization = [ name: "Technipelago AB", url: "http://www.technipelago.se/" ]

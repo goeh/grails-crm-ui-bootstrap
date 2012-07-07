@@ -266,7 +266,7 @@
                         <g:passwordField id="login-password" name="password" value=""
                                          placeholder="${message(code:'auth.login.password', default:'Password...')}"
                                          class="search-query span2"/>
-                        <button id="login-button" class="btn-dummy" type="submit">&raquo;</button>
+                        <button id="login-button" type="submit" class="btn btn-mini btn-info" style="margin-top: 2px;">&raquo;</button>
 
                     </g:form>
 
