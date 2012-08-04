@@ -20,6 +20,7 @@ import grails.plugins.crm.core.DateUtils
 import grails.util.GrailsNameUtils
 import grails.plugins.crm.core.TenantUtils
 import org.springframework.web.servlet.support.RequestContextUtils as RCU
+import org.ocpsoft.pretty.time.PrettyTime
 
 class CrmBootstrapTagLib {
 
@@ -373,6 +374,7 @@ class CrmBootstrapTagLib {
                 break
         }
         if (props.group) {
+            out << body()
             out << "</div>\n"
         }
     }
@@ -644,6 +646,13 @@ class CrmBootstrapTagLib {
         writer << ">${link(action: action, params: linkParams) { title }}</th>"
     }
 
+    def alert = { attrs, body ->
+		out << '<div class="alert alert-block ' << attrs.class.tokenize().join(" ") << '">'
+		out << '<a class="close" data-dismiss="alert">&times;</a>'
+		out << '<p>' << body() << '</p>'
+		out << '</div>'
+	}
+
     /**
      * Renders a select input element populated with all available famfamfam icons (http://www.famfamfam.com/).
      */
@@ -733,7 +742,7 @@ class CrmBootstrapTagLib {
         if (!(date instanceof Date)) {
             date = DateUtils.parseDate(date.toString())
         }
-        def locale = attrs.locale ?: request.locale
+        def locale = attrs.locale ? new Locale(attrs.locale) : RCU.getLocale(request)
         def cal = Calendar.getInstance(locale)
         cal.setTime(date)
         out << cal.get(Calendar.WEEK_OF_YEAR).toString()
@@ -755,6 +764,19 @@ class CrmBootstrapTagLib {
         if (count) {
             out << " ($count)"
         }
+    }
+
+    /**
+     * Renders a date using the prettytime library.
+     * @attr date REQUIRED the date to pretty print
+     */
+    def prettyTime = {attrs->
+        def date = attrs.date
+        if (!date) {
+            throwTagError("Tag [prettyTime] is missing required attribute [date]")
+        }
+        def locale = attrs.locale ? new Locale(attrs.locale) : RCU.getLocale(request)
+        out << new PrettyTime(locale).format(date)
     }
 }
 

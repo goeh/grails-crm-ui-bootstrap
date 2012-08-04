@@ -28,7 +28,7 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
-        // runtime 'mysql:mysql-connector-java:5.1.5'
+        compile "org.ocpsoft.prettytime:prettytime:1.0.8.Final"
     }
 
     plugins {
@@ -42,7 +42,7 @@ grails.project.dependency.resolution = {
             excludes 'resources'
         }
         runtime ":resources:1.1.6"
-        runtime ":fields:latest.integration"
+        runtime ":fields:1.2"
         runtime ":navigation:1.3.2"
         runtime ":famfamfam:latest.integration"
         runtime ":content-buffer:latest.integration"
