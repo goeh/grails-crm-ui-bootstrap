@@ -42,6 +42,20 @@
 <body class="${controllerName ?: 'home'}-body">
 
     <div id="head-wrapper" class="clearfix">
+
+        <recent:hasHistory>
+            <div class="recent-list clearfix">
+                <recent:each var="m" max="5" reverse="true">
+                    <g:link class="${m.controller}"
+                            controller="${m.controller}" action="${m.action}" id="${m.id}"
+                            title="Klicka här för att visa ${m}">
+                        <i class="${m.icon ?: ''}"></i>
+                        <span>&raquo; <g:decorate include="abbreviate" max="20">${m}</g:decorate></span>
+                    </g:link>
+                </recent:each>
+            </div>
+        </recent:hasHistory>
+
         <div class="span5">
             <div id="brand" class="visible-desktop">
                 <crm:logo size="large"/>

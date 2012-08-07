@@ -47,6 +47,7 @@ grails.project.dependency.resolution = {
         runtime ":famfamfam:latest.integration"
         runtime ":content-buffer:latest.integration"
         runtime ":user-tag:latest.integration"
+        runtime ":recent-domain:latest.integration"
 
         test ":codenarc:latest.integration"
 
