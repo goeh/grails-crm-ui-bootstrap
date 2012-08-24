@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <r:require modules="application, style, crmUiBootstrap"/>
+    <r:require modules="crm, application"/>
 
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
@@ -44,7 +44,7 @@
     <div id="head-wrapper" class="clearfix">
 
         <recent:hasHistory>
-            <div class="recent-list clearfix">
+            <div class="recent-list pull-right clearfix">
                 <recent:each var="m" max="5" reverse="true">
                     <g:link class="${m.controller}"
                             controller="${m.controller}" action="${m.action}" id="${m.id}"
@@ -149,23 +149,25 @@
                                 </g:link>
                                 </li>
 
+                                <nav:eachItem group="settings" var="item">
+                                    <crm:hasPermission permission="${item.controller + ':' + item.action}">
+                                        <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
+                                            <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
+                                                    id="${item.id}"
+                                                    title="${message(code:item.controller + '.' + item.action + '.help')}">
+                                                ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
+                                            </g:link>
+                                        </li>
+                                    </crm:hasPermission>
+                                </nav:eachItem>
+
                                 <li class="divider"></li>
 
-                                <li><g:link controller="crmInvitation" action="index">
-                                    ${message(code: 'crmInvitation.index.label', default: 'Invitations')}
-                                </g:link>
-                                </li>
+                                <li><g:link mapping="crm-account"><g:message code="crmAccount.index.label" default="Accounts"/></g:link></li>
 
-                                <li class="divider"></li>
-
-                                <li><g:link controller="account" action="index"><g:message
-                                        code="account.index.label"
-                                        default="Accounts"/></g:link>
-                                </li>
                                 <crm:eachTenant var="a">
                                     <li>
-                                        <g:link controller="account" action="activate"
-                                                id="${a.id}">${a.name.encodeAsHTML()}
+                                        <g:link mapping="crm-account-activate" id="${a.id}">${a.name.encodeAsHTML()}
                                             <g:if test="${a.current}"><i class="icon-arrow-left"></i></g:if>
                                         </g:link>
                                     </li>

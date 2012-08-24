@@ -15,12 +15,23 @@
  *  under the License.
  */
 modules = {
-    crmUiBootstrap {
+    /*bootstrap {
         dependsOn 'jquery'
+        resource url: 'js/bootstrap.js', disposition: 'head'
+        resource url: 'css/bootstrap.css'
+    }*/
+
+    crm {
+        dependsOn 'jquery, bootstrap'
+
+        resource url: 'js/crm-ui-bootstrap.js'
+        resource url: 'css/crm-ui-bootstrap.css'
 
         resource url: 'js/modernizr.js', disposition: 'head'
-        resource url: 'js/crm-ui-bootstrap.js'
+
         resource url: 'js/bootstrap-datepicker.js'
+        resource url: 'css/datepicker.css'
+
         resource url:'js/jquery.dropdownPlain.js'
         resource url:'js/jquery.hoverIntent-min.js'
         resource url:'js/jquery.notifier.js'
