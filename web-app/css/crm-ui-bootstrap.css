@@ -1,0 +1,100 @@
+@-webkit-keyframes pulse {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 0.2;
+    }
+    60% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.pulse {
+    -webkit-animation-name: pulse;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+.center {
+    text-align:center;
+}
+
+th.money,
+td.money {
+    text-align:right;
+}
+a.toggle {
+  text-decoration: none;
+}
+tr.current td,
+tr.current td a {
+  font-weight: bold;
+}
+
+#login-button,
+#logout-button {
+  margin-top: 2px;
+  opacity: 0.5;
+  padding-bottom: 5px;
+  margin-left: 10px;
+}
+
+.recent-list {
+  float: right;
+  margin-top: 3px;
+}
+.recent-list a {
+  color: #999;
+  margin-right: 9px;
+}
+.recent-list i {
+    opacity:0.4;
+}
+
+.acInput {
+	width: 200px;
+}
+.acResults {
+	padding: 0px;
+	border: 1px solid #999;
+	background-color: white;
+	overflow: hidden;
+}
+
+.acResults ul {
+	margin: 0px;
+	padding: 0px;
+	list-style-position: outside;
+	list-style: none;
+}
+
+.acResults ul li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: pointer;
+	display: block;
+	overflow: hidden;
+}
+
+.acLoading {
+	background : url('../images/spinner.gif') right center no-repeat;
+}
+
+.acSelect {
+	background-color: #00abd9;
+	color: black;
+}
+
+.tab-content {
+    overflow: visible; /* See https://github.com/twitter/bootstrap/issues/3519 */
+}

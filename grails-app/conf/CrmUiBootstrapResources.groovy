@@ -41,4 +41,15 @@ modules = {
         dependsOn 'jquery'
         resource url:'js/jquery.autocomplete.js'
     }
+
+    select2 {
+        dependsOn 'jquery'
+        resource url: 'js/select2.js'
+        resource url: 'css/select2.css'
+    }
+
+    dateformat {
+        resource url: 'js/rfc3339date.js'
+        resource url: 'js/date.format.js'
+    }
 }

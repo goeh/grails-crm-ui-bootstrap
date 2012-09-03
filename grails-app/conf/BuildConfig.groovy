@@ -35,6 +35,7 @@ grails.project.dependency.resolution = {
 
         compile "grails.crm:crm-core:latest.integration"
 
+        runtime ":twitter-bootstrap:2.1.0.1"
         runtime ":jquery:1.8.0"
         runtime ":fields:1.3"
         runtime ":navigation:1.3.2"

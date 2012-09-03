@@ -33,14 +33,14 @@ class CrmBootstrapTagLib {
     def selectionService
     def selectionRepositoryService
 
-    def logo = {attrs, body->
+    def logo = {attrs, body ->
         // TODO support different logo sizes
         def tenant = crmSecurityService?.currentTenant
         def image = tenant?.options?.logo ?: attrs.default
-        if(!image) {
+        if (!image) {
             image = grailsApplication.config.crm.theme.logo.default ?: "/images/grails_logo.png"
         }
-        out << g.link(mapping:"home", g.img(uri: image))
+        out << g.link(mapping: "home", g.img(uri: image))
     }
 
     /**
@@ -142,8 +142,9 @@ class CrmBootstrapTagLib {
         if (!username) {
             return
         }
+        def tenant = TenantUtils.tenant
         def location = attrs.location ?: controllerName
-        def savedSelections = selectionRepositoryService.list(location, username, TenantUtils.tenant)
+        def savedSelections = selectionRepositoryService.list(location, username, tenant)
         def selection = attrs.selection ?: pageScope.selection
         def splitButton = (savedSelections || selection)
         def bodyContent = body()?.trim()
@@ -167,21 +168,31 @@ class CrmBootstrapTagLib {
             if (selection) {
                 out << """<li>${link(action: "index", "Ny sökning")}</li>"""
                 if (crmSecurityService.isPermitted("selectionRepository:create")) {
-                    out << """<li>${
-                        link(controller: 'selectionRepository', action: 'create',
-                                params: [location: location,
-                                        username: username,
-                                        tenant: TenantUtils.tenant,
-                                        uri: selectionService.encodeSelection(selection),
-                                        referer: attrs.referer ?: request.forwardURI],
-                                message(code: 'selectionRepository.save.label', default: 'Save')
-                        )
-                    }
-                    </li>"""
+                    out << "<li>"
+                    out << link(controller: 'selectionRepository', action: 'create',
+                            params: [location: location,
+                                    username: username,
+                                    tenant: tenant,
+                                    uri: selectionService.encodeSelection(selection),
+                                    referer: attrs.referer ?: request.forwardURI],
+                            message(code: 'selectionRepository.save.label', default: 'Save')
+                    )
+                    out << "</li>"
                 }
             }
             if (savedSelections) {
-                out << """<li><a href="#">Hantera sparade sökningar</a></li>"""
+                if (crmSecurityService.isPermitted("selectionRepository:list")) {
+                    out << "<li>"
+                    out << link(controller: "selectionRepository", action: "list",
+                            params: [location: location,
+                                    username: username,
+                                    tenant: tenant,
+                                    referer: attrs.referer ?: request.forwardURI],
+                            message(code: 'selectionRepository.list.label', default: 'Manage Selections')
+                    )
+
+                    out << "</li>"
+                }
                 out << """<li class="divider"></li>"""
                 for (sel in savedSelections) {
                     out << "<li>"
@@ -647,11 +658,11 @@ class CrmBootstrapTagLib {
     }
 
     def alert = { attrs, body ->
-		out << '<div class="alert alert-block ' << attrs.class.tokenize().join(" ") << '">'
-		out << '<a class="close" data-dismiss="alert">&times;</a>'
-		out << '<p>' << body() << '</p>'
-		out << '</div>'
-	}
+        out << '<div class="alert alert-block ' << attrs.class.tokenize().join(" ") << '">'
+        out << '<a class="close" data-dismiss="alert">&times;</a>'
+        out << '<p>' << body() << '</p>'
+        out << '</div>'
+    }
 
     /**
      * Renders a select input element populated with all available famfamfam icons (http://www.famfamfam.com/).
@@ -770,7 +781,7 @@ class CrmBootstrapTagLib {
      * Renders a date using the prettytime library.
      * @attr date REQUIRED the date to pretty print
      */
-    def prettyTime = {attrs->
+    def prettyTime = {attrs ->
         def date = attrs.date
         if (!date) {
             throwTagError("Tag [prettyTime] is missing required attribute [date]")

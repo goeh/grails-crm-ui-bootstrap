@@ -42,65 +42,58 @@
 <body class="${controllerName ?: 'home'}-body">
 
     <div id="head-wrapper" class="clearfix">
-
-        <recent:hasHistory>
-            <div class="recent-list pull-right clearfix">
-                <recent:each var="m" max="5" reverse="true">
-                    <g:link class="${m.controller}"
-                            controller="${m.controller}" action="${m.action}" id="${m.id}"
-                            title="Klicka här för att visa ${m}">
-                        <i class="${m.icon ?: ''}"></i>
-                        <span>&raquo; <g:decorate include="abbreviate" max="20">${m}</g:decorate></span>
-                    </g:link>
-                </recent:each>
+        <div class="row-fluid">
+            <div class="span4">
+                <div id="brand" class="visible-desktop">
+                    <crm:logo size="large"/>
+                </div>
             </div>
-        </recent:hasHistory>
-
-        <div class="span5">
-            <div id="brand" class="visible-desktop">
-                <crm:logo size="large"/>
-            </div>
-        </div>
-
-        <div class="span7">
-
-            <g:pageProperty name="page.top"/>
-
-            <div id="global-message" class="hide">
-                <g:if test="${flash.info || flash.message}">
-                    <div class="alert-info">
-                        ${flash.info ?: flash.message}
+            <div class="span8">
+                <recent:hasHistory>
+                    <div class="recent-list pull-right clearfix">
+                        <recent:each var="m" max="5" reverse="true">
+                            <g:link class="${m.controller}"
+                                    controller="${m.controller}" action="${m.action}" id="${m.id}"
+                                    title="${message(code:m.controller + '.click.to.show.label', default:'Click to show {0}', args:[m])}">
+                                <span class="${m.tags ? 'label' : ''}">
+                                    <i class="${m.icon ?: 'icon-chevron-right'}"></i>
+                                    <g:decorate include="abbreviate" max="20">${m}</g:decorate>
+                                </span>
+                            </g:link>
+                        </recent:each>
                     </div>
-                </g:if>
-                <g:if test="${flash.success}">
-                    <div class="alert-success">
-                        ${flash.success}
-                    </div>
-                </g:if>
-                <g:if test="${flash.warning}">
-                    <div class="alert-warning">
-                        ${flash.warning}
-                    </div>
-                </g:if>
-                <g:if test="${flash.error}">
-                    <div class="alert-error">
-                        ${flash.error}
-                    </div>
-                </g:if>
+                </recent:hasHistory>
+
+                <g:pageProperty name="page.top"/>
+                <div id="global-message" class="hide">
+                    <g:if test="${flash.info || flash.message}">
+                        <div class="alert-info">
+                            ${flash.info ?: flash.message}
+                        </div>
+                    </g:if>
+                    <g:if test="${flash.success}">
+                        <div class="alert-success">
+                            ${flash.success}
+                        </div>
+                    </g:if>
+                    <g:if test="${flash.warning}">
+                        <div class="alert-warning">
+                            ${flash.warning}
+                        </div>
+                    </g:if>
+                    <g:if test="${flash.error}">
+                        <div class="alert-error">
+                            ${flash.error}
+                        </div>
+                    </g:if>
+                </div>
             </div>
         </div>
     </div>
 
 <div class="navbar" id="navigation-wrapper">
-    <div class="navbar-inner" style="min-height:40px;">
+    <div class="navbar-inner">
         <div class="container">
-
-            <crm:user>
-                <g:link class="btn btn-navbar pull-right hidden-desktop" style="padding: 5px 12px 2px 12px;"
-                        mapping="logout">
-                    <span class="icon-off icon-white" style="height:13px;line-height:13px;"></span>
-                </g:link>
-            </crm:user>
 
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <span class="icon-bar"></span>
@@ -131,6 +124,11 @@
                 <crm:tenant><g:set var="tenantName" value="${name}"/></crm:tenant>
 
                 <crm:user>
+
+                    <form class="navbar-search pull-right" action="${createLink(mapping:'logout')}">
+                        <button id="logout-button" class="btn btn-small"><i class="icon-off"></i></button>
+                    </form>
+
                     <ul class="nav pull-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -239,18 +237,28 @@
                             </li>
                         </ul>
                     </nav:ifHasItems>
-<%--
-                    <crm:hasPermission permission="search:global">
-                        <g:form class="navbar-search pull-right">
-                            <g:textField name="q" class="search-query span2" placeholder="Sök"/>
-                            <button id="search-button" class="btn-dummy" type="submit">&raquo;</button>
-                        </g:form>
-                    </crm:hasPermission>
---%>
+
                 </crm:user>
 
 
                 <crm:noUser>
+
+                    <g:form controller="auth" action="signIn" name="loginBar" class="navbar-search pull-right">
+                        <input type="hidden" name="targetUri" value="${targetUri}"/>
+                        <!--[if lt IE 10]>
+                        <label class="inline"><g:message code="auth.login.username"/></label>
+                        <![endif]-->
+                        <g:textField id="login-username" name="username" value="${username}"
+                                     placeholder="${message(code:'auth.login.username', default:'Username...')}"
+                                     class="search-query span2"/>
+                        <!--[if lt IE 10]>
+                        <label class="inline"><g:message code="auth.login.password"/></label>
+                        <![endif]-->
+                        <g:passwordField id="login-password" name="password" value=""
+                                         placeholder="${message(code:'auth.login.password', default:'Password...')}"
+                                         class="search-query span2"/>
+                        <button id="login-button" type="submit" class="btn btn-small" style="margin-top:0px;"><i class="icon-play"></i></button>
+                    </g:form>
 
                     <nav:ifHasItems group="public">
                         <ul class="nav" id="navigation_public">
@@ -266,25 +274,6 @@
                             </nav:eachItem>
                         </ul>
                     </nav:ifHasItems>
-
-                    <g:form controller="auth" action="signIn" name="loginBar"
-                            class="form-inline navbar-search pull-right visible-desktop">
-                        <input type="hidden" name="targetUri" value="${targetUri}"/>
-                        <!--[if lt IE 10]>
-                        <label class="inline"><g:message code="auth.login.username"/></label>
-                        <![endif]-->
-                        <g:textField id="login-username" name="username" value="${username}"
-                                     placeholder="${message(code:'auth.login.username', default:'Username...')}"
-                                     class="search-query span2"/>
-                        <!--[if lt IE 10]>
-                        <label class="inline"><g:message code="auth.login.password"/></label>
-                        <![endif]-->
-                        <g:passwordField id="login-password" name="password" value=""
-                                         placeholder="${message(code:'auth.login.password', default:'Password...')}"
-                                         class="search-query span2"/>
-                        <button id="login-button" type="submit" class="btn btn-mini btn-info" style="margin-top: 2px;">&raquo;</button>
-
-                    </g:form>
 
                 </crm:noUser>
 
