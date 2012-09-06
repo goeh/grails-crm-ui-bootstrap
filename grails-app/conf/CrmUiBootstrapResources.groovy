@@ -15,22 +15,18 @@
  *  under the License.
  */
 modules = {
-    /*bootstrap {
-        dependsOn 'jquery'
-        resource url: 'js/bootstrap.js', disposition: 'head'
-        resource url: 'css/bootstrap.css'
-    }*/
-
     crm {
         dependsOn 'jquery, bootstrap'
 
+        resource id:'crm-ui-bootstrap-less', url:[plugin: 'crm-ui-bootstrap', dir: 'less', file: 'crm-ui-bootstrap.less'], attrs:[rel: "stylesheet/less", type:'css', order:100], disposition: 'head'
+        //resource url: 'css/crm-ui-bootstrap.css'
         resource url: 'js/crm-ui-bootstrap.js'
-        resource url: 'css/crm-ui-bootstrap.css'
 
         resource url: 'js/modernizr.js', disposition: 'head'
 
         resource url: 'js/bootstrap-datepicker.js'
-        resource url: 'css/datepicker.css'
+        resource id:'datepicker-less', url:[plugin: 'crm-ui-bootstrap', dir: 'less', file: 'datepicker.less'], attrs:[rel: "stylesheet/less", type:'css', order: 190], disposition: 'head'
+        //resource url: 'css/datepicker.css'
 
         resource url:'js/jquery.dropdownPlain.js'
         resource url:'js/jquery.hoverIntent-min.js'

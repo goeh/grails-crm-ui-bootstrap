@@ -21,6 +21,10 @@ log4j = {
            'net.sf.ehcache.hibernate'
 
     warn   'org.mortbay.log'
+
+    debug 'grails.app.resourceMappers.LessResourceMapper'
 }
 grails.views.default.codec="none" // none, html, base64
 grails.views.gsp.encoding="UTF-8"
+
+grails.resources.less.default.importPath = ['less']

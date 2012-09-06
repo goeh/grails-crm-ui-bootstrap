@@ -1,0 +1,174 @@
+@import "variables.less";
+@import "mixins.less";
+
+html {
+  height: 100%;
+  background-color: @bodyBackground;
+}
+body {
+  #gradient > .vertical(#fff, @bodyBackground);
+}
+#brand {
+  padding: 10px;
+}
+#head-wrapper {
+  background-color: @white;
+}
+#content-wrapper {
+  padding: 19px;
+  background-color: @white;
+  .border-radius(6px);
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    40% {
+        opacity: 0.2;
+    }
+    60% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 0.4;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.pulse {
+    -webkit-animation-name: pulse;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+.center {
+    text-align:center;
+}
+
+th.money,
+td.money {
+    text-align:right;
+}
+a.toggle {
+  text-decoration: none;
+}
+tr.current td,
+tr.current td a {
+  font-weight: bold;
+}
+
+#login-button,
+#logout-button {
+  margin-top: 2px;
+  opacity: 0.5;
+  padding-bottom: 5px;
+  margin-left: 10px;
+}
+
+.navbar-inner {
+  .border-radius(0);
+}
+.navbar .nav > li > a {
+  line-height: 19px;
+  font-size: 15px;
+}
+.navbar-search {
+  .search-query {
+    color: @grayLighter;
+    background-color: lighten(@navbarBackground, 5%);
+    border: 1px solid lighten(@navbarBackground, 10%);
+    &:-moz-placeholder {
+      color: @navbarLinkColor;
+    }
+    &::-webkit-input-placeholder {
+      color: @navbarLinkColor;
+    }
+    &::-ms-input-placeholder {
+      color: @navbarLinkColor;
+    }
+    &:focus,
+    &.focused {
+      color: @navbarLinkColorHover;
+      background-color: lighten(@navbarBackground, 10%);
+      border: 1px solid lighten(@navbarBackground, 15%);
+    }
+  }
+}
+#global-message .alert {
+  margin-top: 9px;
+  margin-bottom: 1px;
+}
+.page-header {
+  padding-bottom: 10px;
+  margin: 10px 0 18px 0;
+  border-bottom: 1px solid @grayLighter;
+}
+footer {
+    //border-top: 1px solid @grayLighter;
+    padding: 20px;
+    color: @white;
+}
+#copyright {
+  text-align: center;
+  font-size: 11px;
+}
+
+li.select2-no-results {
+  display: none;
+}
+
+.recent-list {
+  float: right;
+  margin-top: 3px;
+}
+.recent-list a {
+  color: @grayLight;
+  margin-right: 9px;
+}
+.recent-list i {
+    opacity:0.4;
+}
+
+.acInput {
+	width: 200px;
+}
+.acResults {
+	padding: 0px;
+	border: 1px solid @grayLight;
+	background-color: white;
+	overflow: hidden;
+}
+
+.acResults ul {
+	margin: 0px;
+	padding: 0px;
+	list-style-position: outside;
+	list-style: none;
+}
+
+.acResults ul li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: pointer;
+	display: block;
+	overflow: hidden;
+}
+
+.acLoading {
+	background : url('../images/spinner.gif') right center no-repeat;
+}
+
+.acSelect {
+	background-color: @navbarBackground;
+	color: black;
+}
+
+.tab-content {
+    overflow: visible; /* See https://github.com/twitter/bootstrap/issues/3519 */
+}

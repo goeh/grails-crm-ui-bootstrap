@@ -22,10 +22,11 @@ class CrmUiBootstrapGrailsPlugin {
     def grailsVersion = "2.0 > *"
     // the other plugins this plugin depends on
     def dependsOn = [:]
-    def loadBefore = ['twitter-bootstrap']
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-        "grails-app/views/error.gsp"
+            "grails-app/views/error.gsp",
+            "grails-app/conf/ApplicationResources.groovy",
+            "web-app/less/custom-bootstrap.less"
     ]
     def title = "Twitter Bootstrap UI for Grails CRM"
     def author = "Goran Ehrsson"
@@ -35,7 +36,7 @@ This plugin provides Twitter Bootstrap layout for Grails CRM.
 '''
     def documentation = "https://github.com/goeh/grails-crm-ui-bootstrap"
     def license = "APACHE"
-    def organization = [ name: "Technipelago AB", url: "http://www.technipelago.se/" ]
-    def issueManagement = [ system: "github", url: "https://github.com/goeh/grails-crm-ui-bootstrap/issues" ]
-    def scm = [ url: "https://github.com/goeh/grails-crm-ui-bootstrap" ]
+    def organization = [name: "Technipelago AB", url: "http://www.technipelago.se/"]
+    def issueManagement = [system: "github", url: "https://github.com/goeh/grails-crm-ui-bootstrap/issues"]
+    def scm = [url: "https://github.com/goeh/grails-crm-ui-bootstrap"]
 }

@@ -32,8 +32,10 @@ grails.project.dependency.resolution = {
         test(":codenarc:latest.integration") { export = false }
 
         compile ":resources:1.2-RC1"
+        runtime ":less-resources:1.3.0.3"
 
         compile "grails.crm:crm-core:latest.integration"
+        compile ":recent-domain:latest.integration"
 
         runtime ":twitter-bootstrap:2.1.0.1"
         runtime ":jquery:1.8.0"
@@ -42,6 +44,5 @@ grails.project.dependency.resolution = {
         runtime ":famfamfam:latest.integration"
         runtime ":content-buffer:latest.integration"
         runtime ":user-tag:latest.integration"
-        runtime ":recent-domain:latest.integration"
     }
 }

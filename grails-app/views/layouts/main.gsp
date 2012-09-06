@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <r:require modules="crm, application"/>
+    <r:require modules="application, crm"/>
 
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
@@ -101,7 +101,7 @@
                 <span class="icon-bar"></span>
             </a>
 
-            <span class="hidden-desktop"><g:message code="app.name" default="Grails CRM"/></span>
+            <span class="hidden-desktop pull-left"><g:message code="app.name" default="Grails CRM"/></span>
 
             <div class="nav-collapse">
 
@@ -246,13 +246,13 @@
                     <g:form controller="auth" action="signIn" name="loginBar" class="navbar-search pull-right">
                         <input type="hidden" name="targetUri" value="${targetUri}"/>
                         <!--[if lt IE 10]>
-                        <label class="inline"><g:message code="auth.login.username"/></label>
+                        <span><g:message code="auth.login.username"/></span>
                         <![endif]-->
                         <g:textField id="login-username" name="username" value="${username}"
                                      placeholder="${message(code:'auth.login.username', default:'Username...')}"
                                      class="search-query span2"/>
                         <!--[if lt IE 10]>
-                        <label class="inline"><g:message code="auth.login.password"/></label>
+                        <span><g:message code="auth.login.password"/></span>
                         <![endif]-->
                         <g:passwordField id="login-password" name="password" value=""
                                          placeholder="${message(code:'auth.login.password', default:'Password...')}"
