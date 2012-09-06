@@ -81,8 +81,8 @@ tr.current td a {
 .navbar-search {
   .search-query {
     color: @grayLighter;
-    background-color: lighten(@navbarBackground, 5%);
-    border: 1px solid lighten(@navbarBackground, 10%);
+    background-color: darken(@navbarBackground, 5%);
+    border: 1px solid lighten(@navbarBackground, 5%);
     &:-moz-placeholder {
       color: @navbarLinkColor;
     }
@@ -94,9 +94,9 @@ tr.current td a {
     }
     &:focus,
     &.focused {
-      color: @navbarLinkColorHover;
-      background-color: lighten(@navbarBackground, 10%);
-      border: 1px solid lighten(@navbarBackground, 15%);
+      color: @navbarLinkColor;
+      background-color: lighten(@navbarBackground, 5%);
+      border: 1px solid lighten(@navbarBackground, 10%);
     }
   }
 }
