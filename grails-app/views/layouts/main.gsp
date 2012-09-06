@@ -65,6 +65,7 @@
                 </recent:hasHistory>
 
                 <g:pageProperty name="page.top"/>
+
                 <div id="global-message" class="hide">
                     <g:if test="${flash.info || flash.message}">
                         <div class="alert-info">
@@ -95,15 +96,15 @@
     <div class="navbar-inner">
         <div class="container">
 
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-            </a>
+            </button>
 
-            <span class="hidden-desktop pull-left"><g:message code="app.name" default="Grails CRM"/></span>
+            <g:link mapping="home" class="brand"><g:message code="app.name" default="Grails CRM"/></g:link>
 
-            <div class="nav-collapse">
+            <div class="nav-collapse collapse">
 
                 <nav:ifHasItems group="main">
                     <ul class="nav" id="navigation_main">

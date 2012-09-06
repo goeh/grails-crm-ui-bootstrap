@@ -30,15 +30,19 @@
 
                 <div class="row-fluid">
                     <div class="span7">
-                        <f:field property="name" input-autofocus="" input-class="span4"/>
-                        <f:field property="description" input-rows="5" input-class="span4"/>
+                        <div class="row-fluid">
+                            <f:field property="name" input-autofocus="" input-class="span10"/>
+                            <f:field property="description" input-rows="5" input-class="span10"/>
+                        </div>
                     </div>
 
                     <div class="span5">
-                        <f:field property="orderIndex"/>
-                        <f:field property="icon"/>
-                        <f:field property="param"/>
-                        <f:field property="enabled"/>
+                        <div class="row-fluid">
+                            <f:field property="orderIndex" input-class="input-small"/>
+                            <f:field property="icon"/>
+                            <f:field property="param"/>
+                            <f:field property="enabled"/>
+                        </div>
                     </div>
                 </div>
 
