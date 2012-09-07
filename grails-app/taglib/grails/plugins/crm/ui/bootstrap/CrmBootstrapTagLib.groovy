@@ -789,6 +789,30 @@ class CrmBootstrapTagLib {
         def locale = attrs.locale ? new Locale(attrs.locale) : RCU.getLocale(request)
         out << new PrettyTime(locale).format(date)
     }
+
+    /**
+     * Renders "Printed on September 7 10:09:12 by Liza User"
+     * The i18n message code is <controllerName>.print.header and it takes two arguments [date, user].
+     * If tag body is empty the message is wrapped in a right floated <span> with a gray 13px font.
+     * Tag body can use 'date', 'user' and 'text' for custom rendering.
+     *
+     * @attr date the date to render (default is current time)
+     * @attr datetype the 'type' attribute used by g:formatDate (default is datetime)
+     * @attr datestyle the 'style' attribute used by g:formatDate (default is LONG)
+     */
+    def printedBy = {attrs, body ->
+        def datetype = attrs.datetype ?: 'datetime'
+        def datestyle = attrs.datestyle ?: 'LONG'
+        def dateInstance = attrs.date ?: new Date()
+        def user = crmSecurityService.currentUser?.name ?: 'unknown'
+        def date = formatDate(type: datetype, style: datestyle, date: dateInstance)
+        def text = message(code: (controllerName ?: 'default') + '.print.header', default: 'Printed {0} by {1}', args: [date, user])
+        def content = body([user: user, date: date, text: text])?.trim()
+        if (!content) {
+            content = """<span style="float:right;font-size:13px;color:#999999;">""" + text + "</span>"
+        }
+        out << content
+    }
 }
 
 class MenuVisibilityDelegate {
