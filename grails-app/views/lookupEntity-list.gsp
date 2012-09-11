@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: beanName + '.label', default: beanName)}"/>
-    <title><g:message code="${beanName}.list.label" args="[entityName]"/></title>
+    <title><g:message code="${beanName}.list.title" args="[entityName]"/></title>
     <r:script>
         $(document).ready(function() {
             $(".table-striped tr").hover(function() {
@@ -26,12 +26,14 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <g:sortableColumn property="name" title="${message(code: beanName + '.name.label', default: 'Name')}"/>
-                <g:sortableColumn property="orderIndex"
-                                  title="${message(code: beanName + '.orderIndex.label', default: 'Sort')}"/>
-                <g:sortableColumn property="param"
-                                  title="${message(code: beanName + '.param.label', default: 'Parameter')}"/>
-                <g:sortableColumn property="icon" title="${message(code: beanName + '.icon.label', default: 'Icon')}"/>
+                <crm:sortableColumn property="name"
+                                    title="${message(code: beanName + '.name.label', default: 'Name')}"/>
+                <crm:sortableColumn property="orderIndex"
+                                    title="${message(code: beanName + '.orderIndex.label', default: 'Sort')}"/>
+                <crm:sortableColumn property="param"
+                                    title="${message(code: beanName + '.param.label', default: 'Parameter')}"/>
+                <crm:sortableColumn property="icon"
+                                    title="${message(code: beanName + '.icon.label', default: 'Icon')}"/>
                 <th></th>
             </tr>
             </thead>
@@ -56,7 +58,7 @@
             </tbody>
             <tfoot class="paginateButtons">
             <tr>
-                <td colspan="5"><g:paginate total="${totalCount}"/></td>
+                <td colspan="5"><crm:paginate total="${totalCount}"/></td>
             </tr>
             </tfoot>
         </table>

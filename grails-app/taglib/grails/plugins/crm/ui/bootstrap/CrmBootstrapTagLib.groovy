@@ -174,7 +174,7 @@ class CrmBootstrapTagLib {
                                     username: username,
                                     tenant: tenant,
                                     uri: selectionService.encodeSelection(selection),
-                                    referer: attrs.referer ?: request.forwardURI],
+                                    referer: attrs.referer ?: ''],
                             message(code: 'selectionRepository.save.label', default: 'Save')
                     )
                     out << "</li>"
@@ -188,7 +188,7 @@ class CrmBootstrapTagLib {
                                     username: username,
                                     tenant: tenant,
                                     referer: attrs.referer ?: request.forwardURI],
-                            message(code: 'selectionRepository.list.label', default: 'Manage Selections')
+                            message(code: 'selectionRepository.list.label', default: 'Manage Selections', args:['Selection'])
                     )
 
                     out << "</li>"

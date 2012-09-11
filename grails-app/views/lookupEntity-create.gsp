@@ -3,7 +3,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main"/>
     <g:set var="entityName" value="${message(code: beanName + '.label', default: beanName)}"/>
-    <title><g:message code="${beanName}.create.label" args="[entityName]"/></title>
+    <title><g:message code="${beanName}.create.title" args="[entityName]"/></title>
 </head>
 
 <body>
@@ -50,7 +50,7 @@
 
             <div class="form-actions">
                 <crm:button visual="primary" action="create" icon="icon-ok icon-white"
-                            label="${beanName}.button.save.label"/>
+                            label="${beanName}.button.save.label" accesskey="s"/>
             </div>
 
         </g:form>

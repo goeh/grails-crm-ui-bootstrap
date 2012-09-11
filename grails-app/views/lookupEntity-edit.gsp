@@ -53,7 +53,7 @@
 
             <div class="form-actions">
                 <crm:button visual="primary" action="edit" icon="icon-ok icon-white"
-                            label="${beanName}.button.save.label"/>
+                            label="${beanName}.button.save.label" accesskey="s"/>
                 <crm:button visual="danger" action="delete" icon="icon-trash icon-white"
                             label="${beanName}.button.delete.label" formnovalidate=""
                             confirm="${beanName}.button.delete.confirm.message" permission="${beanName}:delete"/>

@@ -11,9 +11,13 @@
     <r:require modules="application, crm"/>
 
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
-    <link rel="apple-touch-icon" sizes="114x114"
-          href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
+
+    <link rel="apple-touch-icon" sizes="228x228" href="${resource(dir: 'images', file: 'apple-touch-icon-228.png')}">
+    <link rel="apple-touch-icon" sizes="144x144" href="${resource(dir: 'images', file: 'apple-touch-icon-144.png')}">
+    <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-114.png')}">
+    <link rel="apple-touch-icon" sizes="72x72" href="${resource(dir: 'images', file: 'apple-touch-icon-72.png')}">
+    <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon-57.png')}">
+
     <% if(flash.alert) { %>
     <r:script>
         $(document).ready(function() {
@@ -102,7 +106,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <g:link mapping="home" class="brand"><g:message code="app.name" default="Grails CRM"/></g:link>
+            <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name" default="Grails CRM"/></g:link>
 
             <div class="nav-collapse collapse">
 
