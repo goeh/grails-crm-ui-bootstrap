@@ -1,42 +1,150 @@
-<!DOCTYPE html>
+<%@ page import="grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title><g:layoutTitle default="${meta(name: 'app.name')}"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <r:require modules="bootstrap"/>
+    <r:require modules="application, crm"/>
 
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
-    <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
-    <link rel="apple-touch-icon" sizes="114x114"
-          href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
+
+    <link rel="apple-touch-icon" sizes="228x228" href="${resource(dir: 'images', file: 'apple-touch-icon-228.png')}">
+    <link rel="apple-touch-icon" sizes="144x144" href="${resource(dir: 'images', file: 'apple-touch-icon-144.png')}">
+    <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-114.png')}">
+    <link rel="apple-touch-icon" sizes="72x72" href="${resource(dir: 'images', file: 'apple-touch-icon-72.png')}">
+    <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon-57.png')}">
+
+    <% if (flash.alert) { %>
+    <r:script>
+        $(document).ready(function () {
+            $('#alertModal').modal({show:true});
+        });
+    </r:script>
+    <% } %>
     <r:layoutResources/>
     <g:layoutHead/>
-
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
 </head>
 
 <body class="${controllerName ?: 'home'}-body">
 
+<div id="head-wrapper" class="clearfix">
+    <div class="row-fluid">
+        <div class="span4">
+            <div id="brand" class="visible-desktop">
+                <crm:logo size="large"/>
+            </div>
+        </div>
+
+        <div class="span8">
+
+            <g:pageProperty name="page.top"/>
+
+            <div id="global-message" class="hide">
+                <g:if test="${flash.info || flash.message}">
+                    <div class="alert-info">
+                        ${flash.info ?: flash.message}
+                    </div>
+                </g:if>
+                <g:if test="${flash.success}">
+                    <div class="alert-success">
+                        ${flash.success}
+                    </div>
+                </g:if>
+                <g:if test="${flash.warning}">
+                    <div class="alert-warning">
+                        ${flash.warning}
+                    </div>
+                </g:if>
+                <g:if test="${flash.error}">
+                    <div class="alert-error">
+                        ${flash.error}
+                    </div>
+                </g:if>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="navbar" id="navigation-wrapper">
+    <div class="navbar-inner">
+        <div class="container">
+
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name"
+                                                                           default="Grails CRM"/></g:link>
+
+            <div class="nav-collapse collapse">
+                <crm:user>
+                    <ul class="nav pull-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                ${name.encodeAsHTML()}<b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li><g:link controller="auth" action="logout"
+                                            title="${name.encodeAsHTML()}">
+                                    <g:message code="auth.logout.label"
+                                               default="Logout"/>
+                                </g:link>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </crm:user>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container-fluid">
 
-    <g:if test="${flash.info || flash.message}">
-        <p class="alert alert-info" style="margin: 10px;" role="status">${flash.info ?: flash.message}</p>
-    </g:if>
-    <g:if test="${flash.success}">
-        <p class="alert alert-success" style="margin: 10px;" role="status">${flash.success}</p>
-    </g:if>
-    <g:if test="${flash.error}">
-        <p class="alert alert-error" style="margin: 10px;" role="status">${flash.error}</p>
-    </g:if>
+    <g:pageProperty name="page.hero"/>
 
-    <g:layoutBody/>
+    <div class="controller-${controllerName ?: 'home'} action-${actionName ?: 'index'}" id="content-wrapper"
+         role="main">
+        <g:layoutBody/>
+    </div>
+
+    <div id="footer-wrapper">
+        <footer>
+            <div id="copyright"><g:message code="app.copyright.message" default=""/> (${TenantUtils.tenant})</div>
+        </footer>
+    </div>
 </div>
+
+<g:if test="${flash.alert}">
+    <div class="modal hide fade" id="alertModal">
+
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+
+            <h3><g:message code="alert.title" default="Message"/></h3>
+        </div>
+
+        <div class="modal-body">
+            <p>${flash.alert.encodeAsHTML()}</p>
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" class="btn btn-primary" data-dismiss="modal"><g:message
+                    code="default.button.ok.label" default="Ok"/></a>
+        </div>
+
+    </div>
+</g:if>
 
 <r:layoutResources/>
 

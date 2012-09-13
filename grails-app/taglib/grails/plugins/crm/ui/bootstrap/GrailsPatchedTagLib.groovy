@@ -25,8 +25,6 @@ import org.codehaus.groovy.grails.plugins.web.taglib.ApplicationTagLib
  */
 class GrailsPatchedTagLib extends ApplicationTagLib {
 
-    def grailsApplication
-
     /**
      * A helper tag for creating locale selects.<br/>
      *

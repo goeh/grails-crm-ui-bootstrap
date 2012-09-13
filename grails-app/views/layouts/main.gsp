@@ -1,5 +1,4 @@
-<%@ page import="grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %>
-<!DOCTYPE html>
+<%@ page import="grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -30,16 +29,6 @@
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
           <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-          <style type="text/css">
-            button.btn-dummy {
-              visibility: visible;
-              height: 22px;
-              padding: 1px 3px 6px 3px;
-              color: white;
-              background-color: transparent;
-              border: none;
-            }
-          </style>
     <![endif]-->
 </head>
 
@@ -129,11 +118,11 @@
                 <crm:tenant><g:set var="tenantName" value="${name}"/></crm:tenant>
 
                 <crm:user>
-
+<%--
                     <form class="navbar-search pull-right" action="${createLink(mapping:'logout')}">
                         <button id="logout-button" class="btn btn-small"><i class="icon-off"></i></button>
                     </form>
-
+--%>
                     <ul class="nav pull-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
