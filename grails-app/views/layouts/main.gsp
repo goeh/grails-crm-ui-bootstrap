@@ -1,4 +1,4 @@
-<%@ page import="grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %><!DOCTYPE html>
+<%@ page import="org.apache.commons.lang.StringUtils; grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -17,13 +17,25 @@
     <link rel="apple-touch-icon" sizes="72x72" href="${resource(dir: 'images', file: 'apple-touch-icon-72.png')}">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon-57.png')}">
 
-    <% if(flash.alert) { %>
     <r:script>
         $(document).ready(function() {
+            $("#navigation_notifications .notification-delete a").click(function(ev) {
+                var item = $(this).closest(".notification-item");
+                $.post("${createLink(controller:'crmNotification', action:'delete')}", {id:item.data('crm-id')}, function(data) {
+                    item.remove();
+                    var count = data.count;
+                    if(count > 0) {
+                        $("#notifictions-unread-count").text(count);
+                    } else {
+                        $("#navigation_notifications").remove();
+                    }
+                });
+            });
+<% if(flash.alert) { %>
             $('#alertModal').modal({show:true});
+<% } %>
         });
     </r:script>
-    <% } %>
     <r:layoutResources/>
     <g:layoutHead/>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -231,6 +243,39 @@
                             </li>
                         </ul>
                     </nav:ifHasItems>
+
+                    <crm:hasUnreadNotifications username="${username}" tenant="${TenantUtils.tenant}">
+                        <ul class="nav pull-right" id="navigation_notifications" role="menu">
+                            <li class="dropdown">
+                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="badge badge-important" id="notifictions-unread-count">${count}</span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <crm:eachNotification username="${username}" tenant="${TenantUtils.tenant}" var="n">
+                                        <li class="dropdown-submenu notification-item" data-crm-id="${n.id}">
+                                            <a href="javascript:void(0);" tabindex="-1">${n.dateCreated.format('d MMM HH:mm')} - ${StringUtils.abbreviate(n.subject, 30)}</a>
+                                            <ul class="dropdown-menu">
+                                                <g:each in="${n.payload?.links}" var="l">
+                                                    <li>
+                                                        <g:link controller="${l.controller ?: controllerName}" action="${l.action ?: ''}" title="${l.title ?: ''}">
+                                                            <i class="${l.icon ?: 'icon-chevron-right'}"></i>
+                                                            ${l.label}
+                                                        </g:link>
+                                                    </li>
+                                                </g:each>
+                                                <li class="notification-delete">
+                                                    <a href="javascript:void(0);">
+                                                        <i class="icon-trash"></i>
+                                                        <g:message code="crmNotification.button.delete.label" default="Delete"/>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </crm:eachNotification>
+                                </ul>
+                            </li>
+                        </ul>
+                    </crm:hasUnreadNotifications>
 
                 </crm:user>
 
