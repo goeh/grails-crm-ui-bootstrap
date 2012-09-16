@@ -58,6 +58,10 @@ if (jQuery)( function() {
             });
         },
 
+        renumberInputNames: function() {
+            renumberTableInput($(this));
+        },
+
         /* Charles Lawrence - Feb 16, 2012. Free to use and modify. Please attribute back to @geuis if you find this useful
          * Twitter Bootstrap Typeahead doesn't support remote data querying. This is an expected feature in the future. In the meantime, others have submitted patches to the core bootstrap component that allow it.
          * The following will allow remote autocompletes *without* modifying any officially released core code.
@@ -133,9 +137,12 @@ function renumberTableInput(table) {
     $('tbody tr', table).each(function(row) {
         $(':input', $(this)).each(function(col) {
             var input = $(this);
-            var name = input.attr('name').replace(rx, "[" + row + "]\$1");
-            input.attr('id', name);
-            input.attr('name', name);
+            var name = input.attr('name')
+            if(name) {
+                name = name.replace(rx, "[" + row + "]\$1");
+                input.attr('id', name);
+                input.attr('name', name);
+            }
             lastIndex = row;
         });
     });
