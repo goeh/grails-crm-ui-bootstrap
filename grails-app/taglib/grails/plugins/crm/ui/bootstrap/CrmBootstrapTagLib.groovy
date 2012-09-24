@@ -144,7 +144,7 @@ class CrmBootstrapTagLib {
         }
         def tenant = TenantUtils.tenant
         def location = attrs.location ?: controllerName
-        def savedSelections = selectionRepositoryService.list(location, username, tenant)
+        def savedSelections = selectionRepositoryService?.list(location, username, tenant)
         def selection = attrs.selection ?: pageScope.selection
         def splitButton = (savedSelections || selection)
         def bodyContent = body()?.trim()
@@ -670,73 +670,6 @@ class CrmBootstrapTagLib {
     def iconSelect = { attrs ->
         attrs.from = SilkIcons.icons
         out << select(attrs) // use generic select
-    }
-
-    public static final Map<String, String> mimeTypeIconMap = [
-            'text': 'page_white_text',
-            'image': 'image',
-            'video': 'film',
-            'audio': 'cd',
-            'message': 'email',
-            'application/pdf': 'page_white_acrobat',
-            'application/zip': 'page_white_compressed',
-            'application/javascript': 'page_white_code',
-            'application/json': 'page_white_code',
-            'application/rtf': 'page_white_text',
-            'application/msword': 'page_white_word',
-            'application/vnd.ms-excel': 'page_white_excel',
-            'application/vnd.ms-powerpoint': 'page_white_powerpoint',
-            'application/vnd.ms-project': 'page_white_office',
-            'application/vnd.oasis.opendocument.chart': 'chart_line',
-            'application/vnd.oasis.opendocument.chart-template': 'chart_line',
-            'application/vnd.oasis.opendocument.database': 'database',
-            'application/vnd.oasis.opendocument.formula': 'sum',
-            'application/vnd.oasis.opendocument.formula-template': 'sum',
-            'application/vnd.oasis.opendocument.graphics': 'image',
-            'application/vnd.oasis.opendocument.graphics-template': 'image',
-            'application/vnd.oasis.opendocument.image': 'image',
-            'application/vnd.oasis.opendocument.image-template': 'image',
-            'application/vnd.oasis.opendocument.presentation': 'page_white_powerpoint',
-            'application/vnd.oasis.opendocument.presentation-template': 'page_white_powerpoint',
-            'application/vnd.oasis.opendocument.spreadsheet': 'page_white_excel',
-            'application/vnd.oasis.opendocument.spreadsheet-template': 'page_white_excel',
-            'application/vnd.oasis.opendocument.text': 'page_white_text',
-            'application/vnd.oasis.opendocument.text-master': 'page_white_text',
-            'application/vnd.oasis.opendocument.text-template': 'page_white_text',
-            'application/vnd.oasis.opendocument.text-web': 'page_white_world'
-    ]
-
-    /**
-     * Renders a famfamfam icon (http://www.famfamfam.com/) depending on MIME type.
-     *
-     * @attr contentType REQUIRED the MINE content type to select icon for.
-     * @attr default the default icon if MIME type is not recognized. Default is 'page_white'.
-     */
-    def fileIcon = {attrs ->
-        def contentType = attrs.contentType
-        if (!contentType) {
-            throwTagError("Tag [fileIcon] is missing required attribute [contentType]")
-        }
-        def icon = mimeTypeIconMap[contentType]
-        if (!icon) {
-            icon = mimeTypeIconMap[contentType.split('/')[0]]
-        }
-        // Microsoft Office
-        if ((!icon) && contentType.startsWith('application/vnd.openxmlformats-officedocument')) {
-            if (contentType.contains('presentationml')) {
-                icon = 'page_white_powerpoint'
-            } else if (contentType.contains('spreadsheetml')) {
-                icon = 'page_white_excel'
-            } else if (contentType.contains('wordprocessingml')) {
-                icon = 'page_white_word'
-            } else {
-                icon = 'page_white_office'
-            }
-        }
-        if (!icon) {
-            icon = attrs.default ?: 'page_white'
-        }
-        out << fam.icon(name: icon)
     }
 
     /**

@@ -31,6 +31,15 @@
                     }
                 });
             });
+
+            $(".recent-clear").click(function(ev) {
+                ev.stopImmediatePropagation();
+                $.post($(this).attr('href'), function(data) {
+                    location.reload();
+                });
+                return false;
+            });
+
 <% if(flash.alert) { %>
             $('#alertModal').modal({show:true});
 <% } %>
@@ -57,14 +66,16 @@
                 <recent:hasHistory>
                     <div class="recent-list pull-right clearfix">
                         <recent:each var="m" max="5" reverse="true">
-                            <g:link class="${m.controller}"
-                                    controller="${m.controller}" action="${m.action}" id="${m.id}"
-                                    title="${message(code:m.controller + '.click.to.show.label', default:'Click to show {0}', args:[m])}">
-                                <span class="${m.tags ? 'label' : ''}">
-                                    <i class="${m.icon ?: 'icon-chevron-right'}"></i>
-                                    <g:decorate include="abbreviate" max="20">${m}</g:decorate>
-                                </span>
-                            </g:link>
+                            <span class="${m.tags ? 'label' : ''}">
+                                <g:link class="${m.controller}"
+                                        controller="${m.controller}" action="${m.action}" id="${m.id}"
+                                        title="${message(code:m.controller + '.click.to.show.label', default:'Click to show {0}', args:[m])}">
+                                        <i class="${m.icon ?: 'icon-chevron-right'}"></i><g:decorate include="abbreviate" max="20">${m}</g:decorate>
+                                </g:link>
+                                <g:if test="${m.tags}">
+                                    <g:link controller="recentDomain" action="clear" params="${[type: m.type, id: m.id]}" class="recent-clear">&times;</g:link>
+                                </g:if>
+                            </span>
                         </recent:each>
                     </div>
                 </recent:hasHistory>
@@ -109,7 +120,7 @@
 
             <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name" default="Grails CRM"/></g:link>
 
-            <div class="nav-collapse collapse">
+            <div class="nav-collapse">
 
                 <nav:ifHasItems group="main">
                     <ul class="nav" id="navigation_main">
