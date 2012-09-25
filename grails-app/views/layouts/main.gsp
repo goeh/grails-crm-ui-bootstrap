@@ -153,14 +153,12 @@
                             </a>
                             <ul class="dropdown-menu">
 
-                                <li><g:link controller="auth" action="logout"
-                                            title="${name.encodeAsHTML()}">
-                                    <g:message code="auth.logout.label"
-                                               default="Logout"/>
+                                <li><g:link mapping="logout" title="${message(code: 'auth.logout.title', default: 'Logout {0}', args:[name])}">
+                                    <g:message code="auth.logout.label" default="Logout" args="${[name]}"/>
                                 </g:link>
                                 </li>
-                                <li><g:link controller="settings" action="index">
-                                    ${message(code: 'user.settings.label', default: 'Settings')}
+                                <li><g:link mapping="crm-settings">
+                                    ${message(code: 'crmSettings.label', default: 'Settings', args:[name])}
                                 </g:link>
                                 </li>
 
@@ -178,7 +176,7 @@
 
                                 <li class="divider"></li>
 
-                                <li><g:link mapping="crm-account"><g:message code="crmAccount.index.label" default="Accounts"/></g:link></li>
+                                <li><g:link mapping="crm-account"><g:message code="crmTenant.index.label" default="Accounts"/></g:link></li>
 
                                 <crm:eachTenant var="a">
                                     <li>
