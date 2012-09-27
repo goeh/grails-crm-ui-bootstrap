@@ -178,6 +178,8 @@
 
                                 <li><g:link mapping="crm-account"><g:message code="crmTenant.index.label" default="Accounts"/></g:link></li>
 
+                                <li class="divider"></li>
+
                                 <crm:eachTenant var="a">
                                     <li>
                                         <g:link mapping="crm-account-activate" id="${a.id}">${a.name.encodeAsHTML()}
