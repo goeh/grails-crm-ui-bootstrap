@@ -138,8 +138,12 @@ class CrmBootstrapTagLib {
      * Renders a selection menu.
      */
     def selectionMenu = {attrs, body ->
+        def bodyContent = body()?.trim()
         def username = crmSecurityService.currentUser?.username
         if (!username) {
+            if (bodyContent) {
+                out << bodyContent
+            }
             return
         }
         def tenant = TenantUtils.tenant
@@ -147,12 +151,13 @@ class CrmBootstrapTagLib {
         def savedSelections = selectionRepositoryService?.list(location, username, tenant)
         def selection = attrs.selection ?: pageScope.selection
         def splitButton = (savedSelections || selection)
-        def bodyContent = body()?.trim()
         if (!splitButton && !bodyContent) {
             return
         }
 
-        out << """<div class="btn-group">"""
+        if (splitButton) {
+            out << """<div class="btn-group">"""
+        }
 
         if (bodyContent) {
             out << bodyContent
@@ -188,7 +193,7 @@ class CrmBootstrapTagLib {
                                     username: username,
                                     tenant: tenant,
                                     referer: attrs.referer ?: request.forwardURI],
-                            message(code: 'selectionRepository.list.label', default: 'Manage Selections', args:['Selection'])
+                            message(code: 'selectionRepository.list.label', default: 'Manage Selections', args: ['Selection'])
                     )
 
                     out << "</li>"
@@ -201,14 +206,8 @@ class CrmBootstrapTagLib {
                 }
             }
             out << "</ul>"
+            out << "</div>"
         }
-        out << "</div>"
-        /*
-            <g:link controller="selectionRepository" action="delete" id="${sel.id}"
-                    class="pull-right delete" style="display:none;"
-                    onclick="return confirm('${message(code:'default.button.delete.confirm.message', default:'Are you sure?')}')">
-                <i class="icon-trash"></i></g:link>
-          */
     }
 
     /**
