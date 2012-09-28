@@ -221,11 +221,9 @@ jQuery(document).ready(function() {
         fixPlaceholderText();
     }
 
-    if (Modernizr.touch) {
-        // Fix for dropdown menus on iPad.
-        // TODO Remove this when https://github.com/twitter/bootstrap/issues/2975 is fixed.
-        $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-    }
+    // Fix for dropdown menus on iPad.
+    // TODO Remove this when https://github.com/twitter/bootstrap/issues/2975 is fixed.
+    $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
     $("#global-message div").each(function() {
         var div = $(this);
