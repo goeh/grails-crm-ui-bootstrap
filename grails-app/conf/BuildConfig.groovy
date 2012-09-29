@@ -32,7 +32,7 @@ grails.project.dependency.resolution = {
         test(":codenarc:latest.integration") { export = false }
 
         compile ":resources:1.2.RC2"
-        runtime ":less-resources:1.3.0.3"
+        //runtime ":less-resources:1.3.0.3"
 
         compile "grails.crm:crm-core:latest.integration"
         compile ":recent-domain:latest.integration"
