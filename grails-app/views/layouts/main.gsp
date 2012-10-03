@@ -298,7 +298,7 @@
                         <!--[if lt IE 10]>
                         <span><g:message code="auth.login.username"/></span>
                         <![endif]-->
-                        <g:textField id="login-username" name="username" value="${username}"
+                        <g:textField id="login-username" name="username" value="${username}" autocapitalize="off"
                                      placeholder="${message(code:'auth.login.username', default:'Username...')}"
                                      class="search-query span2"/>
                         <!--[if lt IE 10]>

@@ -190,6 +190,22 @@ function fixPlaceholderText() {
     });
 }
 
+function updateTabCounter(selector, count) {
+    var obj = $(selector);
+    if(obj.length) {
+        var span = $(".crm-count", obj);
+        if(count > 0) {
+            if(span.length) {
+                span.text(" (" + count + ")");
+            } else {
+                obj.append('<span class="crm-count"> (' + count + ')</span>');
+            }
+        } else if(span.length) {
+            span.remove();
+        }
+    }
+}
+
 jQuery(document).ready(function() {
     $("#content :input").change(function() {
         if (!pageIsDirty) {

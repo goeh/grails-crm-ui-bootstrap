@@ -692,6 +692,24 @@ class CrmBootstrapTagLib {
     }
 
     /**
+     * Renders a tab list item.
+     *
+     * @attr id REQUIRED tab id
+     * @attr label REQUIRED tab label
+     * @attr count count indicator
+     */
+    def pluginTab = {attrs, body ->
+        out << "<li class=\"nav-${attrs.id}\">"
+        out << "<a href=\"#${attrs.id}\" data-toggle=\"tab\">"
+        out << message(code: attrs.label, default: attrs.label)
+        if (attrs.count) {
+            out << crm.countIndicator(count: attrs.count)
+        }
+        out << "</a>"
+        out << "</li>"
+    }
+
+    /**
      * Renders a number enclosed by parenthesis, but only if the number &gt; 0.
      *
      * This tag is typically used in tabbed views where a count indicator is wanted in each tab.
@@ -705,7 +723,7 @@ class CrmBootstrapTagLib {
             count = count.size()
         }
         if (count) {
-            out << " ($count)"
+            out << "<span class=\"crm-count\"> ($count)</span>"
         }
     }
 
