@@ -5,10 +5,10 @@
     <g:set var="entityName" value="${message(code: beanName + '.label', default: beanName)}"/>
     <title><g:message code="${beanName}.list.title" args="[entityName]"/></title>
     <r:script>
-        $(document).ready(function() {
-            $(".table-striped tr").hover(function() {
+        $(document).ready(function () {
+            $(".table-striped tr").hover(function () {
                 $("i", $(this)).removeClass('hidden');
-            }, function() {
+            }, function () {
                 $("i", $(this)).addClass('hidden');
             });
         });
@@ -56,12 +56,25 @@
                 </tr>
             </g:each>
             </tbody>
-            <tfoot class="paginateButtons">
-            <tr>
-                <td colspan="5"><crm:paginate total="${totalCount}"/></td>
-            </tr>
-            </tfoot>
         </table>
+
+        <crm:paginate total="${totalCount}"/>
+
+        <div class="form-actions btn-toolbar">
+            <g:form action="index">
+                <g:if test="${totalCount}">
+                    <input type="hidden" name="offset" value="${params.offset ?: ''}"/>
+                    <input type="hidden" name="max" value="${params.max ?: ''}"/>
+                    <input type="hidden" name="sort" value="${params.sort ?: ''}"/>
+                    <input type="hidden" name="order" value="${params.order ?: ''}"/>
+                    <input type="hidden" name="format" value="xls"/>
+                    <crm:button visual="primary" icon="icon-print icon-white"
+                                label="${beanName}.button.export.label"/>
+                </g:if>
+                <crm:button type="link" action="create" visual="success" icon="icon-file icon-white"
+                            label="${beanName}.button.create.label" permission="${beanName}:create" accesskey="n"/>
+            </g:form>
+        </div>
     </div>
 
     <div class="span3">

@@ -51,6 +51,7 @@
             <div class="form-actions">
                 <crm:button visual="primary" action="create" icon="icon-ok icon-white"
                             label="${beanName}.button.save.label" accesskey="s"/>
+                <crm:button type="link" action="index" icon="icon-remove" label="${beanName}.button.cancel.label"/>
             </div>
 
         </g:form>

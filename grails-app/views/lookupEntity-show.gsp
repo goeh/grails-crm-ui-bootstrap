@@ -32,6 +32,18 @@
             <dt><g:message code="${beanName}.enabled.label"/></dt>
             <dd><g:formatBoolean boolean="${bean.enabled}"/></dd>
         </dl>
+
+        <div class="form-actions btn-toolbar">
+            <crm:button type="link" visual="primary" action="edit" id="${bean.id}" icon="icon-pencil icon-white"
+                        label="${beanName}.button.edit.label"
+                        permission="${beanName}:edit" accesskey="s"/>
+
+            <crm:button type="link" group="true" action="create"
+                        visual="success"
+                        icon="icon-file icon-white"
+                        label="${beanName}.button.create.label" permission="${beanName}:create"
+                        accesskey="n"/>
+        </div>
     </div>
 
     <div class="span3">
