@@ -27,18 +27,19 @@ grails.project.dependency.resolution = {
                 ":release:2.0.4") {
             export = false
         }
-        runtime ":hibernate:$grailsVersion"
-
+        test(":hibernate:$grailsVersion") {
+            export = false
+        }
         test(":codenarc:latest.integration") { export = false }
 
         compile ":resources:1.2.RC2"
         //runtime ":less-resources:1.3.0.3"
 
         compile "grails.crm:crm-core:latest.integration"
-        compile ":recent-domain:latest.integration"
 
-        runtime "grails.crm:crm-notification:latest.integration"
         runtime ":twitter-bootstrap:latest.integration"
+        runtime ":recent-domain:latest.integration"
+        runtime "grails.crm:crm-notification:latest.integration"
         runtime ":jquery:1.8.0"
         runtime ":fields:1.3"
         runtime ":navigation:1.3.2"

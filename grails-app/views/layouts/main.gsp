@@ -255,39 +255,40 @@
                         </ul>
                     </nav:ifHasItems>
 
-                    <crm:hasUnreadNotifications username="${username}" tenant="${TenantUtils.tenant}">
-                        <ul class="nav pull-right" id="navigation_notifications" role="menu">
-                            <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                                    <span class="badge badge-important" id="notifictions-unread-count">${count}</span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <crm:eachNotification username="${username}" tenant="${TenantUtils.tenant}" var="n">
-                                        <li class="dropdown-submenu notification-item" data-crm-id="${n.id}">
-                                            <a href="javascript:void(0);" tabindex="-1">${n.dateCreated.format('d MMM HH:mm')} - ${StringUtils.abbreviate(n.subject, 30)}</a>
-                                            <ul class="dropdown-menu">
-                                                <g:each in="${n.payload?.links}" var="l">
-                                                    <li>
-                                                        <g:link controller="${l.controller ?: controllerName}" action="${l.action ?: ''}" title="${l.title ?: ''}">
-                                                            <i class="${l.icon ?: 'icon-chevron-right'}"></i>
-                                                            ${l.label}
-                                                        </g:link>
+                    <plugin:isAvailable name="crm-notification">
+                        <crm:hasUnreadNotifications username="${username}" tenant="${TenantUtils.tenant}">
+                            <ul class="nav pull-right" id="navigation_notifications" role="menu">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                                        <span class="badge badge-important" id="notifictions-unread-count">${count}</span>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <crm:eachNotification username="${username}" tenant="${TenantUtils.tenant}" var="n">
+                                            <li class="dropdown-submenu notification-item" data-crm-id="${n.id}">
+                                                <a href="javascript:void(0);" tabindex="-1">${n.dateCreated.format('d MMM HH:mm')} - ${StringUtils.abbreviate(n.subject, 30)}</a>
+                                                <ul class="dropdown-menu">
+                                                    <g:each in="${n.payload?.links}" var="l">
+                                                        <li>
+                                                            <g:link controller="${l.controller ?: controllerName}" action="${l.action ?: ''}" title="${l.title ?: ''}">
+                                                                <i class="${l.icon ?: 'icon-chevron-right'}"></i>
+                                                                ${l.label}
+                                                            </g:link>
+                                                        </li>
+                                                    </g:each>
+                                                    <li class="notification-delete">
+                                                        <a href="javascript:void(0);">
+                                                            <i class="icon-trash"></i>
+                                                            <g:message code="crmNotification.button.delete.label" default="Delete"/>
+                                                        </a>
                                                     </li>
-                                                </g:each>
-                                                <li class="notification-delete">
-                                                    <a href="javascript:void(0);">
-                                                        <i class="icon-trash"></i>
-                                                        <g:message code="crmNotification.button.delete.label" default="Delete"/>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </crm:eachNotification>
-                                </ul>
-                            </li>
-                        </ul>
-                    </crm:hasUnreadNotifications>
-
+                                                </ul>
+                                            </li>
+                                        </crm:eachNotification>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </crm:hasUnreadNotifications>
+                    </plugin:isAvailable>
                 </crm:user>
 
 
