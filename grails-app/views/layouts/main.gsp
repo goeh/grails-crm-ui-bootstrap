@@ -176,7 +176,7 @@
 
                                 <li class="divider"></li>
 
-                                <li><g:link mapping="crm-account"><g:message code="crmTenant.index.label" default="Accounts"/></g:link></li>
+                                <li><g:link mapping="crm-tenant"><g:message code="crmTenant.index.label" default="Tenants"/></g:link></li>
 
                                 <li class="divider"></li>
 
@@ -230,30 +230,32 @@
                         </li>
                     </ul>
 
-                    <nav:ifHasItems group="admin">
-                        <ul class="nav pull-right" id="navigation_admin">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <g:message code="default.admin.menu.label"/><b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
+                    <crm:tenant>
+                        <nav:ifHasItems group="admin">
+                            <ul class="nav pull-right" id="navigation_admin">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <g:message code="default.admin.menu.label"/><b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
 
-                                    <nav:eachItem group="admin" var="item">
-                                        <crm:hasPermission permission="${item.controller + ':' + item.action}">
-                                            <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
-                                                <g:link controller="${item.controller ?: controllerName}"
-                                                        action="${item.action}"
-                                                        id="${item.id}"
-                                                        title="${message(code:item.controller + '.' + item.action + '.help')}">
-                                                    ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                                                </g:link>
-                                            </li>
-                                        </crm:hasPermission>
-                                    </nav:eachItem>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav:ifHasItems>
+                                        <nav:eachItem group="admin" var="item">
+                                            <crm:hasPermission permission="${item.controller + ':' + item.action}">
+                                                <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
+                                                    <g:link controller="${item.controller ?: controllerName}"
+                                                            action="${item.action}"
+                                                            id="${item.id}"
+                                                            title="${message(code:item.controller + '.' + item.action + '.help')}">
+                                                        ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
+                                                    </g:link>
+                                                </li>
+                                            </crm:hasPermission>
+                                        </nav:eachItem>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav:ifHasItems>
+                    </crm:tenant>
 
                     <plugin:isAvailable name="crm-notification">
                         <crm:hasUnreadNotifications username="${username}" tenant="${TenantUtils.tenant}">

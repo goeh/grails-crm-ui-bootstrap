@@ -33,7 +33,7 @@ class CrmBootstrapTagLib {
     def selectionService
     def selectionRepositoryService
 
-    def logo = {attrs, body ->
+    def logo = { attrs, body ->
         // TODO support different logo sizes
         def tenant = crmSecurityService?.currentTenant
         def image = tenant?.getOption('logo') ?: attrs.default
@@ -46,7 +46,7 @@ class CrmBootstrapTagLib {
     /**
      * Renders a submenu.
      */
-    def submenu = {attrs, body ->
+    def submenu = { attrs, body ->
         def entityName = g.message(code: controllerName + '.label', default: GrailsNameUtils.getNaturalName(controllerName))
         def menuTitle = attrs.title ?: entityName
         def items = navigationService.byGroup[attrs.group ?: controllerName]
@@ -137,7 +137,7 @@ class CrmBootstrapTagLib {
     /**
      * Renders a selection menu.
      */
-    def selectionMenu = {attrs, body ->
+    def selectionMenu = { attrs, body ->
         def bodyContent = body()?.trim()
         def username = crmSecurityService.currentUser?.username
         if (!username) {
@@ -218,7 +218,7 @@ class CrmBootstrapTagLib {
      * @attr args arguments sent to i18n message lookup.
      * @attr tag type of header tag. Default is 'h1'.
      */
-    def header = {attrs, body ->
+    def header = { attrs, body ->
         def args = attrs.remove('args')
         def tag = attrs.remove('tag') ?: 'h1'
         def h1 = attrs.remove('title')
@@ -253,7 +253,7 @@ class CrmBootstrapTagLib {
      *
      * @attr bean REQUIRED the bean to check if tagged
      */
-    def favoriteIcon = {attrs ->
+    def favoriteIcon = { attrs ->
         if (!attrs.bean) {
             throwTagError("Tag [favorite] is missing required attribute [bean]")
         }
@@ -278,7 +278,7 @@ class CrmBootstrapTagLib {
 
     private String renderAttributes(Map attrs) {
         def s = new StringBuilder()
-        attrs.each {key, value ->
+        attrs.each { key, value ->
             if (value != null) {
                 s << " ${key.encodeAsURL()}=\"${value.encodeAsURL()}\""
             }
@@ -304,7 +304,7 @@ class CrmBootstrapTagLib {
      * @attrs href href attribute if type is 'url'.
      * @attrs target hyperlink target (_blank, _new, etc.) if type is 'url'
      */
-    def button = {attrs, body ->
+    def button = { attrs, body ->
         def props = takeAttributes(attrs, ['type', 'action', 'visual', 'class', 'icon', 'label', 'title', 'args',
                 'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission', 'group'])
         if (props.permission && !crmSecurityService.isPermitted(props.permission)) {
@@ -506,7 +506,7 @@ class CrmBootstrapTagLib {
             if (beginstep > firststep) {
                 linkParams[prefix + 'offset'] = 0
                 writer << '<li>'
-                writer << g.link(linkTagAttrs.clone()) {firststep.toString()}
+                writer << g.link(linkTagAttrs.clone()) { firststep.toString() }
                 writer << '</li>'
                 writer << '<li class="disabled"><a href=\"#\">...</a></li>'
             }
@@ -519,7 +519,7 @@ class CrmBootstrapTagLib {
                 else {
                     linkParams[prefix + 'offset'] = (i - 1) * max
                     writer << "<li>"
-                    writer << g.link(linkTagAttrs.clone()) {i.toString()}
+                    writer << g.link(linkTagAttrs.clone()) { i.toString() }
                     writer << "</li>"
                 }
             }
@@ -698,7 +698,7 @@ class CrmBootstrapTagLib {
      * @attr label REQUIRED tab label
      * @attr count count indicator
      */
-    def pluginTab = {attrs, body ->
+    def pluginTab = { attrs, body ->
         out << "<li class=\"nav-${attrs.id}\">"
         out << "<a href=\"#${attrs.id}\" data-toggle=\"tab\">"
         out << message(code: attrs.label, default: attrs.label)
@@ -731,7 +731,7 @@ class CrmBootstrapTagLib {
      * Renders a date using the prettytime library.
      * @attr date REQUIRED the date to pretty print
      */
-    def prettyTime = {attrs ->
+    def prettyTime = { attrs ->
         def date = attrs.date
         if (!date) {
             throwTagError("Tag [prettyTime] is missing required attribute [date]")
@@ -750,7 +750,7 @@ class CrmBootstrapTagLib {
      * @attr datetype the 'type' attribute used by g:formatDate (default is datetime)
      * @attr datestyle the 'style' attribute used by g:formatDate (default is LONG)
      */
-    def printedBy = {attrs, body ->
+    def printedBy = { attrs, body ->
         def datetype = attrs.datetype ?: 'datetime'
         def datestyle = attrs.datestyle ?: 'LONG'
         def dateInstance = attrs.date ?: new Date()
@@ -762,6 +762,30 @@ class CrmBootstrapTagLib {
             content = """<span style="float:right;font-size:13px;color:#999999;">""" + text + "</span>"
         }
         out << content
+    }
+
+    /**
+     * Renders dateCreated and lastUpdated timestamps with CSS class 'muted timestamp'.
+     * @attr bean REQUIRED domain instance with dateCreated and lastUpdated properties
+     * @attr type type attribute for formatDate, defaults to 'datetime'
+     * @attr dateStyle date style attribute for formatDate, defaults to 'long'
+     * @attr timeStyle time style attribute for formatDate, defaults to 'short'
+     */
+    def timestamp = { attrs ->
+        def bean = attrs.bean
+        if (!bean) {
+            throwTagError("Tag [timestamp] is missing required attribute [bean]")
+        }
+        def dateStyle = attrs.dateStyle ?: 'long'
+        def timeStyle = attrs.timeStyle ?: 'short'
+        def type = attrs.type ?: 'datetime'
+
+        out << """
+        <div class="muted timestamp">
+            <span class="date-created">${message(code: controllerName + '.dateCreated.label', default: 'Created')} ${formatDate(type: type, dateStyle: dateStyle, timeStyle: timeStyle, date: bean.dateCreated)}</span>
+            <span class="date-updated">${message(code: controllerName + '.lastUpdated.label', default: 'Updated')} ${formatDate(type: type, dateStyle: dateStyle, timeStyle: timeStyle, date: bean.lastUpdated)}</span>
+        </div>
+        """
     }
 }
 

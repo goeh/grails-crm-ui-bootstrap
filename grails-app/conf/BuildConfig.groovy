@@ -11,12 +11,13 @@ grails.project.dependency.resolution = {
         // uncomment to disable ehcache
         // excludes 'ehcache'
     }
-    log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    log "warn"
     repositories {
+        grailsHome()
         grailsCentral()
-        mavenCentral()
         mavenRepo "http://labs.technipelago.se/repo/crm-releases-local/"
         mavenRepo "http://labs.technipelago.se/repo/plugins-releases-local/"
+        mavenCentral()
     }
     dependencies {
         compile "org.ocpsoft.prettytime:prettytime:1.0.8.Final"
@@ -30,21 +31,22 @@ grails.project.dependency.resolution = {
         test(":hibernate:$grailsVersion") {
             export = false
         }
-        test(":codenarc:latest.integration") { export = false }
 
+        test(":codenarc:0.17") { export = false }
         compile ":resources:1.2.RC2"
         //runtime ":less-resources:1.3.0.3"
 
-        compile "grails.crm:crm-core:latest.integration"
-
-        runtime ":twitter-bootstrap:latest.integration"
-        runtime ":recent-domain:latest.integration"
-        runtime "grails.crm:crm-notification:latest.integration"
+        runtime ":twitter-bootstrap:2.1.1"
         runtime ":jquery:1.8.0"
         runtime ":fields:1.3"
         runtime ":navigation:1.3.2"
-        runtime ":famfamfam:latest.integration"
-        runtime ":content-buffer:latest.integration"
+        runtime ":famfamfam:1.0.1"
+        runtime ":content-buffer:1.0.1"
+
+        compile "grails.crm:crm-core:latest.integration"
+        runtime "grails.crm:crm-notification:latest.integration"
+
+        runtime ":recent-domain:latest.integration"
         runtime ":user-tag:latest.integration"
     }
 }
