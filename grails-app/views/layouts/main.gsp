@@ -157,7 +157,7 @@
                                     <g:message code="auth.logout.label" default="Logout" args="${[name]}"/>
                                 </g:link>
                                 </li>
-                                <li><g:link mapping="crm-settings">
+                                <li><g:link mapping="crm-user-settings" title="${message(code:'crmSettings.index.help', default:'User Settings')}">
                                     ${message(code: 'crmSettings.label', default: 'Settings', args:[name])}
                                 </g:link>
                                 </li>
@@ -176,14 +176,14 @@
 
                                 <li class="divider"></li>
 
-                                <li><g:link mapping="crm-tenant"><g:message code="crmTenant.index.label" default="Tenants"/></g:link></li>
+                                <li><g:link mapping="crm-tenant" title="${message(code:'crmTenant.index.help', default:'Tenant Settings')}"><g:message code="crmTenant.index.label" default="Tenants"/></g:link></li>
 
                                 <li class="divider"></li>
 
                                 <crm:eachTenant var="a">
-                                    <li>
-                                        <g:link mapping="crm-account-activate" id="${a.id}">${a.name.encodeAsHTML()}
-                                            <g:if test="${a.current}"><i class="icon-arrow-left"></i></g:if>
+                                    <li class="${a.current ? 'current' : ''}">
+                                        <g:link mapping="crm-tenant-activate" id="${a.id}">
+                                            ${a.name.encodeAsHTML()}
                                         </g:link>
                                     </li>
                                 </crm:eachTenant>
