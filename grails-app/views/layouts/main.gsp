@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title><g:layoutTitle default="${meta(name: 'app.name')}"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
     <r:require modules="application, crm"/>
 
@@ -59,7 +57,7 @@
         <div class="row-fluid">
             <div class="span4">
                 <div id="brand" class="visible-desktop">
-                    <crm:logo size="large"/>
+                    <g:link mapping="home"><crm:logo size="large"/></g:link>
                 </div>
             </div>
             <div class="span8">
@@ -125,7 +123,7 @@
                 <nav:ifHasItems group="main">
                     <ul class="nav" id="navigation_main">
                         <nav:eachItem group="main" var="item">
-                            <crm:hasPermission permission="${item.controller + ':' + item.action}">
+                            <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
                                 <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
                                     <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
                                             id="${item.id}"
@@ -163,7 +161,7 @@
                                 </li>
 
                                 <nav:eachItem group="settings" var="item">
-                                    <crm:hasPermission permission="${item.controller + ':' + item.action}">
+                                    <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
                                         <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
                                             <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
                                                     id="${item.id}"
@@ -240,7 +238,7 @@
                                     <ul class="dropdown-menu">
 
                                         <nav:eachItem group="admin" var="item">
-                                            <crm:hasPermission permission="${item.controller + ':' + item.action}">
+                                            <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
                                                 <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
                                                     <g:link controller="${item.controller ?: controllerName}"
                                                             action="${item.action}"
@@ -303,13 +301,13 @@
                         <![endif]-->
                         <g:textField id="login-username" name="username" value="${username}" autocapitalize="off"
                                      placeholder="${message(code:'auth.login.username', default:'Username...')}"
-                                     class="search-query span2"/>
+                                     class="search-query input-small"/>
                         <!--[if lt IE 10]>
                         <span><g:message code="auth.login.password"/></span>
                         <![endif]-->
                         <g:passwordField id="login-password" name="password" value=""
                                          placeholder="${message(code:'auth.login.password', default:'Password...')}"
-                                         class="search-query span2"/>
+                                         class="search-query input-small"/>
                         <button id="login-button" type="submit" class="btn btn-small" style="margin-top:0px;"><i class="icon-play"></i></button>
                     </g:form>
 

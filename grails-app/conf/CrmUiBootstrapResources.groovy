@@ -15,6 +15,14 @@
  *  under the License.
  */
 modules = {
+    /*
+    overrides {
+        'jquery' {
+            resource id:'js', url:[plugin: 'crm-ui-bootstrap', dir:'js/jquery', file:"jquery-1.8.2.min.js"],
+                disposition:'head', nominify: true
+        }
+    }
+    */
     crm {
         dependsOn 'jquery, bootstrap'
 
