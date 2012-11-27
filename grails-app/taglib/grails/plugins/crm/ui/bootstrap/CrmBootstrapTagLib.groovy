@@ -34,15 +34,26 @@ class CrmBootstrapTagLib {
     def selectionRepositoryService
 
     def logo = { attrs, body ->
-        def tenant = crmSecurityService?.currentTenant
-        def image = tenant?.getOption('logo') ?: attrs.default
-        if (!image) {
-            def size = attrs.size ?: 'default'
-            image = grailsApplication.config.crm.theme.logo[size] ?: "/images/grails_logo.png"
+        def image
+        try {
+            def tenant = crmSecurityService?.currentTenant
+            image = tenant?.getOption('logo') ?: attrs.default
+            if (!image) {
+                def size = attrs.size ?: 'default'
+                def path = grailsApplication.config.crm.theme.logo[size]
+                if (!path) {
+                    path = grailsApplication.config.crm.theme.logo['default']
+                }
+                image = path ?: "/images/grails_logo.png"
+            }
+        } catch (Exception e) {
+            log.error("Failed to render logo", e)
+            image = "/images/grails_logo.png"
         }
         if (Boolean.valueOf(attrs.absolute)) {
             image = grailsApplication.config.grails.serverURL + image
         }
+
         out << g.img(uri: image)
     }
 
@@ -518,8 +529,7 @@ class CrmBootstrapTagLib {
             (beginstep..endstep).each { i ->
                 if (currentstep == i) {
                     writer << "<li class=\"active\"><a href=\"#\">${i}</a></li>"
-                }
-                else {
+                } else {
                     linkParams[prefix + 'offset'] = (i - 1) * max
                     writer << "<li>"
                     writer << g.link(linkTagAttrs.clone()) { i.toString() }
@@ -628,12 +638,10 @@ class CrmBootstrapTagLib {
             attrs.class = attrs.class + " sorted " + order
             if (order == "asc") {
                 linkParams[prefix + 'order'] = "desc"
-            }
-            else {
+            } else {
                 linkParams[prefix + 'order'] = "asc"
             }
-        }
-        else {
+        } else {
             linkParams[prefix + 'order'] = defaultOrder
         }
 

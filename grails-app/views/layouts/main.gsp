@@ -57,7 +57,7 @@
         <div class="row-fluid">
             <div class="span4">
                 <div id="brand" class="visible-desktop">
-                    <g:link mapping="home"><crm:logo size="large"/></g:link>
+                    <g:link uri="/"><crm:logo size="large"/></g:link>
                 </div>
             </div>
             <div class="span8">
@@ -106,270 +106,273 @@
         </div>
     </div>
 
-<div class="navbar" id="navigation-wrapper">
-    <div class="navbar-inner">
-        <div class="container">
+    <div class="navbar" id="navigation-wrapper">
+        <div class="navbar-inner">
+            <div class="container">
 
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-            <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name" default="Grails CRM"/></g:link>
+                <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name" default="Grails CRM"/></g:link>
 
-            <div class="nav-collapse">
+                <div class="nav-collapse">
 
-                <nav:ifHasItems group="main">
-                    <ul class="nav" id="navigation_main">
-                        <nav:eachItem group="main" var="item">
-                            <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
-                                <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
-                                    <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
-                                            id="${item.id}"
-                                            title="${message(code:item.controller + '.' + item.action + '.help')}">
-                                        ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                                    </g:link>
-                                </li>
-                            </crm:hasPermission>
-                        </nav:eachItem>
-                    </ul>
-                </nav:ifHasItems>
-
-                <crm:tenant><g:set var="tenantName" value="${name}"/></crm:tenant>
-
-                <crm:user>
-<%--
-                    <form class="navbar-search pull-right" action="${createLink(mapping:'logout')}">
-                        <button id="logout-button" class="btn btn-small"><i class="icon-off"></i></button>
-                    </form>
---%>
-                    <ul class="nav pull-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                ${(tenantName ?: name).encodeAsHTML()}<b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-
-                                <li><g:link mapping="logout" title="${message(code: 'auth.logout.title', default: 'Logout {0}', args:[name])}">
-                                    <g:message code="auth.logout.label" default="Logout" args="${[name]}"/>
-                                </g:link>
-                                </li>
-                                <li><g:link mapping="crm-user-settings" title="${message(code:'crmSettings.index.help', default:'User Settings')}">
-                                    ${message(code: 'crmSettings.label', default: 'Settings', args:[name])}
-                                </g:link>
-                                </li>
-
-                                <nav:eachItem group="settings" var="item">
-                                    <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
-                                        <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
-                                            <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
-                                                    id="${item.id}"
-                                                    title="${message(code:item.controller + '.' + item.action + '.help')}">
-                                                ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                                            </g:link>
-                                        </li>
-                                    </crm:hasPermission>
-                                </nav:eachItem>
-
-                                <li class="divider"></li>
-
-                                <li><g:link mapping="crm-tenant" title="${message(code:'crmTenant.index.help', default:'Tenant Settings')}"><g:message code="crmTenant.index.label" default="Tenants"/></g:link></li>
-
-                                <li class="divider"></li>
-
-                                <crm:eachTenant var="a">
-                                    <li class="${a.current ? 'current' : ''}">
-                                        <g:link mapping="crm-tenant-activate" id="${a.id}">
-                                            ${a.name.encodeAsHTML()}
+                    <nav:ifHasItems group="main">
+                        <ul class="nav" id="navigation_main">
+                            <crm:user>
+                            <li><g:link mapping="home"><i class="icon-home icon-white"></i></g:link></li>
+                            </crm:user>
+                            <nav:eachItem group="main" var="item">
+                                <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
+                                    <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
+                                        <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
+                                                id="${item.id}"
+                                                title="${message(code:item.controller + '.' + item.action + '.help')}">
+                                            ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
                                         </g:link>
                                     </li>
-                                </crm:eachTenant>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <ul class="nav pull-right" id="navigation_favorites">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <g:message code="default.favorites.menu.label"/><b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <g:set var="prevFav" value=""/>
-                                <usertag:eachTagged tag="favorite" tenant="${TenantUtils.tenant}" username="${username}"
-                                                    var="fav">
-                                    <g:set var="thisFav"
-                                           value="${GrailsNameUtils.getPropertyName(fav.class)}"/>
-                                    <g:if test="${thisFav != prevFav}">
-                                        <g:set var="prevFav" value="${thisFav}"/>
-                                        <li style="color:#999;padding-left:16px;font-size:10px;text-transform:uppercase;">${message(code: thisFav + '.label', default: GrailsNameUtils.getNaturalName(thisFav))}</li>
-                                    </g:if>
-                                    <li>
-                                        <g:link controller="${grails.util.GrailsNameUtils.getPropertyName(fav.class)}"
-                                                action="show" id="${fav.id}">${fav.encodeAsHTML()}</g:link>
-                                    </li>
-                                </usertag:eachTagged>
-                                <nav:ifHasItems group="public">
-                                    <g:if test="${prevFav}">
-                                        <li class="divider"></li>
-                                    </g:if>
-                                    <nav:eachItem group="public" var="item">
-                                        <li>
-                                            <g:link controller="${item.controller ?: controllerName}"
-                                                    action="${item.action}"
-                                                    id="${item.id}"
-                                                    title="${message(code:item.controller + '.' + item.action + '.help')}">
-                                                ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                                            </g:link>
-                                        </li>
-                                    </nav:eachItem>
-                                </nav:ifHasItems>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <crm:tenant>
-                        <nav:ifHasItems group="admin">
-                            <ul class="nav pull-right" id="navigation_admin">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <g:message code="default.admin.menu.label"/><b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-
-                                        <nav:eachItem group="admin" var="item">
-                                            <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
-                                                <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
-                                                    <g:link controller="${item.controller ?: controllerName}"
-                                                            action="${item.action}"
-                                                            id="${item.id}"
-                                                            title="${message(code:item.controller + '.' + item.action + '.help')}">
-                                                        ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                                                    </g:link>
-                                                </li>
-                                            </crm:hasPermission>
-                                        </nav:eachItem>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </nav:ifHasItems>
-                    </crm:tenant>
-
-                    <plugin:isAvailable name="crm-notification">
-                        <crm:hasUnreadNotifications username="${username}" tenant="${TenantUtils.tenant}">
-                            <ul class="nav pull-right" id="navigation_notifications" role="menu">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-                                        <span class="badge badge-important" id="notifictions-unread-count">${count}</span>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <crm:eachNotification username="${username}" tenant="${TenantUtils.tenant}" var="n">
-                                            <li class="dropdown-submenu notification-item" data-crm-id="${n.id}">
-                                                <a href="javascript:void(0);" tabindex="-1">${n.dateCreated.format('d MMM HH:mm')} - ${StringUtils.abbreviate(n.subject, 30)}</a>
-                                                <ul class="dropdown-menu">
-                                                    <g:each in="${n.payload?.links}" var="l">
-                                                        <li>
-                                                            <g:link controller="${l.controller ?: controllerName}" action="${l.action ?: ''}" title="${l.title ?: ''}">
-                                                                <i class="${l.icon ?: 'icon-chevron-right'}"></i>
-                                                                ${l.label}
-                                                            </g:link>
-                                                        </li>
-                                                    </g:each>
-                                                    <li class="notification-delete">
-                                                        <a href="javascript:void(0);">
-                                                            <i class="icon-trash"></i>
-                                                            <g:message code="crmNotification.button.delete.label" default="Delete"/>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </crm:eachNotification>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </crm:hasUnreadNotifications>
-                    </plugin:isAvailable>
-                </crm:user>
-
-
-                <crm:noUser>
-
-                    <g:form controller="auth" action="signIn" name="loginBar" class="navbar-search pull-right">
-                        <input type="hidden" name="targetUri" value="${targetUri}"/>
-                        <!--[if lt IE 10]>
-                        <span><g:message code="auth.login.username"/></span>
-                        <![endif]-->
-                        <g:textField id="login-username" name="username" value="${username}" autocapitalize="off"
-                                     placeholder="${message(code:'auth.login.username', default:'Username...')}"
-                                     class="search-query input-small"/>
-                        <!--[if lt IE 10]>
-                        <span><g:message code="auth.login.password"/></span>
-                        <![endif]-->
-                        <g:passwordField id="login-password" name="password" value=""
-                                         placeholder="${message(code:'auth.login.password', default:'Password...')}"
-                                         class="search-query input-small"/>
-                        <button id="login-button" type="submit" class="btn btn-small" style="margin-top:0px;"><i class="icon-play"></i></button>
-                    </g:form>
-
-                    <nav:ifHasItems group="public">
-                        <ul class="nav" id="navigation_public">
-                            <nav:eachItem group="public" var="item">
-                                <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
-                                    <g:link controller="${item.controller ?: controllerName}"
-                                            action="${item.action}"
-                                            id="${item.id}"
-                                            title="${message(code:item.controller + '.' + item.action + '.help')}">
-                                        ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
-                                    </g:link>
-                                </li>
+                                </crm:hasPermission>
                             </nav:eachItem>
                         </ul>
                     </nav:ifHasItems>
 
-                </crm:noUser>
+                    <crm:tenant><g:set var="tenantName" value="${name}"/></crm:tenant>
 
-                <g:pageProperty name="page.navbar"/>
+                    <crm:user>
+    <%--
+                        <form class="navbar-search pull-right" action="${createLink(mapping:'logout')}">
+                            <button id="logout-button" class="btn btn-small"><i class="icon-off"></i></button>
+                        </form>
+    --%>
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    ${(tenantName ?: name).encodeAsHTML()}<b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
 
+                                    <li><g:link mapping="logout" title="${message(code: 'auth.logout.title', default: 'Logout {0}', args:[name])}">
+                                        <g:message code="auth.logout.label" default="Logout" args="${[name]}"/>
+                                    </g:link>
+                                    </li>
+                                    <li><g:link mapping="crm-user-settings" title="${message(code:'crmSettings.index.help', default:'User Settings')}">
+                                        ${message(code: 'crmSettings.label', default: 'Settings', args:[name])}
+                                    </g:link>
+                                    </li>
+
+                                    <nav:eachItem group="settings" var="item">
+                                        <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
+                                            <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
+                                                <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
+                                                        id="${item.id}"
+                                                        title="${message(code:item.controller + '.' + item.action + '.help')}">
+                                                    ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
+                                                </g:link>
+                                            </li>
+                                        </crm:hasPermission>
+                                    </nav:eachItem>
+
+                                    <li class="divider"></li>
+
+                                    <li><g:link mapping="crm-tenant" title="${message(code:'crmTenant.index.help', default:'Tenant Settings')}"><g:message code="crmTenant.index.label" default="Tenants"/></g:link></li>
+
+                                    <li class="divider"></li>
+
+                                    <crm:eachTenant var="a">
+                                        <li class="${a.current ? 'current' : ''}">
+                                            <g:link mapping="crm-tenant-activate" id="${a.id}">
+                                                ${a.name.encodeAsHTML()}
+                                            </g:link>
+                                        </li>
+                                    </crm:eachTenant>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <ul class="nav pull-right" id="navigation_favorites">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <g:message code="default.favorites.menu.label"/><b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <g:set var="prevFav" value=""/>
+                                    <usertag:eachTagged tag="favorite" tenant="${TenantUtils.tenant}" username="${username}"
+                                                        var="fav">
+                                        <g:set var="thisFav"
+                                               value="${GrailsNameUtils.getPropertyName(fav.class)}"/>
+                                        <g:if test="${thisFav != prevFav}">
+                                            <g:set var="prevFav" value="${thisFav}"/>
+                                            <li style="color:#999;padding-left:16px;font-size:10px;text-transform:uppercase;">${message(code: thisFav + '.label', default: GrailsNameUtils.getNaturalName(thisFav))}</li>
+                                        </g:if>
+                                        <li>
+                                            <g:link controller="${grails.util.GrailsNameUtils.getPropertyName(fav.class)}"
+                                                    action="show" id="${fav.id}">${fav.encodeAsHTML()}</g:link>
+                                        </li>
+                                    </usertag:eachTagged>
+                                    <nav:ifHasItems group="public">
+                                        <g:if test="${prevFav}">
+                                            <li class="divider"></li>
+                                        </g:if>
+                                        <nav:eachItem group="public" var="item">
+                                            <li>
+                                                <g:link controller="${item.controller ?: controllerName}"
+                                                        action="${item.action}"
+                                                        id="${item.id}"
+                                                        title="${message(code:item.controller + '.' + item.action + '.help')}">
+                                                    ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
+                                                </g:link>
+                                            </li>
+                                        </nav:eachItem>
+                                    </nav:ifHasItems>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <crm:tenant>
+                            <nav:ifHasItems group="admin">
+                                <ul class="nav pull-right" id="navigation_admin">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                            <g:message code="default.admin.menu.label"/><b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu">
+
+                                            <nav:eachItem group="admin" var="item">
+                                                <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
+                                                    <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
+                                                        <g:link controller="${item.controller ?: controllerName}"
+                                                                action="${item.action}"
+                                                                id="${item.id}"
+                                                                title="${message(code:item.controller + '.' + item.action + '.help')}">
+                                                            ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
+                                                        </g:link>
+                                                    </li>
+                                                </crm:hasPermission>
+                                            </nav:eachItem>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav:ifHasItems>
+                        </crm:tenant>
+
+                        <plugin:isAvailable name="crm-notification">
+                            <crm:hasUnreadNotifications username="${username}" tenant="${TenantUtils.tenant}">
+                                <ul class="nav pull-right" id="navigation_notifications" role="menu">
+                                    <li class="dropdown">
+                                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                                            <span class="badge badge-important" id="notifictions-unread-count">${count}</span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <crm:eachNotification username="${username}" tenant="${TenantUtils.tenant}" var="n">
+                                                <li class="dropdown-submenu notification-item" data-crm-id="${n.id}">
+                                                    <a href="javascript:void(0);" tabindex="-1">${n.dateCreated.format('d MMM HH:mm')} - ${StringUtils.abbreviate(n.subject, 30)}</a>
+                                                    <ul class="dropdown-menu">
+                                                        <g:each in="${n.payload?.links}" var="l">
+                                                            <li>
+                                                                <g:link controller="${l.controller ?: controllerName}" action="${l.action ?: ''}" title="${l.title ?: ''}">
+                                                                    <i class="${l.icon ?: 'icon-chevron-right'}"></i>
+                                                                    ${l.label}
+                                                                </g:link>
+                                                            </li>
+                                                        </g:each>
+                                                        <li class="notification-delete">
+                                                            <a href="javascript:void(0);">
+                                                                <i class="icon-trash"></i>
+                                                                <g:message code="crmNotification.button.delete.label" default="Delete"/>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </crm:eachNotification>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </crm:hasUnreadNotifications>
+                        </plugin:isAvailable>
+                    </crm:user>
+
+
+                    <crm:noUser>
+
+                        <g:form controller="auth" action="signIn" name="loginBar" class="navbar-search pull-right">
+                            <input type="hidden" name="targetUri" value="${targetUri}"/>
+                            <!--[if lt IE 10]>
+                            <span><g:message code="auth.login.username"/></span>
+                            <![endif]-->
+                            <g:textField id="login-username" name="username" value="${username}" autocapitalize="off"
+                                         placeholder="${message(code:'auth.login.username', default:'Username...')}"
+                                         class="search-query input-small"/>
+                            <!--[if lt IE 10]>
+                            <span><g:message code="auth.login.password"/></span>
+                            <![endif]-->
+                            <g:passwordField id="login-password" name="password" value=""
+                                             placeholder="${message(code:'auth.login.password', default:'Password...')}"
+                                             class="search-query input-small"/>
+                            <button id="login-button" type="submit" class="btn btn-small" style="margin-top:0px;"><i class="icon-play"></i></button>
+                        </g:form>
+
+                        <nav:ifHasItems group="public">
+                            <ul class="nav" id="navigation_public">
+                                <nav:eachItem group="public" var="item">
+                                    <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
+                                        <g:link controller="${item.controller ?: controllerName}"
+                                                action="${item.action}"
+                                                id="${item.id}"
+                                                title="${message(code:item.controller + '.' + item.action + '.help')}">
+                                            ${message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])}
+                                        </g:link>
+                                    </li>
+                                </nav:eachItem>
+                            </ul>
+                        </nav:ifHasItems>
+
+                    </crm:noUser>
+
+                    <g:pageProperty name="page.navbar"/>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid">
+    <div class="${grailsApplication.config.crm.ui.bootstrap.fluid ? 'container-fluid' : 'container'}">
 
-    <g:pageProperty name="page.hero"/>
+        <g:pageProperty name="page.hero"/>
 
-    <div class="controller-${controllerName ?: 'home'} action-${actionName ?: 'index'}" id="content-wrapper"
-         role="main">
-        <g:layoutBody/>
+        <div class="controller-${controllerName ?: 'home'} action-${actionName ?: 'index'}" id="content-wrapper"
+             role="main">
+            <g:layoutBody/>
+        </div>
+
+        <div id="footer-wrapper">
+            <footer>
+                <div id="copyright"><g:message code="app.copyright.message" default=""/> (${TenantUtils.tenant})</div>
+            </footer>
+        </div>
     </div>
-
-    <div id="footer-wrapper">
-        <footer>
-            <div id="copyright"><g:message code="app.copyright.message" default=""/> (${TenantUtils.tenant})</div>
-        </footer>
-    </div>
-</div>
 
 <g:if test="${flash.alert}">
-<div class="modal hide fade" id="alertModal">
+    <div class="modal hide fade" id="alertModal">
 
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
 
-        <h3><g:message code="alert.title" default="Message"/></h3>
+            <h3><g:message code="alert.title" default="Message"/></h3>
+        </div>
+
+        <div class="modal-body">
+            <p>${flash.alert.encodeAsHTML()}</p>
+        </div>
+
+        <div class="modal-footer">
+            <a href="#" class="btn btn-primary" data-dismiss="modal"><g:message
+                    code="default.button.ok.label" default="Ok"/></a>
+        </div>
+
     </div>
-
-    <div class="modal-body">
-        <p>${flash.alert.encodeAsHTML()}</p>
-    </div>
-
-    <div class="modal-footer">
-        <a href="#" class="btn btn-primary" data-dismiss="modal"><g:message
-                code="default.button.ok.label" default="Ok"/></a>
-    </div>
-
-</div>
 </g:if>
 
 <r:layoutResources/>
