@@ -26,24 +26,19 @@ modules = {
     crm {
         dependsOn 'jquery, bootstrap'
 
-        resource id:'crm-ui-bootstrap-less', url:[plugin: 'crm-ui-bootstrap', dir: 'less', file: 'crm-ui-bootstrap.less'], attrs:[rel: "stylesheet/less", type:'css', order:100], disposition: 'head'
-        //resource url: 'css/crm-ui-bootstrap.css'
+        resource id: 'crm-ui-bootstrap-less', url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'crm-ui-bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 100], disposition: 'head'
         resource url: 'js/crm-ui-bootstrap.js'
 
         resource url: 'js/modernizr.js', disposition: 'head'
 
-        resource url: 'js/bootstrap-datepicker.js'
-        resource id:'datepicker-less', url:[plugin: 'crm-ui-bootstrap', dir: 'less', file: 'datepicker.less'], attrs:[rel: "stylesheet/less", type:'css', order: 190], disposition: 'head'
-        //resource url: 'css/datepicker.css'
-
-        resource url:'js/jquery.dropdownPlain.js'
-        resource url:'js/jquery.hoverIntent-min.js'
-        resource url:'js/jquery.notifier.js'
+        resource url: 'js/jquery.dropdownPlain.js'
+        resource url: 'js/jquery.hoverIntent-min.js'
+        resource url: 'js/jquery.notifier.js'
     }
 
     autocomplete {
         dependsOn 'jquery'
-        resource url:'js/jquery.autocomplete.js'
+        resource url: 'js/jquery.autocomplete.js'
     }
 
     select2 {
@@ -55,5 +50,17 @@ modules = {
     dateformat {
         resource url: 'js/rfc3339date.js'
         resource url: 'js/date.format.js'
+    }
+
+    datepicker {
+        dependsOn 'bootstrap'
+        resource url: 'js/bootstrap-datepicker.js'
+        resource id: 'datepicker-less', url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'datepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 190], disposition: 'head'
+    }
+
+    timepicker {
+        dependsOn 'bootstrap'
+        resource url: 'js/bootstrap-timepicker.js'
+        resource id: 'timepicker-less', url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'timepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 192], disposition: 'head'
     }
 }
