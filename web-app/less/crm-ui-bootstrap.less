@@ -62,8 +62,13 @@ a.toggle {
   text-decoration: none;
 }
 tr.current td,
-tr.current td a {
+tr.current td a:not(.btn) {
   font-weight: bold;
+}
+.disabled td,
+.disabled td a:not(.btn) {
+  text-decoration: line-through;
+  color: @grayLight;
 }
 
 #login-button,
