@@ -105,10 +105,16 @@ class CrmBootstrapTagLib {
 
                 def active = pathIsActive(item.path, activePath)
                 def title = message(code: item.controller + '.' + item.action + '.help', default: '')
-                def icon = item.icon ?: message(code: (item.title ?: (item.controller ?: controllerName) + '.' + item.action) + '_icon', default: message(code: ('default.' + item.action) + '_icon', default: 'icon-asterisk'))
+                def icon = item.params?.icon ?: message(code: (item.title ?: (item.controller ?: controllerName) + '.' + item.action) + '_icon', default: message(code: ('default.' + item.action) + '_icon', default: 'icon-asterisk'))
                 def label = g.message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])
                 def elementId = "menu_${item.controller ?: controllerName}_${item.action}"
-                def link = g.link(controller: item.controller ?: controllerName, action: item.action, id: id, elementId: elementId, title: title, "<i class=\"${icon}\"></i> " + label)
+                def linkParams = [:]
+                if(item.params) {
+                    linkParams.putAll(item.params)
+                    linkParams.remove('icon')
+                }
+                linkParams.putAll([controller: item.controller ?: controllerName, action: item.action, id: id, elementId: elementId, title: title])
+                def link = g.link(linkParams, "<i class=\"${icon}\"></i> " + label)
 
                 if (empty) {
                     out << """<div class="well sidebar-nav">
@@ -459,8 +465,6 @@ class CrmBootstrapTagLib {
         if (uri) {
             linkParams.putAll(selectionService.createSelectionParameters(uri))
         }
-        println "linkParams=$linkParams"
-
         def linkTagAttrs = [action: action]
         if (attrs.controller) {
             linkTagAttrs.controller = attrs.controller
