@@ -1,5 +1,9 @@
 <%@ page import="org.apache.commons.lang.StringUtils; grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %><!DOCTYPE html>
-<html lang="en">
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <title><g:layoutTitle default="${meta(name: 'app.name')}"/></title>
@@ -374,6 +378,8 @@
 
     </div>
 </g:if>
+
+<div id="spinner" class="spinner" style="display:none;"><g:img dir="images" file="spinner.gif" alt="${message(code: 'spinner.alt', default: 'Loading&hellip;')}"/></div>
 
 <r:layoutResources/>
 

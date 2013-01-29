@@ -15,21 +15,32 @@
  *  under the License.
  */
 modules = {
-    /*
-    overrides {
-        'jquery' {
-            resource id:'js', url:[plugin: 'crm-ui-bootstrap', dir:'js/jquery', file:"jquery-1.8.2.min.js"],
-                disposition:'head', nominify: true
-        }
+    modernizr {
+        resource url:'js/modernizr.js', disposition: 'head'
     }
-    */
+    /*
+     * In your application, copy (and modify) variables.less from twitter-bootstrap plugin or generate variables.less
+     * from the bootstrap site. Save it in your application's web-app/less directory.
+     * Then create a web-app/less/my-app.less with the following content:
+     *
+     * @import "bootstrap.less";
+     * @import "responsive.less";
+     *
+     * Your custom CSS here...
+     *
+     * Add a resource declaration to ApplicationResources.groovy:
+     * application {
+     *   resource url:[dir: 'less', file: 'my-app.less'], attrs:[rel: "stylesheet/less", type:'css'], disposition: 'head'
+     * }
+     * Make sure you have less-resources plugin installed.
+     * IMPORTANT: The lesscss-resources plugin does not handle imports the way we want so you MUST use less-resources.
+     */
     crm {
-        dependsOn 'jquery, bootstrap'
+        // We depend only on bootstrap JavaScript, not the bootstrap styles. Add styles as described above.
+        dependsOn 'jquery, modernizr, bootstrap-js'
 
-        resource id: 'crm-ui-bootstrap-less', url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'crm-ui-bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 100], disposition: 'head'
+        resource url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'crm-ui-bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 100], disposition: 'head'
         resource url: 'js/crm-ui-bootstrap.js'
-
-        resource url: 'js/modernizr.js', disposition: 'head'
 
         resource url: 'js/jquery.dropdownPlain.js'
         resource url: 'js/jquery.hoverIntent-min.js'
@@ -53,14 +64,14 @@ modules = {
     }
 
     datepicker {
-        dependsOn 'bootstrap'
+        dependsOn 'bootstrap-js'
         resource url: 'js/bootstrap-datepicker.js'
-        resource id: 'datepicker-less', url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'datepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 190], disposition: 'head'
+        resource url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'datepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 190], disposition: 'head'
     }
 
     timepicker {
-        dependsOn 'bootstrap'
+        dependsOn 'bootstrap-js'
         resource url: 'js/bootstrap-timepicker.js'
-        resource id: 'timepicker-less', url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'timepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 192], disposition: 'head'
+        resource url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'timepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 192], disposition: 'head'
     }
 }
