@@ -20,12 +20,12 @@ grails.project.dependency.resolution = {
         mavenCentral()
     }
     dependencies {
-        compile "org.ocpsoft.prettytime:prettytime:1.0.8.Final"
+        compile "org.ocpsoft.prettytime:prettytime:2.1.3.Final"
     }
 
     plugins {
         build(":tomcat:$grailsVersion",
-                ":release:2.2.0") {
+                ":release:2.2.1") {
             export = false
         }
         test(":hibernate:$grailsVersion") {
@@ -33,10 +33,10 @@ grails.project.dependency.resolution = {
         }
 
         test(":codenarc:0.17") { export = false }
-        compile ":resources:1.2.RC2"
 
-        runtime ":twitter-bootstrap:2.2.2"
+        runtime ":resources:1.2"
         runtime ":jquery:1.8.3"
+        runtime ":twitter-bootstrap:2.2.2"
         runtime ":fields:1.3"
         runtime ":navigation:1.3.2"
         runtime ":famfamfam:1.0.1"

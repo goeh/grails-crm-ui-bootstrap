@@ -20,7 +20,7 @@ import grails.plugins.crm.core.DateUtils
 import grails.util.GrailsNameUtils
 import grails.plugins.crm.core.TenantUtils
 import org.springframework.web.servlet.support.RequestContextUtils as RCU
-import org.ocpsoft.pretty.time.PrettyTime
+import org.ocpsoft.prettytime.PrettyTime
 
 class CrmBootstrapTagLib {
 
