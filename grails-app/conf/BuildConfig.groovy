@@ -21,6 +21,7 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         compile "org.ocpsoft.prettytime:prettytime:2.1.3.Final"
+        //test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
 
     plugins {
@@ -32,11 +33,17 @@ grails.project.dependency.resolution = {
             export = false
         }
 
-        test(":codenarc:0.17") { export = false }
+        test(":spock:0.7") {
+            export = false
+            //exclude "spock-grails-support"
+        }
+        test(":codenarc:0.18.1") { export = false }
+        test(":code-coverage:1.2.6") { export = false }
 
         runtime ":resources:1.2"
-        runtime ":jquery:1.8.3"
-        runtime ":twitter-bootstrap:2.2.2"
+        runtime ":less-resources:1.3.3.1"
+        runtime ":jquery:1.10.0"
+        runtime ":twitter-bootstrap:2.3.2"
         runtime ":fields:1.3"
         runtime ":navigation:1.3.2"
         runtime ":famfamfam:1.0.1"
@@ -49,3 +56,33 @@ grails.project.dependency.resolution = {
         runtime ":user-tag:latest.integration"
     }
 }
+
+codenarc {
+    reports = {
+        CrmXmlReport('xml') {
+            outputFile = 'target/test-reports/CodeNarcReport.xml'
+            title = 'Grails CRM CodeNarc Report'
+        }
+        CrmHtmlReport('html') {
+            outputFile = 'target/test-reports/CodeNarcReport.html'
+            title = 'Grails CRM CodeNarc Report'
+
+        }
+    }
+    properties = {
+        GrailsPublicControllerMethod.enabled = false
+        CatchException.enabled = false
+        CatchThrowable.enabled = false
+        ThrowException.enabled = false
+        ThrowRuntimeException.enabled = false
+        GrailsStatelessService.enabled = false
+        GrailsStatelessService.ignoreFieldNames="dataSource,scope,sessionFactory,transactional,*Service,messageSource,grailsApplication,applicationContext,expose"
+    }
+    processTestUnit = false
+    processTestIntegration = false
+}
+
+coverage {
+    exclusions = ['**/radar/**']
+}
+
