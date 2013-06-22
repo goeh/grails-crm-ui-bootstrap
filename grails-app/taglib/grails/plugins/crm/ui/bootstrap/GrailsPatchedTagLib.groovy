@@ -71,12 +71,12 @@ class GrailsPatchedTagLib extends ApplicationTagLib {
             attrs.from = from.collect {code ->
                 def locale = locales.find {it.country == code}
                 if (locale) {
-                    return new Country(locale.country, locale.displayCountry)
+                    return new Country(code: locale.country, name: locale.displayCountry)
                 }
-                return new Country(code, code)
+                return new Country(code: code, name: code)
             }
         } else {
-            attrs.from = locales.collect {locale -> new Country(locale.country, locale.displayCountry)}.unique()
+            attrs.from = locales.collect {locale -> new Country(code: locale.country, name: locale.displayCountry)}.unique()
         }
         if (!attrs.value) {
             attrs.value = RCU.getLocale(request)?.country
@@ -94,21 +94,3 @@ class GrailsPatchedTagLib extends ApplicationTagLib {
     }
 }
 
-
-private class Country {
-    String code
-    String name
-
-    public Country(String code, String name) {
-        this.code = code
-        this.name = name
-    }
-
-    String toString() {
-        name
-    }
-
-    boolean equals(other) {
-        code == other.code
-    }
-}
