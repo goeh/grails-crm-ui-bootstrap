@@ -71,18 +71,18 @@ class GrailsPatchedTagLib extends ApplicationTagLib {
             attrs.from = from.collect {code ->
                 def locale = locales.find {it.country == code}
                 if (locale) {
-                    return new Country(code: locale.country, name: locale.displayCountry)
+                    return new Country(locale.country, locale.displayCountry)
                 }
-                return new Country(code: code, name: code)
+                return new Country(code, code)
             }
         } else {
-            attrs.from = locales.collect {locale -> new Country(code: locale.country, name: locale.displayCountry)}.unique()
+            attrs.from = locales.collect {locale -> new Country(locale.country, locale.displayCountry)}.unique()
         }
         if (!attrs.value) {
             attrs.value = RCU.getLocale(request)?.country
         }
-        def sort = attrs.sort
-        attrs.from = attrs.from.toList().sort {sort ? it."${sort}" : it.toString()}
+        def sortKey = attrs.sort
+        attrs.from = attrs.from.toList().sort {sortKey ? it."${sortKey}" : it.toString()}
         if (!attrs.optionKey) {
             attrs.optionKey = 'code'
         }

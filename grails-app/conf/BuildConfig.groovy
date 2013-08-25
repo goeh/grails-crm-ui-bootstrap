@@ -8,12 +8,10 @@ grails.project.repos.default = "crm"
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
     inherits("global") {
-        // uncomment to disable ehcache
-        // excludes 'ehcache'
     }
     log "warn"
+    legacyResolve false
     repositories {
-        grailsHome()
         grailsCentral()
         mavenRepo "http://labs.technipelago.se/repo/crm-releases-local/"
         mavenRepo "http://labs.technipelago.se/repo/plugins-releases-local/"
@@ -21,12 +19,13 @@ grails.project.dependency.resolution = {
     }
     dependencies {
         compile "org.ocpsoft.prettytime:prettytime:2.1.3.Final"
-        //test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
+        test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
 
     plugins {
         build(":tomcat:$grailsVersion",
-                ":release:2.2.1") {
+                ":release:2.2.1",
+                ":rest-client-builder:1.0.3") {
             export = false
         }
         test(":hibernate:$grailsVersion") {
@@ -35,21 +34,21 @@ grails.project.dependency.resolution = {
 
         test(":spock:0.7") {
             export = false
-            //exclude "spock-grails-support"
+            exclude "spock-grails-support"
         }
         test(":codenarc:0.18.1") { export = false }
         test(":code-coverage:1.2.6") { export = false }
 
         runtime ":resources:1.2"
-        runtime ":less-resources:1.3.3.1"
-        runtime ":jquery:1.10.0"
+        runtime ":less-resources:1.3.3.2"
+        runtime ":jquery:1.10.2"
         runtime ":twitter-bootstrap:2.3.2"
         runtime ":fields:1.3"
         runtime ":navigation:1.3.2"
         runtime ":famfamfam:1.0.1"
         runtime ":content-buffer:1.0.1"
 
-        compile "grails.crm:crm-core:latest.integration"
+        compile "grails.crm:crm-core:1.2.0"
         runtime "grails.crm:crm-notification:latest.integration"
 
         runtime ":recent-domain:latest.integration"
@@ -76,7 +75,7 @@ codenarc {
         ThrowException.enabled = false
         ThrowRuntimeException.enabled = false
         GrailsStatelessService.enabled = false
-        GrailsStatelessService.ignoreFieldNames="dataSource,scope,sessionFactory,transactional,*Service,messageSource,grailsApplication,applicationContext,expose"
+        GrailsStatelessService.ignoreFieldNames = "dataSource,scope,sessionFactory,transactional,*Service,messageSource,grailsApplication,applicationContext,expose"
     }
     processTestUnit = false
     processTestIntegration = false

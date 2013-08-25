@@ -17,18 +17,43 @@
     <link rel="apple-touch-icon" sizes="72x72" href="${resource(dir: 'images', file: 'apple-touch-icon-72.png')}">
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon-57.png')}">
 
-    <% if (flash.alert) { %>
     <r:script>
+        $(document).ajaxError(function(e, xhr, settings, exception) {
+
+            var message = '';
+
+            if (xhr.status == 0) {
+                message = 'You are offline!\n Please check your network.';
+            } else if (xhr.status == 403) {
+                window.location.href = "${createLink(mapping: 'start', absolute: true)}";
+                return;
+            } else if (xhr.status == 404) {
+                message = 'Requested URL not found.';
+            } else if (xhr.status == 500) {
+                message = xhr.responseText;
+            } else if (errStatus == 'parsererror') {
+                message = 'Error.\nParsing JSON Request failed.';
+            } else if (errStatus == 'timeout') {
+                message = 'Request timed out.\nPlease try later';
+            } else {
+                message = ('Unknown Error.\n' + xhr.responseText);
+            }
+
+            alert(message);
+        });
+
+    <% if (flash.alert) { %>
         $(document).ready(function () {
             $('#alertModal').modal({show:true});
         });
-    </r:script>
     <% } %>
+    </r:script>
+
     <r:layoutResources/>
     <g:layoutHead/>
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
-          <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+          <script src="${resource(dir:'js', file: 'html5.js')}"></script>
     <![endif]-->
 </head>
 

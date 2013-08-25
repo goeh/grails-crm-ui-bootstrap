@@ -239,7 +239,7 @@ jQuery(document).ready(function() {
 
     // Fix for dropdown menus on iPad.
     // TODO Remove this when https://github.com/twitter/bootstrap/issues/2975 is fixed.
-    $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+    //$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
     $("#global-message div").each(function() {
         var div = $(this);
@@ -250,12 +250,4 @@ jQuery(document).ready(function() {
         if(div.hasClass('alert-error')) Notifier.error(messageText);
     });
 
-    // Slide down tag panel when mouse is over.
-    $("#tags").hoverIntent(function(event) {
-      $("form", $(this)).slideDown('fast', function() {
-        $("input:first", $(this)).focus();
-      });
-    }, function(event) {
-      $("form", $(this)).slideUp('fast');
-    });
 });

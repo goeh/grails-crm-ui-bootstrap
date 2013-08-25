@@ -74,4 +74,8 @@ modules = {
         resource url: 'js/bootstrap-timepicker.js'
         resource url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'timepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 192], disposition: 'head'
     }
+
+    html5 {
+        resource url: 'js/html5.js'
+    }
 }
