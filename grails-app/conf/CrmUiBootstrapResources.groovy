@@ -74,7 +74,10 @@ modules = {
         resource url: 'js/bootstrap-timepicker.js'
         resource url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'timepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 192], disposition: 'head'
     }
-
+    aligndates {
+        dependsOn 'dateformat'
+        resource url:'js/aligndates.js'
+    }
     html5 {
         resource url: 'js/html5.js'
     }
