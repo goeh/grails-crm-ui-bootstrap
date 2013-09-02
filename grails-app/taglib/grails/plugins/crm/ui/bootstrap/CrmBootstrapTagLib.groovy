@@ -737,8 +737,14 @@ class CrmBootstrapTagLib {
         if (count instanceof Collection) {
             count = count.size()
         }
-        if (count) {
-            out << "<span class=\"crm-count\"> ($count)</span>"
+        if(count) {
+            def badge = attrs.badge
+            if(badge) {
+                // Render Twitter Bootstrap badge.
+                out << """<span class="badge badge-$badge">$count</span>"""
+            } else {
+                out << """<span class="crm-count"> ($count)</span>"""
+            }
         }
     }
 
