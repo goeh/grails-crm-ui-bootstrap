@@ -19,33 +19,36 @@ package grails.plugins.crm.ui.bootstrap;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import groovy.transform.CompileStatic;
 import org.springframework.util.StringUtils;
 
 /**
  *
  * @author Goran Ehrsson
  */
+@CompileStatic
 public class CustomDateEditor extends org.springframework.beans.propertyeditors.CustomDateEditor {
 
     private boolean sql;
 
     public static String[] DATE_FORMATS = new String[]{"yyyy-MM-dd", "yyyyMMdd", "yyMMdd"};
 
-    public CustomDateEditor(DateFormat dateFormat, boolean allowEmpty, int exactDateLength) {
+    public CustomDateEditor(final DateFormat dateFormat, final boolean allowEmpty, final int exactDateLength) {
         super(dateFormat, allowEmpty, exactDateLength);
     }
 
-    public CustomDateEditor(DateFormat dateFormat, boolean allowEmpty) {
+    public CustomDateEditor(final DateFormat dateFormat, final boolean allowEmpty) {
         super(dateFormat, allowEmpty);
     }
 
-    public CustomDateEditor(DateFormat dateFormat, boolean allowEmpty, boolean sqlDate) {
+    public CustomDateEditor(final DateFormat dateFormat, final boolean allowEmpty, final boolean sqlDate) {
         super(dateFormat, allowEmpty);
         sql = sqlDate;
     }
 
     @Override
-    public void setAsText(String text) throws IllegalArgumentException {
+    public void setAsText(final String text) throws IllegalArgumentException {
         if (!StringUtils.hasText(text)) {
             setValue(null); // Treat empty String as null value.
         } else {

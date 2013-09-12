@@ -16,15 +16,18 @@
  */
 package grails.plugins.crm.ui.bootstrap
 
+import groovy.transform.CompileStatic
+
 /**
  * Utility to get Silk Icon names.
  * Silk is a smooth, free icon set, containing 1000 16-by-16 pixel icons in strokably-soft PNG format.
  * Containing a large variety of icons, you're sure to find something that tickles your fancy.
  * http://www.famfamfam.com/lab/icons/silk/
  */
-class SilkIcons {
+@CompileStatic
+final class SilkIcons {
   private SilkIcons() {}
-  public static final List icons = [
+  public static final List<String> icons = [
     "accept",
     "add",
     "anchor",

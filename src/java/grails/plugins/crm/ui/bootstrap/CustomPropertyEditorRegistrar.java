@@ -17,6 +17,8 @@
 package grails.plugins.crm.ui.bootstrap;
 
 import java.text.SimpleDateFormat;
+
+import groovy.transform.CompileStatic;
 import org.springframework.beans.PropertyEditorRegistrar;
 import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -25,6 +27,7 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
  *
  * @author Goran Ehrsson
  */
+@CompileStatic
 public final class CustomPropertyEditorRegistrar implements PropertyEditorRegistrar {
 
     public void registerCustomEditors(PropertyEditorRegistry registry) {
