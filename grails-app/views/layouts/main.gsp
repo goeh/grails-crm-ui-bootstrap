@@ -1,11 +1,8 @@
 <%@ page import="org.apache.commons.lang.StringUtils; grails.plugins.crm.core.TenantUtils; grails.util.GrailsNameUtils;" %><!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"><!--<![endif]-->
+<html lang="en" class="no-js">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title><g:layoutTitle default="${meta(name: 'app.name')}"/></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -22,27 +19,19 @@
     <r:script>
 
         $(document).ajaxError(function(e, xhr, settings, exception) {
-
-            var message = '';
-
-            if (xhr.status == 0) {
-                message = 'You are offline!\n Please check your network.';
-            } else if (xhr.status == 403) {
+            if (xhr.status == 403) {
                 window.location.href = "${createLink(mapping: 'start', absolute: true)}";
-                return;
             } else if (xhr.status == 404) {
-                message = 'Requested URL not found.';
+                alert('Requested URL not found.');
             } else if (xhr.status == 500) {
-                message = xhr.responseText;
+                alert('Error.\nInternal server error.');
             } else if (errStatus == 'parsererror') {
-                message = 'Error.\nParsing JSON Request failed.';
+                alert('Error.\nParsing JSON Request failed.');
             } else if (errStatus == 'timeout') {
-                message = 'Request timed out.\nPlease try later';
+                alert('Request timed out.\nPlease try later');
             } else {
-                message = ('Unknown Error.\n' + xhr.responseText);
+                alert('Unknown Error.');
             }
-
-            alert(message);
         });
 
         $(document).ready(function() {
