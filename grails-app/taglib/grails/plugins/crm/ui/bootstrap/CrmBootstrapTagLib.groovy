@@ -627,8 +627,9 @@ class CrmBootstrapTagLib {
         if (attrs.id != null) {
             linkParams.id = attrs.id
         }
+        def linkAttributes = [:]
         if (attrs.fragment != null) {
-            linkParams.fragment = attrs.fragment
+            linkAttributes.fragment = attrs.remove('fragment')
         }
         linkParams[prefix + 'sort'] = property
 
@@ -668,7 +669,9 @@ class CrmBootstrapTagLib {
         attrs.each { k, v ->
             writer << "${k}=\"${v.encodeAsHTML()}\" "
         }
-        writer << ">${link(action: action, params: linkParams) { title }}</th>"
+        linkAttributes.action = action
+        linkAttributes.params = linkParams
+        writer << ">${link(linkAttributes) { title }}</th>"
     }
 
     def alert = { attrs, body ->
