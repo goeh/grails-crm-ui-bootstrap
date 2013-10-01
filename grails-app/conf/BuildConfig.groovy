@@ -18,7 +18,7 @@ grails.project.dependency.resolution = {
         mavenCentral()
     }
     dependencies {
-        compile "org.ocpsoft.prettytime:prettytime:2.1.3.Final"
+        compile "org.ocpsoft.prettytime:prettytime:3.1.0.Final"
         test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
 
