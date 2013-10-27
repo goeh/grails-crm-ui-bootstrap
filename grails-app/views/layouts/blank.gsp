@@ -63,7 +63,7 @@
     <div class="row-fluid">
         <div class="span4">
             <div id="brand" class="visible-desktop">
-                <crm:logo size="large"/>
+                <span class="brand"><crm:logo/></span>
             </div>
         </div>
 

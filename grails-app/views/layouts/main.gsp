@@ -75,7 +75,7 @@
         <div class="row-fluid">
             <div class="span4">
                 <div id="brand" class="visible-desktop">
-                    <g:link uri="/"><crm:logo size="large"/></g:link>
+                    <g:link uri="/" class="brand"><crm:logo/></g:link>
                 </div>
             </div>
             <div class="span8">
