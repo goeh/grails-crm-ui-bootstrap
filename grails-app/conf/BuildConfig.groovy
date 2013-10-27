@@ -48,7 +48,7 @@ grails.project.dependency.resolution = {
         runtime ":famfamfam:1.0.1"
         runtime ":content-buffer:1.0.1"
 
-        compile "grails.crm:crm-core:1.2.0"
+        compile "grails.crm:crm-core:latest.integration"
         runtime "grails.crm:crm-notification:latest.integration"
 
         runtime ":recent-domain:latest.integration"
