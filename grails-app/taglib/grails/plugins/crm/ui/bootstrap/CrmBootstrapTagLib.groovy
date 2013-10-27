@@ -326,7 +326,7 @@ class CrmBootstrapTagLib {
      */
     def button = { attrs, body ->
         def props = takeAttributes(attrs, ['type', 'action', 'visual', 'class', 'icon', 'label', 'title', 'args',
-                'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission', 'group'])
+                'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission', 'group', 'elementId'])
         if (props.permission && !crmSecurityService.isPermitted(props.permission)) {
             return
         }
@@ -344,6 +344,9 @@ class CrmBootstrapTagLib {
         switch (type) {
             case 'button':
                 out << '<button type="submit"'
+                if(props.elementId) {
+                    out << " id=\"${props.elementId}\""
+                }
                 if (action) {
                     out << " name=\"_action_${action.encodeAsHTML()}\""
                 }
