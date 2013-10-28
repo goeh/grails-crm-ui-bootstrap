@@ -50,9 +50,14 @@ grails.project.dependency.resolution = {
 
         compile "grails.crm:crm-core:latest.integration"
         runtime "grails.crm:crm-notification:latest.integration"
+        runtime "grails.crm:crm-security:latest.integration"
 
         runtime ":recent-domain:latest.integration"
         runtime ":user-tag:latest.integration"
+
+        test(":selection-repository:latest.integration") {
+            export = false
+        }
     }
 }
 
