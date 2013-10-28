@@ -221,7 +221,7 @@ class CrmBootstrapTagLib {
                 out << """<li class="divider"></li>"""
                 for (sel in savedSelections) {
                     out << "<li>"
-                    out << select.link(controller: params.controller ?: location, action: attrs.action ?: 'list', selection: sel.uri, sel.name)
+                    out << select.link(controller: attrs.controller ?: location, action: attrs.action ?: 'list', selection: sel.uri, sel.name)
                     out << "</li>"
                 }
             }
