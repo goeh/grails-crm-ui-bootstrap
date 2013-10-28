@@ -16,20 +16,21 @@
 
 class CrmUiBootstrapGrailsPlugin {
     def groupId = "grails.crm"
-    def version = "1.2.2"
+    def version = "1.2.3"
     def grailsVersion = "2.2 > *"
     def dependsOn = [:]
     def loadAfter = ['crmCore']
     def pluginExcludes = [
             "grails-app/views/error.gsp",
             "grails-app/conf/ApplicationResources.groovy",
-            "web-app/less/custom-bootstrap.less"
+            "web-app/less/custom-bootstrap.less",
+            "src/groovy/grails/plugins/crm/ui/bootstrap/TestSecurityDelegate.groovy"
     ]
-    def title = "Twitter Bootstrap UI for Grails CRM"
+    def title = "Twitter Bootstrap UI for GR8 CRM"
     def author = "Goran Ehrsson"
     def authorEmail = "goran@technipelago.se"
     def description = '''\
-This plugin provides Twitter Bootstrap layout for Grails CRM.
+This plugin provides Twitter Bootstrap layout for GR8 CRM.
 '''
     def documentation = "https://github.com/goeh/grails-crm-ui-bootstrap"
     def license = "APACHE"
