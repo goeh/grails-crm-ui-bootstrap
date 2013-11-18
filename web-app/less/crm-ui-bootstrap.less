@@ -200,3 +200,100 @@ li.select2-no-results {
 .accordion-heading {
   background-color: #fcfcfc;
 }
+
+.crm-treeview ul,
+.crm-treeview li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.crm-treeview li:last-child {
+    margin-bottom: 10px;
+}
+.crm-treeview input {
+    position: absolute;
+    opacity: 0;
+}
+
+.crm-treeview {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.crm-treeview a {
+    color: #4f96f6;
+    text-decoration: none;
+}
+
+.crm-treeview a:hover {
+    text-decoration: underline;
+}
+
+.crm-treeview input + label + ul {
+    margin: 0 0 0 22px;
+}
+
+.crm-treeview input ~ ul {
+    display: none;
+}
+
+.crm-treeview label,
+.crm-treeview label::before {
+    cursor: pointer;
+}
+
+.crm-treeview input:disabled + label {
+    cursor: default;
+    opacity: .6;
+}
+
+.crm-treeview input:checked:not(:disabled) ~ ul {
+    display: block;
+}
+
+.crm-treeview label,
+.crm-treeview label::before {
+    background: url('../images/treeview.png') no-repeat;
+}
+
+.crm-treeview label,
+.crm-treeview a,
+.crm-treeview label::before {
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+
+.crm-treeview label {
+    background-position: 18px 0;
+}
+
+.crm-treeview label::before {
+    content: "";
+    width: 16px;
+    margin: 0 22px 0 0;
+    vertical-align: middle;
+    background-position: 0 -32px;
+}
+
+.crm-treeview input:checked + label::before {
+    background-position: 0 -16px;
+}
+
+/* webkit adjacent element selector bugfix */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .crm-treeview {
+        -webkit-animation: webkit-adjacent-element-selector-bugfix infinite 1s;
+    }
+
+    @-webkit-keyframes webkit-adjacent-element-selector-bugfix {
+        from {
+            padding: 0;
+        }
+        to {
+            padding: 0;
+        }
+    }
+}
