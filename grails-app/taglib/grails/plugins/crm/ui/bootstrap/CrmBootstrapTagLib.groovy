@@ -109,7 +109,7 @@ class CrmBootstrapTagLib {
                 def label = g.message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])
                 def elementId = "menu_${item.controller ?: controllerName}_${item.action}"
                 def linkParams = [:]
-                if(item.params) {
+                if (item.params) {
                     linkParams.putAll(item.params)
                     linkParams.remove('icon')
                 }
@@ -184,7 +184,9 @@ class CrmBootstrapTagLib {
         }
 
         if (splitButton) {
-            out << """<button class="btn ${attrs.visual ? 'btn-' + attrs.visual : ''} dropdown-toggle" data-toggle="dropdown">"""
+            out << """<button class="btn ${
+                attrs.visual ? 'btn-' + attrs.visual : ''
+            } dropdown-toggle" data-toggle="dropdown">"""
             if (!bodyContent) {
                 out << """<i class="icon-search ${attrs.visual ? 'icon-white' : ''}"></i> Sökningar """
             }
@@ -344,7 +346,7 @@ class CrmBootstrapTagLib {
         switch (type) {
             case 'button':
                 out << '<button type="submit"'
-                if(props.elementId) {
+                if (props.elementId) {
                     out << " id=\"${props.elementId}\""
                 }
                 if (action) {
@@ -743,9 +745,9 @@ class CrmBootstrapTagLib {
         if (count instanceof Collection) {
             count = count.size()
         }
-        if(count) {
+        if (count) {
             def badge = attrs.badge
-            if(badge) {
+            if (badge) {
                 // Render Twitter Bootstrap badge.
                 out << """<span class="badge badge-$badge">$count</span>"""
             } else {
@@ -763,8 +765,22 @@ class CrmBootstrapTagLib {
         if (!date) {
             throwTagError("Tag [prettyTime] is missing required attribute [date]")
         }
-        def locale = attrs.locale ? new Locale(attrs.locale) : RCU.getLocale(request)
-        out << new PrettyTime(locale).format(date)
+        def locale
+        if (attrs.locale) {
+            if (attrs.locale instanceof Locale) {
+                locale = attrs.locale
+            } else {
+                locale = new Locale(attrs.locale.toString())
+            }
+        } else {
+            locale = RCU.getLocale(request)
+            if (!locale) {
+                locale = Locale.default
+            }
+        }
+        def pt = new PrettyTime()
+        pt.setLocale(locale)
+        out << pt.format(date)
     }
 
     /**
@@ -809,8 +825,12 @@ class CrmBootstrapTagLib {
 
         out << """
         <div class="muted timestamp">
-            <span class="date-created">${message(code: controllerName + '.dateCreated.label', default: 'Created')} ${formatDate(type: type, dateStyle: dateStyle, timeStyle: timeStyle, date: bean.dateCreated)}</span>
-            <span class="date-updated">${message(code: controllerName + '.lastUpdated.label', default: 'Updated')} ${formatDate(type: type, dateStyle: dateStyle, timeStyle: timeStyle, date: bean.lastUpdated)}</span>
+            <span class="date-created">${message(code: controllerName + '.dateCreated.label', default: 'Created')} ${
+            formatDate(type: type, dateStyle: dateStyle, timeStyle: timeStyle, date: bean.dateCreated)
+        }</span>
+            <span class="date-updated">${message(code: controllerName + '.lastUpdated.label', default: 'Updated')} ${
+            formatDate(type: type, dateStyle: dateStyle, timeStyle: timeStyle, date: bean.lastUpdated)
+        }</span>
         </div>
         """
     }
