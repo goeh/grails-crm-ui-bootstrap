@@ -108,7 +108,7 @@
             </button>
 
             <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name"
-                                                                           default="Grails CRM"/></g:link>
+                                                                           default="GR8 CRM"/></g:link>
 
             <div class="nav-collapse collapse">
                 <crm:user>
