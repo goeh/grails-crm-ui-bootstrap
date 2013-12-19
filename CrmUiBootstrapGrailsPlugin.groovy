@@ -16,14 +16,12 @@
 
 class CrmUiBootstrapGrailsPlugin {
     def groupId = "grails.crm"
-    def version = "1.2.4"
+    def version = "1.2.5"
     def grailsVersion = "2.2 > *"
     def dependsOn = [:]
     def loadAfter = ['crmCore']
     def pluginExcludes = [
             "grails-app/views/error.gsp",
-            "grails-app/conf/ApplicationResources.groovy",
-            "web-app/less/custom-bootstrap.less",
             "src/groovy/grails/plugins/crm/ui/bootstrap/TestSecurityDelegate.groovy"
     ]
     def title = "Twitter Bootstrap UI for GR8 CRM"
