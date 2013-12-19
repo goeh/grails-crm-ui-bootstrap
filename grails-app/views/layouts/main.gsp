@@ -134,7 +134,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name" default="Grails CRM"/></g:link>
+                <g:link mapping="home" class="brand hidden-desktop"><g:message code="app.name" default="GR8 CRM"/></g:link>
 
                 <div class="nav-collapse">
 
@@ -145,7 +145,7 @@
                             </crm:user>
                             <nav:eachItem group="main" var="item">
                                 <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
-                                    <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
+                                    <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
                                         <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
                                                 id="${item.id}"
                                                 title="${message(code:item.controller + '.' + item.action + '.help')}">
@@ -176,14 +176,10 @@
                                         <g:message code="auth.logout.label" default="Logout" args="${[name]}"/>
                                     </g:link>
                                     </li>
-                                    <li><g:link mapping="crm-user-settings" title="${message(code:'crmSettings.index.help', default:'User Settings')}">
-                                        ${message(code: 'crmSettings.label', default: 'Settings', args:[name])}
-                                    </g:link>
-                                    </li>
 
                                     <nav:eachItem group="settings" var="item">
                                         <crm:hasPermission permission="${item.controller + ':' + item.action + (item.id ? ':' + item.id : '')}">
-                                            <li class="${item.active || (item.controller == controllerName) ? 'active' : ''}">
+                                            <li class="${item.active || (item.controller == controllerName && item.action == actionName) ? 'active' : ''}">
                                                 <g:link controller="${item.controller ?: controllerName}" action="${item.action}"
                                                         id="${item.id}"
                                                         title="${message(code:item.controller + '.' + item.action + '.help')}">
@@ -192,10 +188,6 @@
                                             </li>
                                         </crm:hasPermission>
                                     </nav:eachItem>
-
-                                    <li class="divider"></li>
-
-                                    <li><g:link mapping="crm-tenant" title="${message(code:'crmTenant.index.help', default:'Tenant Settings')}"><g:message code="crmTenant.index.label" default="Tenants"/></g:link></li>
 
                                     <li class="divider"></li>
 
