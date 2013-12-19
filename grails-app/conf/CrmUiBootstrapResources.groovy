@@ -39,7 +39,7 @@ modules = {
         // We depend only on bootstrap JavaScript, not the bootstrap styles. Add styles as described above.
         dependsOn 'jquery, modernizr, bootstrap-js'
 
-        resource url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'crm-ui-bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 100], disposition: 'head'
+        resource url: [id: 'crm-ui-bootstrap-less', plugin: 'crm-ui-bootstrap', dir: 'less', file: 'crm-ui-bootstrap.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 110], disposition: 'head'
         resource url: 'js/crm-ui-bootstrap.js'
 
         resource url: 'js/jquery.dropdownPlain.js'
