@@ -383,14 +383,17 @@ class CrmBootstrapTagLib {
                 if (title) {
                     linkAttrs.title = title
                 }
+                if (props.elementId) {
+                    linkAttrs.elementId = props.elementId
+                }
                 out << g.link(linkAttrs + attrs, label)
                 break;
             case 'url':
                 out << "<a href=\"${props.href}\""
-                out << " class=\"${css.encodeAsHTML()}\""
-                if (confirm) {
-                    out << " onclick=\"return confirm('$confirm')\""
+                if (props.elementId) {
+                    out << " id=\"${props.elementId}\""
                 }
+                out << " class=\"${css.encodeAsHTML()}\""
                 if (props.style) {
                     out << " style=\"${props.style}\""
                 }
@@ -399,6 +402,9 @@ class CrmBootstrapTagLib {
                 }
                 if (props.target) {
                     out << " target=\"${props.target}\""
+                }
+                if (confirm) {
+                    out << " onclick=\"return confirm('$confirm')\""
                 }
                 out << "${renderAttributes(attrs)}>"
                 if (icon) {
