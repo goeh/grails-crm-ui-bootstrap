@@ -694,6 +694,46 @@ class CrmBootstrapTagLib {
     }
 
     /**
+     * Render javascript code for initializing a datepicker on the page.
+     *
+     * &lt;crm:datepicker/> without any options is equivalent to the following:
+     * &lt;crm:datepicker selector=".date" format="yyyy-mm-dd" weekStart="1" language="<request.locale>" calendarWeeks="true" todayHighLight="true"/>
+     */
+    def datepicker = {attrs->
+        def config = grailsApplication.config.crm.datepicker
+        if(! attrs.selector) attrs.selector = (config.selector ?: '.date')
+        if(! attrs.calendarWeeks) attrs.calendarWeeks = (config.calendarWeeks ?: false)
+        if(! attrs.todayHighlight) attrs.todayHighlight = (config.todayHighlight == false ? false : true)
+        if(! attrs.language) {
+            def locale = attrs.locale ? new Locale(attrs.remove('locale')) : RCU.getLocale(request)
+            attrs.language = locale.getLanguage()
+        }
+
+        out << """\$('${attrs.selector}').datepicker({
+language: "${attrs.language}",
+calendarWeeks: ${attrs.calendarWeeks},
+todayHighlight: ${attrs.todayHighlight}"""
+
+        if(attrs.format != null) {
+            out << ",\nformat: \"${attrs.format}\""
+        }
+        if(attrs.weekStart != null) {
+            out << ",\nweekStart: ${attrs.weekStart}"
+        }
+
+        if(attrs.todayBtn || config.todayBtn) {
+            out << ",\ntodayBtn: true"
+        }
+
+        def days = attrs.daysOfWeekDisabled ?: config.daysOfWeekDisabled
+        if(days) {
+            out << ",\ndaysOfWeekDisabled: \"${days}\""
+        }
+
+        out << "\n});"
+    }
+
+    /**
      * Render week number.
      *
      * @attr date REQUIRED the date to render week number for.
