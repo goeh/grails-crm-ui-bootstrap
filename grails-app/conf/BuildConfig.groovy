@@ -35,7 +35,7 @@ grails.project.dependency.resolution = {
         test(":codenarc:0.19") { export = false }
         test(":code-coverage:1.2.7") { export = false }
 
-        runtime ":resources:1.2"
+        runtime ":resources:1.2.7"
         runtime ":less-resources:1.3.3.2"
         runtime ":jquery:1.10.2"
         runtime ":twitter-bootstrap:2.3.2"
