@@ -65,7 +65,15 @@ modules = {
 
     datepicker {
         dependsOn 'bootstrap-js'
-        resource url: 'js/bootstrap-datepicker.js'
+        resource url: 'js/datepicker/bootstrap-datepicker.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.sv.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.da.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.no.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.fi.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.pl.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.de.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.fr.js'
+        resource url: 'js/datepicker/locales/bootstrap-datepicker.es.js'
         resource url: [plugin: 'crm-ui-bootstrap', dir: 'less', file: 'datepicker.less'], attrs: [rel: "stylesheet/less", type: 'css', order: 190], disposition: 'head'
     }
 
