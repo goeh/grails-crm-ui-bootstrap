@@ -704,6 +704,7 @@ class CrmBootstrapTagLib {
         if(! attrs.selector) attrs.selector = (config.selector ?: '.date')
         if(! attrs.calendarWeeks) attrs.calendarWeeks = (config.calendarWeeks ?: false)
         if(! attrs.todayHighlight) attrs.todayHighlight = (config.todayHighlight == false ? false : true)
+        if(! attrs.autoclose) attrs.autoclose = (config.autoclose == false ? false : true)
         if(! attrs.language) {
             def locale = attrs.locale ? new Locale(attrs.remove('locale')) : RCU.getLocale(request)
             attrs.language = locale.getLanguage()
@@ -712,7 +713,8 @@ class CrmBootstrapTagLib {
         out << """\$('${attrs.selector}').datepicker({
 language: "${attrs.language}",
 calendarWeeks: ${attrs.calendarWeeks},
-todayHighlight: ${attrs.todayHighlight}"""
+todayHighlight: ${attrs.todayHighlight},
+autoclose: ${attrs.autoclose}"""
 
         if(attrs.format != null) {
             out << ",\nformat: \"${attrs.format}\""
