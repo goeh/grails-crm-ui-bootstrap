@@ -699,7 +699,7 @@ class CrmBootstrapTagLib {
      * &lt;crm:datepicker/> without any options is equivalent to the following:
      * &lt;crm:datepicker selector=".date" format="yyyy-mm-dd" weekStart="1" language="<request.locale>" calendarWeeks="true" todayHighLight="true"/>
      */
-    def datepicker = {attrs->
+    def datepicker = {attrs, body ->
         def config = grailsApplication.config.crm.datepicker
         if(! attrs.selector) attrs.selector = (config.selector ?: '.date')
         if(! attrs.calendarWeeks) attrs.calendarWeeks = (config.calendarWeeks ?: false)
@@ -732,7 +732,7 @@ autoclose: ${attrs.autoclose}"""
             out << ",\ndaysOfWeekDisabled: \"${days}\""
         }
 
-        out << "\n});"
+        out << "\n})${body()};"
     }
 
     /**
