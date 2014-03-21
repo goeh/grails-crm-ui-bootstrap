@@ -358,9 +358,7 @@
         </div>
 
         <div id="footer-wrapper">
-            <footer>
-                <div id="copyright"><g:message code="app.copyright.message" default=""/> (${TenantUtils.tenant})</div>
-            </footer>
+            <g:render template="/footer"/>
         </div>
     </div>
 
