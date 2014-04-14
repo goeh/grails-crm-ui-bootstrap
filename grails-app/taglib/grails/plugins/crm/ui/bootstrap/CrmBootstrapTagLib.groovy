@@ -33,6 +33,7 @@ class CrmBootstrapTagLib {
     def selectionService
     def selectionRepositoryService
     def crmThemeService
+    def grailsLinkGenerator
 
     def logo = { attrs, body ->
         def image
@@ -44,7 +45,7 @@ class CrmBootstrapTagLib {
             image = "/images/grails_logo.png"
         }
         if (Boolean.valueOf(attrs.absolute)) {
-            image = grailsApplication.config.grails.serverURL + image
+            image = grailsLinkGenerator.getServerBaseURL() + image
         }
 
         out << g.img(uri: image)
