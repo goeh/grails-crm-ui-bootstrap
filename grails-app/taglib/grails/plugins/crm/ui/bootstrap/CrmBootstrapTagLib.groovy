@@ -182,12 +182,14 @@ class CrmBootstrapTagLib {
                 attrs.visual ? 'btn-' + attrs.visual : ''
             } dropdown-toggle" data-toggle="dropdown">"""
             if (!bodyContent) {
-                out << """<i class="icon-search ${attrs.visual ? 'icon-white' : ''}"></i> Sökningar """
+                def label = message(code: controllerName + '.button.selections.label', default: 'Filters')
+                out << """<i class="icon-search ${attrs.visual ? 'icon-white' : ''}"></i> $label """
             }
             out << """<span class="caret"></span></button>\n"""
             out << """<ul class="dropdown-menu">\n"""
             if (selection) {
-                out << """<li>${link(action: "index", "Ny sökning")}</li>"""
+                def label = message(code: controllerName + '.button.search.again.label', default: 'New Query')
+                out << """<li>${link(action: "index", label)}</li>"""
                 if (crmSecurityService.isPermitted("selectionRepository:create")) {
                     out << "<li>"
                     out << link(controller: 'selectionRepository', action: 'create',
