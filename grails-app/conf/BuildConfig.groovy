@@ -38,25 +38,25 @@ grails.project.dependency.resolution = {
         test(":codenarc:0.21") { export = false }
         test(":code-coverage:1.2.7") { export = false }
 
-        runtime ":resources:1.2.7"
-        runtime ":less-resources:1.3.3.2"
-        runtime ":jquery:1.10.2"
-        runtime ":twitter-bootstrap:2.3.2"
-        runtime ":fields:1.3"
-        runtime ":navigation:1.3.2"
-        runtime ":famfamfam:1.0.1"
-        runtime ":content-buffer:1.0.1"
-
-        compile "grails.crm:crm-core:latest.integration"
-        runtime "grails.crm:crm-notification:latest.integration"
-        runtime "grails.crm:crm-security:latest.integration"
-
-        runtime ":recent-domain:latest.integration"
-        runtime ":user-tag:latest.integration"
-
-        test(":selection-repository:latest.integration") {
+        test(":selection-repository:0.9.3") {
             export = false
         }
+
+        compile ":resources:1.2.7"
+        compile ":less-resources:1.3.3.2"
+        compile ":jquery:1.10.2"
+        compile ":twitter-bootstrap:2.3.2"
+        compile ":fields:1.3"
+        compile ":navigation:1.3.2"
+        compile ":famfamfam:1.0.1"
+        compile ":content-buffer:1.0.1"
+
+        compile "grails.crm:crm-core:latest.integration"
+        compile "grails.crm:crm-notification:latest.integration"
+        compile "grails.crm:crm-security:latest.integration"
+
+        compile ":recent-domain:latest.integration"
+        compile ":user-tag:0.6"
     }
 }
 
