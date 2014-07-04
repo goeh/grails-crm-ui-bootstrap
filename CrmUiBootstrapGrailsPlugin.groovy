@@ -16,7 +16,7 @@
 
 class CrmUiBootstrapGrailsPlugin {
     def groupId = "grails.crm"
-    def version = "1.2.12"
+    def version = "1.2.13-SNAPSHOT"
     def grailsVersion = "2.2 > *"
     def dependsOn = [:]
     def loadAfter = ['crmCore']
