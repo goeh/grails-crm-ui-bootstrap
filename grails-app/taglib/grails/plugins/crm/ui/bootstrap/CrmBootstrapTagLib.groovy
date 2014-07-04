@@ -19,8 +19,11 @@ package grails.plugins.crm.ui.bootstrap
 import grails.plugins.crm.core.DateUtils
 import grails.util.GrailsNameUtils
 import grails.plugins.crm.core.TenantUtils
+import org.springframework.web.servlet.support.RequestContextUtils
 import org.springframework.web.servlet.support.RequestContextUtils as RCU
 import org.ocpsoft.prettytime.PrettyTime
+
+import java.text.DateFormat
 
 class CrmBootstrapTagLib {
 
@@ -703,13 +706,13 @@ class CrmBootstrapTagLib {
      * &lt;crm:datepicker selector=".date" format="yyyy-mm-dd" weekStart="1" language="<request.locale>" calendarWeeks="true" todayHighLight="true"/>
      */
     def datepicker = {attrs, body ->
+        def locale = attrs.locale ? new Locale(attrs.remove('locale')) : RCU.getLocale(request)
         def config = grailsApplication.config.crm.datepicker
         if(! attrs.selector) attrs.selector = (config.selector ?: '.date')
         if(! attrs.calendarWeeks) attrs.calendarWeeks = (config.calendarWeeks ?: false)
         if(! attrs.todayHighlight) attrs.todayHighlight = (config.todayHighlight == false ? false : true)
         if(! attrs.autoclose) attrs.autoclose = (config.autoclose == false ? false : true)
         if(! attrs.language) {
-            def locale = attrs.locale ? new Locale(attrs.remove('locale')) : RCU.getLocale(request)
             attrs.language = locale.getLanguage()
         }
 
@@ -721,6 +724,9 @@ autoclose: ${attrs.autoclose}"""
 
         if(attrs.format != null) {
             out << ",\nformat: \"${attrs.format}\""
+        } else {
+            def df = DateFormat.getDateInstance(DateFormat.SHORT, locale)
+            out << ",\nformat: \"${df.toPattern().toLowerCase()}\""
         }
         if(attrs.weekStart != null) {
             out << ",\nweekStart: ${attrs.weekStart}"
