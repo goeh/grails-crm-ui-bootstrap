@@ -52,7 +52,7 @@ grails.project.dependency.resolution = {
         compile ":content-buffer:1.0.1"
 
         compile "grails.crm:crm-core:latest.integration"
-        compile "grails.crm:crm-notification:latest.integration"
+        //compile "grails.crm:crm-notification:latest.integration"
         compile "grails.crm:crm-security:latest.integration"
 
         compile ":recent-domain:latest.integration"
