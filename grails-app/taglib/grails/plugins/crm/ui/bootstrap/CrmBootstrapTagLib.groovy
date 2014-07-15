@@ -232,7 +232,7 @@ class CrmBootstrapTagLib {
     }
 
     /**
-     * Render a age header.
+     * Render a page header.
      *
      * @attr title page title
      * @attr subtitle optional subtitle.
