@@ -12,3 +12,7 @@ With CRM we mean features like:
 - Project Management
 
 This plugin provides Twitter Bootstrap user interface features for GR8 CRM.
+
+### Documentation
+
+Complete documentation can be found at [gr8crm.github.io](http://gr8crm.github.io/plugins/crm-ui-bootstrap/crm-ui-bootstrap.html)
