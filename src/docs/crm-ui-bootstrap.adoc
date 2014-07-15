@@ -1,5 +1,7 @@
 = GR8 CRM - Twitter Bootstrap UI Plugin
 Göran Ehrsson <goran@technipelago.se>
+:description: Official documentation for the GR8 CRM Twitter Bootstrap User Interface Plugin
+:keywords: groovy, grails, crm, gr8crm, documentation
 :toc:
 :numbered:
 :icons: font
@@ -26,10 +28,16 @@ The {gr8crm} "Ecosystem" currently contains over 40 Grails plugins. For a comple
 Each {gr8crm} plugin defines a http://martinfowler.com/bliki/BoundedContext.html[Bounded Context]
 that focus on one specific domain, for example *contact*, *project* or *document*.
 
-== CRM Twitter Bootstrap UI Plugin
+== GR8 CRM Twitter Bootstrap UI Plugin
 
-This plugin provides a Twitter Bootstrap user Interface for {gr8crm} applications. It contains layouts and GRP tags
-that makes it easy to build user interfaces for {gr8crm} applications.
+This plugin provides a http://getbootstrap.com/2.3.2/[Twitter Bootstrap^] user Interface for {gr8crm} applications.
+It contains layouts and GRP tags that makes it easy to build user interfaces for {gr8crm} applications.
+
+== Layouts
+
+=== Layout: main
+
+The main layout ...
 
 == Tag Libraries
 
@@ -89,15 +97,15 @@ Renders a number enclosed by parenthesis, but only if the number is greater than
 
 === prettyTime
 
-Renders a date using the prettytime library.
+Renders a date using Ocpsoft's http://ocpsoft.org/prettytime/[prettytime^] library.
 
 === printedBy
 
-Renders "Printed on September 7 10:09:12 by Liza User"
+Renders *Printed on September 7 10:09:12 by Liza User*
 
 === timestamp
 
-Renders +dateCreated+ and +lastUpdated+ timestamps with CSS class 'muted timestamp'.
+Renders +dateCreated+ and +lastUpdated+ timestamps with CSS class +muted timestamp+.
 
 == Configuration
 
