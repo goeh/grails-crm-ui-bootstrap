@@ -15,7 +15,7 @@
  */
 
 class CrmUiBootstrapGrailsPlugin {
-    def groupId = "gr8crm"
+    def groupId = ""
     def version = "2.0.0"
     def grailsVersion = "2.2 > *"
     def dependsOn = [:]
@@ -28,9 +28,9 @@ class CrmUiBootstrapGrailsPlugin {
     def author = "Goran Ehrsson"
     def authorEmail = "goran@technipelago.se"
     def description = '''\
-This plugin provides Twitter Bootstrap layout for GR8 CRM.
+This plugin provides Twitter Bootstrap layout for GR8 CRM applications.
 '''
-    def documentation = "http://gr8crm.github.io/plugins/crm-ui-bootstrap/crm-ui-bootstrap.html"
+    def documentation = "http://gr8crm.github.io/plugins/crm-ui-bootstrap/"
     def license = "APACHE"
     def organization = [name: "Technipelago AB", url: "http://www.technipelago.se/"]
     def issueManagement = [system: "github", url: "https://github.com/goeh/grails-crm-ui-bootstrap/issues"]
