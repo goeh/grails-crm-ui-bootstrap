@@ -1,26 +1,28 @@
 /*
- *  Copyright 2012 Goran Ehrsson.
+ * Copyright 2014 Goran Ehrsson.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *  under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package grails.plugins.crm.ui.bootstrap
 
 import grails.plugins.crm.core.DateUtils
 import grails.util.GrailsNameUtils
 import grails.plugins.crm.core.TenantUtils
+import org.springframework.web.servlet.support.RequestContextUtils
 import org.springframework.web.servlet.support.RequestContextUtils as RCU
 import org.ocpsoft.prettytime.PrettyTime
+
+import java.text.DateFormat
 
 class CrmBootstrapTagLib {
 
@@ -182,12 +184,14 @@ class CrmBootstrapTagLib {
                 attrs.visual ? 'btn-' + attrs.visual : ''
             } dropdown-toggle" data-toggle="dropdown">"""
             if (!bodyContent) {
-                out << """<i class="icon-search ${attrs.visual ? 'icon-white' : ''}"></i> Sökningar """
+                def label = message(code: controllerName + '.button.selections.label', default: 'Filters')
+                out << """<i class="icon-search ${attrs.visual ? 'icon-white' : ''}"></i> $label """
             }
             out << """<span class="caret"></span></button>\n"""
             out << """<ul class="dropdown-menu">\n"""
             if (selection) {
-                out << """<li>${link(action: "index", "Ny sökning")}</li>"""
+                def label = message(code: controllerName + '.button.search.again.label', default: 'New Query')
+                out << """<li>${link(action: "index", label)}</li>"""
                 if (crmSecurityService.isPermitted("selectionRepository:create")) {
                     out << "<li>"
                     out << link(controller: 'selectionRepository', action: 'create',
@@ -227,7 +231,7 @@ class CrmBootstrapTagLib {
     }
 
     /**
-     * Render a age header.
+     * Render a page header.
      *
      * @attr title page title
      * @attr subtitle optional subtitle.
@@ -701,13 +705,13 @@ class CrmBootstrapTagLib {
      * &lt;crm:datepicker selector=".date" format="yyyy-mm-dd" weekStart="1" language="<request.locale>" calendarWeeks="true" todayHighLight="true"/>
      */
     def datepicker = {attrs, body ->
+        def locale = attrs.locale ? new Locale(attrs.remove('locale')) : RCU.getLocale(request)
         def config = grailsApplication.config.crm.datepicker
         if(! attrs.selector) attrs.selector = (config.selector ?: '.date')
         if(! attrs.calendarWeeks) attrs.calendarWeeks = (config.calendarWeeks ?: false)
         if(! attrs.todayHighlight) attrs.todayHighlight = (config.todayHighlight == false ? false : true)
         if(! attrs.autoclose) attrs.autoclose = (config.autoclose == false ? false : true)
         if(! attrs.language) {
-            def locale = attrs.locale ? new Locale(attrs.remove('locale')) : RCU.getLocale(request)
             attrs.language = locale.getLanguage()
         }
 
@@ -719,6 +723,9 @@ autoclose: ${attrs.autoclose}"""
 
         if(attrs.format != null) {
             out << ",\nformat: \"${attrs.format}\""
+        } else {
+            def df = DateFormat.getDateInstance(DateFormat.SHORT, locale)
+            out << ",\nformat: \"${df.toPattern().toLowerCase()}\""
         }
         if(attrs.weekStart != null) {
             out << ",\nweekStart: ${attrs.weekStart}"

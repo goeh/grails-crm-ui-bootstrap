@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Goran Ehrsson.
+ * Copyright 2014 Goran Ehrsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@
  */
 
 class CrmUiBootstrapGrailsPlugin {
-    def groupId = "grails.crm"
-    def version = "1.4.0-SNAPSHOT"
-    def grailsVersion = "2.4 > *"
+    def groupId = ""
+    def version = "2.0.1-SNAPSHOT"
+    def grailsVersion = "2.2 > *"
     def dependsOn = [:]
     def loadAfter = ['crmCore']
     def pluginExcludes = [
@@ -28,9 +28,9 @@ class CrmUiBootstrapGrailsPlugin {
     def author = "Goran Ehrsson"
     def authorEmail = "goran@technipelago.se"
     def description = '''\
-This plugin provides Twitter Bootstrap layout for GR8 CRM.
+This plugin provides Twitter Bootstrap layout for GR8 CRM applications.
 '''
-    def documentation = "https://github.com/goeh/grails-crm-ui-bootstrap"
+    def documentation = "http://gr8crm.github.io/plugins/crm-ui-bootstrap/"
     def license = "APACHE"
     def organization = [name: "Technipelago AB", url: "http://www.technipelago.se/"]
     def issueManagement = [system: "github", url: "https://github.com/goeh/grails-crm-ui-bootstrap/issues"]

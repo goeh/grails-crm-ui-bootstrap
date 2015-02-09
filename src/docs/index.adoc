@@ -1,0 +1,120 @@
+= GR8 CRM - Twitter Bootstrap UI Plugin
+Göran Ehrsson <goran@technipelago.se>
+:description: Official documentation for the GR8 CRM Twitter Bootstrap User Interface Plugin
+:keywords: groovy, grails, crm, gr8crm, documentation
+:toc:
+:numbered:
+:icons: font
+:imagesdir: ./images
+:source-highlighter: prettify
+:homepage: http://gr8crm.github.io
+:gr8crm: GR8 CRM
+:gr8source: https://github.com/goeh/grails-crm-ui-bootstrap
+:license: This plugin is licensed with http://www.apache.org/licenses/LICENSE-2.0.html[Apache License version 2.0]
+
+== Introduction
+
+{gr8crm} is a set of http://www.grails.org/[Grails Web Application Framework]
+plugins that makes it easy to develop web applications with CRM functionality.
+
+You can find more information about {gr8crm} on the main documentation site {homepage}.
+
+=== Customer relationship management
+
+Customer relationship management (CRM) is a system for managing a company’s interactions with current and future customers.
+It involves using technology to organize, automate and synchronize sales, marketing, customer service, and technical support.
+http://en.wikipedia.org/wiki/Customer_relationship_management[Wikipedia]
+
+The {gr8crm} "Ecosystem" currently contains over 40 Grails plugins. For a complete list of plugins see {homepage}.
+
+Each {gr8crm} plugin defines a http://martinfowler.com/bliki/BoundedContext.html[Bounded Context]
+that focus on one specific domain, for example *contact*, *project* or *document*.
+
+== GR8 CRM Twitter Bootstrap UI Plugin
+
+This plugin provides a http://getbootstrap.com/2.3.2/[Twitter Bootstrap^] user Interface for {gr8crm} applications.
+It contains layouts and GRP tags that makes it easy to build user interfaces for {gr8crm} applications.
+
+== Layouts
+
+=== Layout: main
+
+The main layout ...
+
+== Tag Libraries
+
+This plugin provide several useful tags under the +crm+ namespace.
+
+=== logo
+
+Renders a logo picture based on current theme.
+
+=== submenu
+
+Renders a sub menu.
+
+=== selectionMenu
+
+Renders a selection menu.
+
+=== header
+
+Render a page header.
+
+=== favoriteIcon
+
+Renders a favorite icon (star) if a bean is tagged as favorite.
+
+=== button
+
+Renders a button or anchor with Twitter Bootstrap style.
+
+=== paginate
+
+Creates next/previous links to support pagination for the current controller.
+
+=== sortableColumn
+
+Renders a sortable column to support sorting in list views.
+
+=== alert
+
+Renders an alert box.
+
+=== datepicker
+
+Render javascript code for initializing a datepicker on the page.
+
+=== weekNumber
+
+Render week number.
+
+=== pluginTab
+
+Renders a tab list item.
+
+=== countIndicator
+
+Renders a number enclosed by parenthesis, but only if the number is greater than zero.
+
+=== prettyTime
+
+Renders a date using Ocpsoft's http://ocpsoft.org/prettytime/[prettytime^] library.
+
+=== printedBy
+
+Renders *Printed on September 7 10:09:12 by Liza User*
+
+=== timestamp
+
+Renders +dateCreated+ and +lastUpdated+ timestamps with CSS class +muted timestamp+.
+
+== Configuration
+
+== License
+
+{license}
+
+== Source Code
+
+The source code for this plugin is available at {gr8source}
