@@ -9,7 +9,7 @@ Göran Ehrsson <goran@technipelago.se>
 :source-highlighter: prettify
 :homepage: http://gr8crm.github.io
 :gr8crm: GR8 CRM
-:gr8source: https://github.com/goeh/grails-crm-security
+:gr8source: https://github.com/goeh/grails-crm-ui-bootstrap
 :license: This plugin is licensed with http://www.apache.org/licenses/LICENSE-2.0.html[Apache License version 2.0]
 
 == Introduction
