@@ -1,14 +1,9 @@
 package grails.plugins.crm.ui.bootstrap
 
-import grails.plugins.crm.core.TenantUtils
 import grails.test.GroovyPagesTestCase
 
 /**
- * Created with IntelliJ IDEA.
- * User: goran
- * Date: 2013-10-28
- * Time: 19:01
- * To change this template use File | Settings | File Templates.
+ * Tests for crm-ui-bootstrap tag library.
  */
 class CrmBootstrapTagLibTests extends GroovyPagesTestCase {
 

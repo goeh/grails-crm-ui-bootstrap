@@ -65,7 +65,7 @@ abstract class CrmLookupEntityController {
                     flash.success = "${message(code: beanName + '.created.message', args: [message(code: beanName + '.label', default: beanName), instance])}"
                     redirect(action: "index")
                 } else {
-                    render(view: '/lookupEntity-create', plugin: 'crm-base', model: [bean: instance, beanName: beanName])
+                    render(view: '/lookupEntity-create', plugin: 'crm-ui-bootstrap', model: [bean: instance, beanName: beanName])
                 }
                 break
         }

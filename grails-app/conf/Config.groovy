@@ -20,11 +20,16 @@ log4j = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 
-    warn   'org.mortbay.log'
-
-    debug 'grails.app.resourceMappers.LessResourceMapper'
+    //debug 'grails.app.resourceMappers.LessResourceMapper'
 }
 grails.views.default.codec="none" // none, html, base64
 grails.views.gsp.encoding="UTF-8"
 
-grails.resources.less.default.importPath = ['less']
+//grails.resources.less.default.importPath = ['less']
+
+grails.resources.resourceLocatorEnabled = true
+
+// What URL patterns should be processed by the resources plugin
+grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*', '/less/*']
+grails.resources.adhoc.includes = ['/images/**', '/css/**', '/js/**', '/plugins/**', '/less/*']
+grails.resources.adhoc.excludes = ['**/WEB-INF/**', '**/META-INF/**']

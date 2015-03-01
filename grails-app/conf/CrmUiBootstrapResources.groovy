@@ -18,23 +18,6 @@ modules = {
     modernizr {
         resource url:'js/modernizr.js', disposition: 'head'
     }
-    /*
-     * In your application, copy (and modify) variables.less from twitter-bootstrap plugin or generate variables.less
-     * from the bootstrap site. Save it in your application's web-app/less directory.
-     * Then create a web-app/less/my-app.less with the following content:
-     *
-     * @import "bootstrap.less";
-     * @import "responsive.less";
-     *
-     * Your custom CSS here...
-     *
-     * Add a resource declaration to ApplicationResources.groovy:
-     * application {
-     *   resource url:[dir: 'less', file: 'my-app.less'], attrs:[rel: "stylesheet/less", type:'css'], disposition: 'head'
-     * }
-     * Make sure you have less-resources plugin installed.
-     * IMPORTANT: The lesscss-resources plugin does not handle imports the way we want so you MUST use less-resources.
-     */
     crm {
         // We depend only on bootstrap JavaScript, not the bootstrap styles. Add styles as described above.
         dependsOn 'jquery, modernizr, bootstrap-js'
