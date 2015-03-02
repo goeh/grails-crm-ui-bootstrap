@@ -73,22 +73,22 @@
             <div id="global-message" class="hide">
                 <g:if test="${flash.info || flash.message}">
                     <div class="alert-info">
-                        ${flash.info ?: flash.message}
+                        ${raw(flash.info ?: flash.message)}
                     </div>
                 </g:if>
                 <g:if test="${flash.success}">
                     <div class="alert-success">
-                        ${flash.success}
+                        ${raw(flash.success)}
                     </div>
                 </g:if>
                 <g:if test="${flash.warning}">
                     <div class="alert-warning">
-                        ${flash.warning}
+                        ${raw(flash.warning)}
                     </div>
                 </g:if>
                 <g:if test="${flash.error}">
                     <div class="alert-error">
-                        ${flash.error}
+                        ${raw(flash.error)}
                     </div>
                 </g:if>
             </div>
