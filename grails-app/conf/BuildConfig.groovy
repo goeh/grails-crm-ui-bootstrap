@@ -44,8 +44,9 @@ grails.project.dependency.resolution = {
             export = false
         }
 
-        compile ":resources:1.2.14"
+        compile ":resources:1.2.8" // TODO I could not get version 1.2.14 working with Grails 2.4.4, why?
         compile ":less-resources:1.3.3.3" // TODO https://github.com/groovydev/less-grails-plugin/pull/18
+
         compile ":jquery:1.11.1"
         compile ":twitter-bootstrap:2.3.2.2"
         compile ":fields:1.4"
