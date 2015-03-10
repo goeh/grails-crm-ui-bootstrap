@@ -45,13 +45,13 @@ grails.project.dependency.resolution = {
         }
 
         compile ":resources:1.2.14"
-        compile ":less-resources:1.3.3.3"
+        compile ":less-resources:1.3.3.3" // TODO https://github.com/groovydev/less-grails-plugin/pull/18
         compile ":jquery:1.11.1"
         compile ":twitter-bootstrap:2.3.2.2"
         compile ":fields:1.4"
-        compile ":navigation:1.4.0-SNAPSHOT"
+        compile ":navigation:1.4.0-SNAPSHOT" // TODO https://github.com/Grailsrocks/grails-navigation/pull/4
 
-        compile ":crm-security:2.4.0-SNAPSHOT"
+        compile ":crm-security:2.4.0"
 
         compile ":recent-domain:0.6.0"
         compile ":user-tag:0.6"
