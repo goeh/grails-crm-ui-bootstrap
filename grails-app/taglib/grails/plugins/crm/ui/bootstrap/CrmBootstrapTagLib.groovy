@@ -28,9 +28,20 @@ class CrmBootstrapTagLib {
 
     static namespace = "crm"
 
+    static CALLBACK_CONTEXT_VARS = [
+        'grailsApplication',
+        'pageScope',
+        'session',
+        'request',
+        'controllerName',
+        'actionName',
+        'flash',
+        'params'
+    ]
+
     def grailsApplication
     def crmSecurityService
-    def navigationService
+    def grailsNavigation
     def userTagService
     def selectionService
     def selectionRepositoryService
@@ -55,98 +66,73 @@ class CrmBootstrapTagLib {
 
     /**
      * Renders a submenu.
+     *
+     * Since version 2.4.0+ this tag just delegates to nav:secondary (navigation feature in the platform-core plugin)
      */
     def submenu = { attrs, body ->
-        def entityName = g.message(code: controllerName + '.label', default: GrailsNameUtils.getNaturalName(controllerName))
-        def menuTitle = attrs.title ?: entityName
-        def items = navigationService.byGroup[attrs.group ?: controllerName]
-        def dlg = new MenuVisibilityDelegate(grailsApplication, pageScope, [
-                session: session,
-                request: request,
-                controllerName: controllerName,
-                actionName: actionName,
-                flash: flash,
-                params: params
-        ])
-        def activePath = attrs.activePath ?: navigationService.reverseMapActivePathFor(controllerName, actionName, params)
-        if (activePath instanceof String) {
-            activePath = activePath.tokenize('/')
-        }
+        out << nav.secondary(attrs, body)
+    }
 
-        def empty = true
+    /**
+     * Render tag body conditionally if navigation scope contain nodes (navigation items).
+     *
+     * TODO: This tag really should be included in platform-core NavigationtagLib.
+     */
+    def hasNavigationItems = { attrs, body ->
+        def pathNodes = grailsNavigation.nodesForPath(attrs.path ?: grailsNavigation.getActivePath(request))
 
-        items?.eachWithIndex { item, i ->
-
-            if (!crmSecurityService.isPermitted((item.controller ?: controllerName) + ':' + item.action)) {
-                return
-            }
-
-            // isVisible is closure or null/false
-            def isVisible = item['isVisible']
-
-            if (isVisible instanceof Closure) {
-                isVisible = isVisible.clone()
-                isVisible.delegate = dlg
-                isVisible.resolveStrategy = Closure.DELEGATE_FIRST
-            }
-
-            if ((isVisible == null) || (isVisible == true) || isVisible.call()) {
-                def id = item.id
-                if (id instanceof Closure) {
-                    id = id.clone();
-                    id.delegate = dlg
-                    id.resolveStrategy = Closure.DELEGATE_FIRST
-                    id = id.call()
-                }
-
-                def active = pathIsActive(item.path, activePath)
-                def title = message(code: item.controller + '.' + item.action + '.help', default: '')
-                def icon = item.params?.icon ?: message(code: (item.title ?: (item.controller ?: controllerName) + '.' + item.action) + '_icon', default: message(code: ('default.' + item.action) + '_icon', default: 'icon-asterisk'))
-                def label = g.message(code: item.title ?: (item.controller + '.' + item.action), default: message(code: item.controller, default: item.title ?: (item.controller + '.' + item.action)), args: [entityName])
-                def elementId = "menu_${item.controller ?: controllerName}_${item.action}"
-                def linkParams = [:]
-                if (item.params) {
-                    linkParams.putAll(item.params)
-                    linkParams.remove('icon')
-                }
-                linkParams.putAll([controller: item.controller ?: controllerName, action: item.action, id: id, elementId: elementId, title: title])
-                def link = g.link(linkParams, "<i class=\"${icon}\"></i> " + label)
-
-                if (empty) {
-                    out << """<div class="well sidebar-nav">
-            <ul class="nav nav-list">
-                <li class="nav-header">${menuTitle}</li>
-"""
-                    empty = false
-                }
-                out << """<li class="${active ? 'active' : ''}">$link</li>"""
-            }
-        }
-
-        def bodyContent = body()?.toString()?.trim()
-        if (bodyContent) {
-            if (empty) {
-                out << """<div class="well sidebar-nav">
-            <ul class="nav nav-list">
-                <li class="nav-header">${menuTitle}</li>
-"""
-            }
-            out << bodyContent
-            empty = false
-        }
-
-        if (!empty) {
-            out << "</ul></div>"
+        if (pathNodes?.size()) {
+            out << body()
         }
     }
 
-    protected pathIsActive(itemPath, currentPath) {
-        def itemSize = itemPath?.size() ?: 0
-        def activeSize = currentPath?.size() ?: 0
-        if (itemSize && activeSize && (itemSize <= activeSize)) {
-            return itemPath[0..itemSize - 1] == currentPath[0..itemSize - 1]
-        } else {
-            return false
+    /**
+     * Render navigation items for a given scope and path.
+     *
+     * @attr scope Optional scope to render menu for. Defaults to "app", but could be any valid scope i.e. "app/messages/archive"
+     * @attr path Optional activation path indicating what is currently active.
+     */
+    def eachNavigationItem = { attrs, body ->
+        def scope = attrs.scope
+        if (!scope) {
+            def requestPath = attrs.path ?: grailsNavigation.getActivePath(request)
+            def pathScope = nav.scopeForActivationPath(path:requestPath)
+            scope = pathScope ?: grailsNavigation.getDefaultScope(request)
+        }
+        if (!(scope instanceof String)) {
+            scope = scope.name
+        }
+
+        if (log.debugEnabled) {
+            log.debug "Rendering items for scope [${scope}]"
+        }
+
+        def activeNodes = grailsNavigation.nodesForPath(attrs.path ?: grailsNavigation.getActivePath(request))
+
+        def callbackContext = [:]
+        for (varName in CALLBACK_CONTEXT_VARS) {
+            callbackContext[varName] = this."$varName"
+        }
+
+        def scopeNode = grailsNavigation.nodeForId(scope)
+        if (scopeNode) {
+            if (log.debugEnabled) {
+                log.debug "Rendering items for scope [${scope}] which has children ${scopeNode.children.name}"
+            }
+            for (n in scopeNode.children) {
+                def nodeContext = callbackContext + [item:n]
+                if (n.isVisible(nodeContext)) {
+                    def active = activeNodes.contains(n)
+                    def enabled = n.isEnabled(nodeContext)
+
+                    def linkArgs = new HashMap(n.linkArgs) // Clone! naughty g.link changes them otherwise. Naughty g.link!
+                    // Always give custom body a clone of the link args as they can't use the ones from item
+                    // Custom body is responsible for rendering nested items
+                    out << body([item:n, linkArgs:linkArgs, active:active, enabled:enabled])
+                }
+            }
+        } else if (log.debugEnabled) {
+            log.debug "Attempt to render items for scope [${scope}] but there was no navigation node found for that scope."
         }
     }
 
