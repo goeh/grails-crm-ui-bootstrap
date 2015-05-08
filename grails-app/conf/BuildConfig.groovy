@@ -47,7 +47,7 @@ grails.project.dependency.resolution = {
         compile ":content-buffer:1.0.1"
 
         compile ":crm-core:2.0.2"
-        compile ":crm-security:2.0.0"
+        compile ":crm-security:2.0.2"
 
         compile ":recent-domain:0.6.0"
         compile ":user-tag:0.6"
