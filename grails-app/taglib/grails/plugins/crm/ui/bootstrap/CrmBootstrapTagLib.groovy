@@ -177,7 +177,7 @@ class CrmBootstrapTagLib {
             out << """<ul class="dropdown-menu">\n"""
             if (selection) {
                 def label = message(code: controllerName + '.button.search.again.label', default: 'New Query')
-                out << """<li>${link(action: "index", label)}</li>"""
+                out << """<li>${link(controller: attrs.controller ?: location, action: "index", label)}</li>"""
                 if (crmSecurityService.isPermitted("selectionRepository:create")) {
                     out << "<li>"
                     out << link(controller: 'selectionRepository', action: 'create',
