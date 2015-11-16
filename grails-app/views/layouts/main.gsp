@@ -144,7 +144,7 @@
                             <li class="${active || (navController == controllerName && navAction == actionName) ? 'active' : ''}">
                                 <g:link controller="${navController ?: controllerName}" action="${navAction}" id="${navData.id}"
                                         title="${message(code:navController + '.' + navAction + '.help')}">
-                                    ${message(code: item.titleMessageCode ?: (navController + '.' + navAction), default: message(code: navController, default: item.titleMessageCode ?: (navController + '.' + navAction)), args: [entityName])}
+                                    ${message(code: item.titleMessageCode ?: (navController + '.' + navAction + '.label'), default: message(code: navController, default: item.titleMessageCode ?: (navController + '.' + navAction)), args: [entityName])}
                                 </g:link>
                             </li>
                         </crm:hasPermission>
