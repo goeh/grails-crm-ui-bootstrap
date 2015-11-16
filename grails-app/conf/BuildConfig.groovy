@@ -50,7 +50,7 @@ grails.project.dependency.resolution = {
         compile ":twitter-bootstrap:2.3.2.2"
         compile ":fields:1.4"
 
-        compile ":crm-security:2.4.0"
+        compile ":crm-security:2.4.2"
 
         compile ":recent-domain:0.6.0"
         compile ":user-tag:1.0"
