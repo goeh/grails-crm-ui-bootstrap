@@ -67,10 +67,13 @@ class CrmBootstrapTagLib {
     /**
      * Renders a submenu.
      *
-     * Since version 2.4.0+ this tag just delegates to nav:secondary (navigation feature in the platform-core plugin)
+     * Since version 2.4.0+ this tag just delegates to nav:menu (navigation feature in the platform-core plugin)
      */
     def submenu = { attrs, body ->
-        out << nav.secondary(attrs, body)
+        if(! attrs.scope) {
+            attrs.scope = controllerName
+        }
+        out << nav.menu(attrs, body)
     }
 
     /**
