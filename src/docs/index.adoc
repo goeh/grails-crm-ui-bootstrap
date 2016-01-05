@@ -114,6 +114,7 @@ Renders +dateCreated+ and +lastUpdated+ timestamps with CSS class +muted timesta
 
 == Changes
 
+2.4.1:: Fixes for selectionMenu and submenu. Adjusted i18n key for main navigation (added .label).
 2.4.0:: First version compatible with Grails 2.4.4.
 2.0.0:: First public release.
 
