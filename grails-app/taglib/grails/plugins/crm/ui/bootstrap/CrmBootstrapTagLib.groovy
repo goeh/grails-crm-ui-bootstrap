@@ -177,7 +177,7 @@ class CrmBootstrapTagLib {
                 out << """<i class="icon-search ${attrs.visual ? 'icon-white' : ''}"></i> $label """
             }
             out << """<span class="caret"></span></button>\n"""
-            out << """<ul class="dropdown-menu">\n"""
+            out << """<ul id="selection-menu" class="dropdown-menu">\n"""
             if (selection) {
                 def label = message(code: controllerName + '.button.search.again.label', default: 'New Query')
                 out << """<li>${link(controller: attrs.controller ?: location, action: "index", label)}</li>"""
