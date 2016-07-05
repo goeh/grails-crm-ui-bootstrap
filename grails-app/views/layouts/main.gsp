@@ -292,6 +292,13 @@
                                 </ul>
                             </crm:hasUnreadNotifications>
                         </plugin:isAvailable>
+
+                        <g:if test="${grailsApplication.config.elasticsearch.enabled}">
+                            <g:form mapping="search" class="navbar-search pull-right" style="margin-top: 7px;">
+                                <input type="text" name="q" class="input-small search-query" placeholder="${message(code: 'search.help')}">
+                            </g:form>
+                        </g:if>
+
                     </crm:user>
 
 
