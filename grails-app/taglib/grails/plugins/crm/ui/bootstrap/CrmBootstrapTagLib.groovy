@@ -16,11 +16,9 @@
 package grails.plugins.crm.ui.bootstrap
 
 import grails.plugins.crm.core.DateUtils
-import grails.util.GrailsNameUtils
 import grails.plugins.crm.core.TenantUtils
-import org.springframework.web.servlet.support.RequestContextUtils
-import org.springframework.web.servlet.support.RequestContextUtils as RCU
 import org.ocpsoft.prettytime.PrettyTime
+import org.springframework.web.servlet.support.RequestContextUtils as RCU
 
 import java.text.DateFormat
 
@@ -217,6 +215,65 @@ class CrmBootstrapTagLib {
             out << "</ul>"
             out << "</div>"
         }
+    }
+
+    def navButtons = { attrs, body ->
+        def scopeNode = grailsNavigation.nodeForId(attrs.path ?: (controllerName + '/buttons'))
+        if (scopeNode == null) {
+            return
+        }
+        final Map callbackContext = [
+                pageScope     : pageScope,
+                session       : session,
+                request       : request,
+                controllerName: controllerName,
+                actionName    : actionName,
+                flash         : flash,
+                params        : params,
+                config        : grailsApplication.config
+        ]
+
+        def nodes = scopeNode.children.findAll { it.isVisible(callbackContext) }
+        for (n in nodes) {
+            def data = n.data
+            def button = [type: 'link']
+            def linkParams = [:]
+            data.params.each { key, value ->
+                if (value instanceof Closure) {
+                    value = invokeCallback(value, callbackContext)
+                }
+                linkParams[key] = value
+            }
+            if (linkParams.referer == true) {
+                linkParams.referer = request.forwardURI
+            }
+            button.controller = n.linkArgs.controller ?: controllerName
+            button.action = n.linkArgs.action ?: 'index'
+            button.params = linkParams
+            button.visual = data.visual ?: 'default'
+            if (data.icon) {
+                button.icon = data.icon
+            }
+            def klass = data['class'] ?: ''
+            if (!n.isEnabled(callbackContext)) {
+                klass += ' disabled'
+            }
+            if (klass) {
+                button['class'] = klass
+            }
+            button.label = "${button.controller}.${button.action}.label".toString()
+            button.title = n.titleMessageCode ?: "${button.controller}.button.${button.action}.title".toString()
+            button.permission = data.permission
+
+            out << crm.button(button)
+        }
+    }
+
+    private Object invokeCallback(Closure c, context) {
+        Closure cloneOfClosure = c.clone()
+        cloneOfClosure.delegate = new MenuVisibilityDelegate(context.grailsApplication, context.pageScope, context)
+        cloneOfClosure.resolveStrategy = Closure.DELEGATE_FIRST
+        cloneOfClosure()
     }
 
     /**
@@ -894,7 +951,7 @@ class MenuVisibilityDelegate {
         } else if (this.@model[name] != null) {
             return this.@model[name]
         } else {
-            return this.@grailsApplication.mainContext.getBean(name)
+            return this.@grailsApplication.mainContext[name]
         }
     }
 }
