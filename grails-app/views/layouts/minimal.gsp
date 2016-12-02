@@ -23,9 +23,9 @@
                 message = 'Requested URL not found.';
             } else if (xhr.status == 500) {
                 message = xhr.responseText;
-            } else if (errStatus == 'parsererror') {
+            } else if (exception == 'parsererror') {
                 message = 'Error.\nParsing JSON Request failed.';
-            } else if (errStatus == 'timeout') {
+            } else if (exception == 'timeout') {
                 message = 'Request timed out.\nPlease try later';
             } else {
                 message = ('Unknown Error.\n' + xhr.responseText);
