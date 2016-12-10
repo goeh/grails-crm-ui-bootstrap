@@ -49,7 +49,7 @@ class CrmBootstrapTagLib {
     def logo = { attrs, body ->
         def image
         try {
-            def size = attrs.size ?: 'medium'
+            def size = attrs.size ?: (grailsApplication.config.crm.theme.logo.size ?: 'medium')
             image = crmThemeService.getLogo(TenantUtils.tenant, size) ?: "/images/grails_logo.png"
         } catch (Exception e) {
             log.error("Failed to render logo", e)
