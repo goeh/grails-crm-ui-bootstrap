@@ -295,7 +295,9 @@
 
                         <g:if test="${grailsApplication.config.elasticsearch.enabled}">
                             <g:form mapping="search" class="navbar-search pull-right" style="margin-top: 7px;">
-                                <input type="text" name="q" class="input-small search-query" placeholder="${message(code: 'search.help')}">
+                                <input type="text" name="${grailsApplication.config.elasticsearch.query.param ?: 'q'}"
+                                    value="${params[grailsApplication.config.elasticsearch.query.param ?: 'q'] ?: ''}"
+                                       class="input-small search-query" placeholder="${message(code: 'search.help')}">
                             </g:form>
                         </g:if>
 
