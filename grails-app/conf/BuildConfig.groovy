@@ -36,7 +36,7 @@ grails.project.dependency.resolution = {
             export = false
         }
 
-        test(":codenarc:0.25.2") { export = false }
+        test(":codenarc:1.0") { export = false }
         test(":code-coverage:2.0.3-3") { export = false }
 
         test(":selection-repository:0.9.3") {
@@ -50,7 +50,7 @@ grails.project.dependency.resolution = {
         compile ":twitter-bootstrap:2.3.2.2"
         compile ":fields:1.4"
 
-        compile ":crm-security:2.4.3"
+        compile ":crm-security:2.4.4"
 
         compile ":recent-domain:0.6.0"
         compile ":user-tag:1.0"
