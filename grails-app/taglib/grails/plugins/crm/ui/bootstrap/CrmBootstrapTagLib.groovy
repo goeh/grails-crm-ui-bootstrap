@@ -372,7 +372,7 @@ class CrmBootstrapTagLib {
      */
     def button = { attrs, body ->
         def props = takeAttributes(attrs, ['type', 'action', 'visual', 'class', 'icon', 'label', 'title', 'args',
-                'confirm', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission', 'group', 'elementId'])
+                'confirm', 'onclick', 'style', 'controller', 'id', 'params', 'href', 'target', 'permission', 'group', 'elementId'])
         if (props.permission && !crmSecurityService.isPermitted(props.permission)) {
             return
         }
@@ -401,7 +401,13 @@ class CrmBootstrapTagLib {
                     out << " title=\"${title}\""
                 }
                 if (confirm) {
-                    out << " onclick=\"return confirm('$confirm')\""
+                    if(props.onclick) {
+                        out << " onclick=\"return confirm('$confirm') && ${props.onclick}\""
+                    } else {
+                        out << " onclick=\"return confirm('$confirm')\""
+                    }
+                } else if(props.onclick) {
+                    out << " onclick=\"${props.onclick}\""
                 }
                 if (props.style) {
                     out << " style=\"${props.style}\""
@@ -419,7 +425,13 @@ class CrmBootstrapTagLib {
                     label = "<i class=\"$icon\"></i> $label"
                 }
                 if (confirm) {
-                    linkAttrs.onclick = "return confirm('$confirm')"
+                    if(props.onclick) {
+                        linkAttrs.onclick = "return confirm('$confirm') && ${props.onclick}"
+                    } else {
+                        linkAttrs.onclick = "return confirm('$confirm')"
+                    }
+                } else if (props.onclick) {
+                    out << " onclick=\"${props.onclick}\""
                 }
                 if (props.params) {
                     linkAttrs.params = props.params
@@ -448,7 +460,13 @@ class CrmBootstrapTagLib {
                     out << " target=\"${props.target}\""
                 }
                 if (confirm) {
-                    out << " onclick=\"return confirm('$confirm')\""
+                    if(props.onclick) {
+                        out << " onclick=\"return confirm('$confirm') && ${props.onclick}\""
+                    } else {
+                        out << " onclick=\"return confirm('$confirm')\""
+                    }
+                } else if(props.onclick) {
+                    out << " onclick=\"${props.onclick}\""
                 }
                 out << "${renderAttributes(attrs)}>"
                 if (icon) {
