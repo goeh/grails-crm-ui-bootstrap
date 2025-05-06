@@ -52,8 +52,8 @@ grails.project.dependency.resolution = {
 
         compile ":crm-security:2.4.5"
 
-        compile ":recent-domain:0.6.0"
-        compile ":user-tag:1.0"
+        compile ":recent-domain:0.6.1"
+        compile ":user-tag:1.0.1"
     }
 }
 
